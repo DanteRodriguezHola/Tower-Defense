@@ -1,17 +1,23 @@
 - Zombie normal:
-  -Vida: 5
+  -Vida: 4
   -Velocidad: 1.5
   -Daño: -1
-  -Recompensa: 3$
+  -Recompensa: 4$
 
 - Zombie lento:
-  -Vida: 25
+  -Vida: 16
   -Velocidad: 0.7
-  -Daño: -3
-  -Recompensa: 10$
+  -Daño: -6
+  -Recompensa: 16$
 
 - Zombie rapido:
-  -Vida: 10
+  -Vida: 3
   -Velocidad: 2.5
   -Daño: -3
-  -Recompensa: 10$
+  -Recompensa: 3$
+
+- Zombie slime:
+  -Vida: 100 + 50*2 + 25*4 + 12 * 8 
+  -Velocidad: 1.1
+  -Daño: -30 > -14 > -6 > -2
+  -Recompensa: 100$
