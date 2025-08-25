@@ -1,9 +1,10 @@
+from mapa import leer_waypoints, procesar_waypoints
 import pygame
 
 pygame.init()
 
 #Definiendo nuestras variables
-ventana = (600, 900)
+ventana = (570, 570)
 clock = pygame.time.Clock()
 titulo = pygame.display.set_caption("Stray Tower Defense")
 jugando = True
