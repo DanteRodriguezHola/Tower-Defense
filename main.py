@@ -7,7 +7,7 @@ pg.init()
 
 clock = pg.time.Clock()
 screen = pg.display.set_mode((30*19, 30*19))
-pg.display.set_caption('pene rico rico')
+pg.display.set_caption('Stray Tower Defense')
 
 #imagenes jiij
 zombie_img = pg.image.load('assets/images/zombies/zombie1_normal.png').convert_alpha()
