@@ -1,27 +1,43 @@
-from mapa import leer_waypoints, procesar_waypoints
-import pygame
+import pygame as pg
+import json
+from world import World
+from zombies import Enemy
 
-pygame.init()
+pg.init()
 
-#Definiendo nuestras variables
-ventana = pygame.display.set_mode((570, 570))
-clock = pygame.time.Clock()
-titulo = pygame.display.set_caption("Stray Tower Defense")
-jugando = True
+clock = pg.time.Clock()
+screen = pg.display.set_mode((30*19, 30*19))
+pg.display.set_caption('pene rico rico')
 
-#Carga de imagenes
-zombie_img = pygame.image.load("assets/images/zombies/zombie1_normal.png").convert_alpha()
-zombie_lento_img = pygame.image.load("assets/images/zombies/zombie2_lento.png").convert_alpha()
-zombie_rapido_img = pygame.image.load("assets/images/zombies/zombie3_rapido.png").convert_alpha()
-mapa_img = pygame.image.load("assets/images/mapa.png").convert_alpha()
+#imagenes jiij
+zombie_img = pg.image.load('assets/images/zombies/zombie1_normal.png').convert_alpha()
+map_img = pg.image.load('assets/images/mapa.png').convert_alpha()
 
-#Loop de juego básico
-while jugando:
-    ventana.blit(mapa_img, (0, 0))
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-           jugando = False
-    pygame.display.flip()
+with open('map.tmj') as file:
+    world_data = json.load(file)
+
+world = World(world_data, map_img)
+world.process_data()
+enemy_group = pg.sprite.Group()
+
+enemy = Enemy(world.waypoints, zombie_img)
+enemy_group.add(enemy)
+
+game_over = False
+while not game_over:
     clock.tick(60)
 
-pygame.quit()
+    screen.fill('grey100')
+    world.draw(screen)
+    
+    enemy_group.update()
+
+    enemy_group.draw(screen)
+
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            game_over = True
+
+    pg.display.flip()
+
+pg.quit()
