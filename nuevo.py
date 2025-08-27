@@ -2,7 +2,7 @@ from estadisticas_zombies import zombies
 import os
 
 def obtener_ruta_ronda(numero_ronda):
-    nombre_archivo = "ronda" + numero_ronda + ".txt"
+    nombre_archivo = "ronda_" + numero_ronda + ".txt"
     ruta_carpeta = os.path.dirname(__file__)
     ruta_rondas = os.path.join(ruta_carpeta, "rondas")
     ruta_archivo = os.path.join(ruta_rondas, nombre_archivo)
@@ -23,5 +23,3 @@ def obtener_datos_enemigos(subronda):
         velocidad = datos["velocidad"]
         daño = datos["daño"]
         recompensa = datos["recompensa"]
-
-leer_ronda()
