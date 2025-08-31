@@ -1,4 +1,4 @@
-from estadisticas_zombies import zombies
+from config import enemigos
 import os
 
 def obtener_ruta_ronda(numero_ronda):
@@ -9,16 +9,16 @@ def obtener_ruta_ronda(numero_ronda):
 
     return ruta_archivo
 
-def leer_ronda():
+def procesar_ronda():
     ruta_archivo = obtener_ruta_ronda(numero_ronda = "1")
     with open(ruta_archivo, "r") as ronda:
-        for subronda in ronda:
-            obtener_datos_enemigos(subronda)
+        for oleada in ronda:
+            obtener_datos_enemigos(oleada)
 
-def obtener_datos_enemigos(subronda):
-    zombies_presentes = subronda.split()
-    for zombie in zombies_presentes:
-        datos = zombies[zombie]
+def obtener_datos_enemigos(oleada):
+    enemigos_presentes = oleada.split()
+    for tipo in enemigos_presentes:
+        datos = enemigos[tipo]
         vida = datos["vida"]
         velocidad = datos["velocidad"]
         daño = datos["daño"]
