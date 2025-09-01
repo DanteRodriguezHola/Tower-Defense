@@ -1,4 +1,6 @@
-from config import enemigos
+from oleadas import procesar_oleada
+from zombies import bleh
+
 import os
 
 def obtener_ruta_ronda(numero_ronda):
@@ -6,20 +8,10 @@ def obtener_ruta_ronda(numero_ronda):
     ruta_carpeta = os.path.dirname(__file__)
     ruta_rondas = os.path.join(ruta_carpeta, "rondas")
     ruta_archivo = os.path.join(ruta_rondas, nombre_archivo)
-
     return ruta_archivo
 
 def procesar_ronda():
     ruta_archivo = obtener_ruta_ronda(numero_ronda = "1")
     with open(ruta_archivo, "r") as ronda:
         for oleada in ronda:
-            obtener_datos_enemigos(oleada)
-
-def obtener_datos_enemigos(oleada):
-    enemigos_presentes = oleada.split()
-    for tipo in enemigos_presentes:
-        datos = enemigos[tipo]
-        vida = datos["vida"]
-        velocidad = datos["velocidad"]
-        daño = datos["daño"]
-        recompensa = datos["recompensa"]
+            bleh(oleada)

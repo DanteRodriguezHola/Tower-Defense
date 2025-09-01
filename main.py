@@ -1,26 +1,18 @@
 from config import clock, ventana, world
 
-from zombies import Enemy
-from world import World
+from rondas import procesar_ronda
 import pygame as pg
 import json
 
-#Carga de imagenes
-zombie_img = pg.image.load('assets/imagenes/zombies/zombie_normal.png').convert_alpha()
-
-
+grupo_enemigos = procesar_ronda()
 oleada = pg.sprite.Group()
-enemigo = Enemy(world.waypoints, zombie_img)
+oleada.add(grupo_enemigos)
 
 jugando = True
 
 while jugando:
     clock.tick(60)
     world.draw(ventana)
-    oleada.add(enemigo)
-    oleada.update()
-    oleada.draw(ventana)
-
     for evento in pg.event.get():
         if evento.type == pg.QUIT:
             jugando = False
