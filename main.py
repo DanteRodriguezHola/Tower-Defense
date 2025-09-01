@@ -18,9 +18,7 @@ while jugando:
     clock.tick(60)
     world.draw(ventana)
     oleada.add(enemigo)
-    oleada.add(enemigo)
     oleada.update()
-
     oleada.draw(ventana)
 
     for evento in pg.event.get():
