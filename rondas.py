@@ -1,6 +1,7 @@
-from oleadas import procesar_oleada
-from zombies import bleh
+from config import ventana, world, enemigos
+from zombies import Enemy
 
+import pygame as pg
 import os
 
 def obtener_ruta_ronda(numero_ronda):
@@ -10,8 +11,29 @@ def obtener_ruta_ronda(numero_ronda):
     ruta_archivo = os.path.join(ruta_rondas, nombre_archivo)
     return ruta_archivo
 
-def procesar_ronda():
-    ruta_archivo = obtener_ruta_ronda(numero_ronda = "1")
+def procesar_ronda(numero_ronda):
+    subrondas = []
+    ruta_archivo = obtener_ruta_ronda(numero_ronda)
     with open(ruta_archivo, "r") as ronda:
-        for oleada in ronda:
-            bleh(oleada)
+        for subronda in ronda:
+            enemigos = procesar_subronda(subronda)
+            subrondas.append(enemigos)
+    return subrondas
+
+def procesar_subronda(subronda):   
+    enemigos = []
+    oleada = subronda.split()
+    for tipo_de_enemigo in oleada:
+        enemigo = obtener_datos_enemigos(tipo_de_enemigo)
+        enemigos.append(enemigo)
+    return enemigos
+
+def obtener_datos_enemigos(tipo):
+    datos = enemigos[tipo]
+    vida = datos["vida"]
+    velocidad = datos["velocidad"]
+    daño = datos["daño"]
+    recompensa = datos["recompensa"]
+    imagen = pg.image.load(datos["imagen"]).convert_alpha()
+    
+    return Enemy(world.waypoints, vida, velocidad, daño, recompensa, imagen)

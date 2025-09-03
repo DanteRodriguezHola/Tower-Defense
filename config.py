@@ -5,6 +5,7 @@ clock = pg.time.Clock()
 ventana = pg.display.set_mode((570, 570))
 world = cargar_mapa()
 
+
 #Carga de elementos decorativos (titulo y icono del programa):
 titulo = pg.display.set_caption("Stray Tower Defense")
 
@@ -18,7 +19,7 @@ enemigos = {
         "velocidad": 1.5,
         "daño": 1,
         "recompensa": 5,
-        "imagen": "assets/imagenes/zombies/zombie_normal.png",
+        "imagen": "assets/imagenes/zombies/zombie_normal_nuevo.png",
         },
     "Len": { #Zombie lento, con mayor vida
         "vida": 25,

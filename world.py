@@ -27,5 +27,4 @@ def cargar_mapa():
         world_data = json.load(file)
     world = World(world_data, mapa_imagen)
     world.process_data()
-
     return world
