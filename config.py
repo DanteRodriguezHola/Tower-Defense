@@ -2,9 +2,8 @@ from world import cargar_mapa
 import pygame as pg
 
 clock = pg.time.Clock()
-ventana = pg.display.set_mode((570, 570))
+ventana = pg.display.set_mode((700, 700))
 world = cargar_mapa()
-
 
 #Carga de elementos decorativos (titulo y icono del programa):
 titulo = pg.display.set_caption("Stray Tower Defense")
