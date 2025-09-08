@@ -16,8 +16,7 @@ class World():
         for punto in data:
             temp_x = punto.get('x')
             temp_y = punto.get('y')
-            self.waypoints.append((temp_x, temp_y))
-        
+            self.waypoints.append((temp_x, temp_y))  
     def draw(self, surface):
         surface.blit(self.image, (0, 0))
 
