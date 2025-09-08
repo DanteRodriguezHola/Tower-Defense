@@ -19,7 +19,7 @@ enemigos = {
         "velocidad": 1.5,
         "daño": 1,
         "recompensa": 5,
-        "imagen": "assets/imagenes/zombies/zombie_normal_nuevo.png",
+        "imagen": "assets/imagenes/zombies/zombie_normal.png",
         },
     "Len": { #Zombie lento, con mayor vida
         "vida": 25,

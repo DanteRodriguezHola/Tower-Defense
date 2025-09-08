@@ -7,7 +7,7 @@ import pygame as pg
 
 jugando = True
 
-imagen_torreta = pg.image.load("assets/imagenes/torretas/torreta_flecha.png").convert_alpha()
+imagen_torreta = pg.image.load("assets/imagenes/torretas/torreta_tanque.png").convert_alpha()
 
 grupo_torretas = pg.sprite.Group()
 
