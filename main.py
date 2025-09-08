@@ -25,9 +25,10 @@ while jugando:
         for evento in pg.event.get():
             #Al hacer click izquierdo
             if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
-                posicion = pg.mouse.get_pos() #Se obtiene la posicion del ratón
-                torreta = Torreta(imagen_torreta, posicion)
-                grupo_torretas.add(torreta)
+                posicion_mouse = pg.mouse.get_pos() #Se obtiene la posicion del ratón
+                if posicion_mouse[0] < 555 and posicion_mouse[1] < 555:
+                    torreta = Torreta(imagen_torreta, posicion_mouse)
+                    grupo_torretas.add(torreta)
             #Salir del programa
             if evento.type == pg.QUIT:
                 jugando = False
