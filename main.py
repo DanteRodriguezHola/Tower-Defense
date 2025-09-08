@@ -13,11 +13,16 @@ while jugando:
         oleada = pg.sprite.Group()
         oleada.add(subronda)
         oleada.update()
-        oleada.draw(ventana)        
+        oleada.draw(ventana)
+
         for evento in pg.event.get():
+            #Al hacer click izquierdo
+            if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
+                print("Hola")
+            #Salir del programa
             if evento.type == pg.QUIT:
                 jugando = False
-                break
+
         pg.display.flip()
 pg.quit()
 

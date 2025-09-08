@@ -6,13 +6,13 @@ ventana = pg.display.set_mode((570, 570))
 world = cargar_mapa()
 
 
-#Carga de elementos decorativos (titulo y icono del programa):
+#Carga de elementos decorativos (titulo y icono del programa)
 titulo = pg.display.set_caption("Stray Tower Defense")
 
 icono_imagen = pg.image.load("assets\imagenes\icono.png").convert_alpha()
 icono = pg.display.set_icon(icono_imagen)
 
-#Estadisticas de los enemigos y torres:
+#Estadisticas de los enemigos y las torretas
 enemigos = {
     "Nor": { #Zombie normal
         "vida": 5,
@@ -55,5 +55,18 @@ enemigos = {
         "daño": 0,
         "recompensa": 0,
         "imagen": "imagen",
+        },
+}
+
+torretas = {
+    "Flecha": { #Dispara a los enemigos uno por uno
+        "costo": 15,
+        "daño": 5,
+        "espera": 1.5,
+        },
+    "Base": { #Copia y pega
+        "costo": 0,
+        "daño": 0,
+        "espera": 0,
         },
 }
