@@ -19,14 +19,12 @@ while jugando:
         oleada.update()
         oleada.draw(ventana)
         grupo_torretas.draw(ventana)
-        
         for evento in pg.event.get():
             #Al hacer click izquierdo
             if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
                 posicion_mouse = pg.mouse.get_pos() #Se obtiene la posicion del ratón
-                if posicion_mouse[0] < 555 and posicion_mouse[1] < 555:
+                if posicion_mouse[0] < 570 and posicion_mouse[1] < 570:
                     crear_torreta(posicion_mouse, grupo_torretas)
-                    print(grupo_torretas)
             #Salir del programa
             if evento.type == pg.QUIT:
                 jugando = False

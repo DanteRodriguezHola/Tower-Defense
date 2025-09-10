@@ -1,7 +1,6 @@
-from config import ventana, tamano_celda
+from config import world, tamano_celda
 
 import pygame as pg
-import constants as c
 
 class Torreta(pg.sprite.Sprite):
     def __init__(self, imagen, celda_x, celda_y):
@@ -18,12 +17,13 @@ def crear_torreta(posicion_mouse, grupo_torretas):
     imagen_torreta = pg.image.load("assets/imagenes/torretas/torreta_tanque_chica.png").convert_alpha()
     celda_x = posicion_mouse[0] // tamano_celda
     celda_y = posicion_mouse[1] // tamano_celda
+    celda_numero = (celda_y * 30) + celda_x
 
-    espacio_libre = True
-
-    for torreta in grupo_torretas:
-        if (celda_x,  celda_y) == (torreta.tile_x, torreta.tile_y): #Esto comprueba si la celda x, y donde esta ubicado el mouse ya son la misma que la de otra torreta.
-            espacio_libre = False
-    if espacio_libre:
-        torreta = Torreta(imagen_torreta, celda_x, celda_y)
-        grupo_torretas.add(torreta)
+    if world.tile_map[celda_numero] == 16:
+        espacio_libre = True
+        for torreta in grupo_torretas:
+            if (celda_x,  celda_y) == (torreta.tile_x, torreta.tile_y): #Esto comprueba si la celda x, y donde esta ubicado el mouse ya son la misma que la de otra torreta.
+                espacio_libre = False
+        if espacio_libre:
+            torreta = Torreta(imagen_torreta, celda_x, celda_y)   # 30
+            grupo_torretas.add(torreta)
