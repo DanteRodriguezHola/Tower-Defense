@@ -5,6 +5,7 @@ clock = pg.time.Clock()
 ventana = pg.display.set_mode((570, 570))
 world = cargar_mapa()
 
+tamano_celda = 19
 
 #Carga de elementos decorativos (titulo y icono del programa)
 titulo = pg.display.set_caption("Stray Tower Defense")
