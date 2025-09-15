@@ -2,7 +2,7 @@ from world import cargar_mapa
 import pygame as pg
 
 clock = pg.time.Clock()
-ventana = pg.display.set_mode((570, 570))
+ventana = pg.display.set_mode((700, 570))
 world = cargar_mapa()
 
 tamano_celda = 19
@@ -42,13 +42,6 @@ enemigos = {
         "daño": "Igual a la vida final",
         "recompensa": 100,
         "imagen": "imagen",
-        },
-    "Mar": { #Zombie ligeramente más rapido
-        "vida": 70,
-        "velocidad": 2.1,
-        "daño": 10,
-        "recompensa": 70,
-        "imagen": "la imagen",
         },
     "Base": { #Copia y pega
         "vida": 0,

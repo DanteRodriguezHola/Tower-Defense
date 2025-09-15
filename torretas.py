@@ -20,11 +20,14 @@ def crear_torreta(posicion_mouse, grupo_torretas):
     celda_y = posicion_mouse[1] // tamano_celda
     celda_numero = (celda_y * 30) + celda_x
 
-    if world.tile_map[celda_numero] == 16:
+    #Se comprueba si donde se va a colocar la torreta esta fuera del sendero.
+    if world.tile_map[celda_numero] == 16: 
         espacio_libre = True
+        #Esto comprueba si donde esta ubicado el mouse ya hay otra torreta.
         for torreta in grupo_torretas:
-            if (celda_x,  celda_y) == (torreta.tile_x, torreta.tile_y): #Esto comprueba si la celda x, y donde esta ubicado el mouse ya son la misma que la de otra torreta.
+            if (celda_x,  celda_y) == (torreta.tile_x, torreta.tile_y):
                 espacio_libre = False
+        #Se crea la torreta.
         if espacio_libre:
             torreta = Torreta(imagen_torreta, celda_x, celda_y)   # 30
             grupo_torretas.add(torreta)
