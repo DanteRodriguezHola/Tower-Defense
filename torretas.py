@@ -14,7 +14,7 @@ class Torreta(pg.sprite.Sprite):
         self.rect.center = (self.x, self.y)
     
 def crear_torreta(posicion_mouse, grupo_torretas):
-    imagen_torreta = pg.image.load("assets/imagenes/torretas/torreta_tanque.png").convert_alpha()
+    imagen_torreta = pg.image.load("assets/imagenes/torretas/torreta_tanque_chica.png").convert_alpha()
     
     celda_x = posicion_mouse[0] // tamano_celda
     celda_y = posicion_mouse[1] // tamano_celda

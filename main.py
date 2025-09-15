@@ -10,6 +10,7 @@ jugando = True
 grupo_torretas = pg.sprite.Group()
 subrondas = procesar_ronda("1")
 
+print(subrondas)
 while jugando:
     clock.tick(60) 
     world.draw(ventana)
