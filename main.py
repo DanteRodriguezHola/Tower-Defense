@@ -5,30 +5,28 @@ from torretas import crear_torreta
 
 import pygame as pg
 
+jugando = True
+
 grupo_torretas = pg.sprite.Group()
 subrondas = procesar_ronda("1")
-
-#Loop de juego
-jugando = True
 
 while jugando:
     clock.tick(60) 
     world.draw(ventana)
     for subronda in subrondas:
-        grupo_zombies = pg.sprite.Group()
-        grupo_zombies.add(subronda)
-        grupo_zombies.update()
-
-        #Se muestran los zombies y torretas en la pantalla
-        grupo_zombies.draw(ventana)
+        oleada = pg.sprite.Group()
+        oleada.add(subronda)
+        oleada.update()
+        oleada.draw(ventana)
         grupo_torretas.draw(ventana)
+        
         for evento in pg.event.get():
-            #Al hacer click izquierdo.
+            #Al hacer click izquierdo
             if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
                 posicion_mouse = pg.mouse.get_pos() #Se obtiene la posicion del ratón
                 if posicion_mouse[0] < 570 and posicion_mouse[1] < 570:
                     crear_torreta(posicion_mouse, grupo_torretas)
-            #Salir del programa.
+            #Salir del programa
             if evento.type == pg.QUIT:
                 jugando = False
 

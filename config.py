@@ -1,11 +1,23 @@
 from world import cargar_mapa
 import pygame as pg
 
+#Se carga el reloj
 clock = pg.time.Clock()
-ventana = pg.display.set_mode((700, 570))
-world = cargar_mapa()
+
+#Definir las dimesiones de la pantalla
+ancho_mapa = 570
+alto_mapa = 570
+
+ancho_tienda = 130
+alto_tienda = 130
 
 tamano_celda = 19
+
+#Tamaño de la ventana: 700 x 700
+ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa + alto_tienda)) 
+
+
+world = cargar_mapa()
 
 #Carga de elementos decorativos (titulo y icono del programa)
 titulo = pg.display.set_caption("Stray Tower Defense")
@@ -13,7 +25,7 @@ titulo = pg.display.set_caption("Stray Tower Defense")
 icono_imagen = pg.image.load("assets\imagenes\icono.png").convert_alpha()
 icono = pg.display.set_icon(icono_imagen)
 
-#Estadisticas de los enemigos y las torretas
+#Carga de estadisticas de los enemigos y las torretas
 enemigos = {
     "Nor": { #Zombie normal
         "vida": 5,
@@ -25,7 +37,7 @@ enemigos = {
     "Len": { #Zombie lento, con mayor vida
         "vida": 25,
         "velocidad": 0.7,
-        "daño": 5,
+        "daño": 3,
         "recompensa": 30,
         "imagen": "assets/imagenes/zombies/zombie_lento.png",
         },
@@ -42,6 +54,13 @@ enemigos = {
         "daño": "Igual a la vida final",
         "recompensa": 100,
         "imagen": "imagen",
+        },
+    "Mar": { #Zombie ligeramente más rapido
+        "vida": 70,
+        "velocidad": 2.1,
+        "daño": 10,
+        "recompensa": 70,
+        "imagen": "la imagen",
         },
     "Base": { #Copia y pega
         "vida": 0,
@@ -63,4 +82,11 @@ torretas = {
         "daño": 0,
         "espera": 0,
         },
+}
+
+#Carga de estadisticas del jugador
+
+jugador = {
+    "vida": 0,
+    "dinero": 0,
 }
