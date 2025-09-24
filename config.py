@@ -1,24 +1,38 @@
 from world import cargar_mapa
 import pygame as pg
 
+#Se carga el reloj
 clock = pg.time.Clock()
-ventana = pg.display.set_mode((700, 700))
+
+#Definir las dimesiones de la pantalla
+ancho_mapa = 720
+alto_mapa = 720
+
+ancho_tienda = 130
+alto_tienda = 130
+
+tamano_celda = 48
+
+#Tamaño de la ventana: 850 x 850
+ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa + alto_tienda)) 
+
+
 world = cargar_mapa()
 
-#Carga de elementos decorativos (titulo y icono del programa):
+#Carga de elementos decorativos (titulo y icono del programa)
 titulo = pg.display.set_caption("Stray Tower Defense")
 
 icono_imagen = pg.image.load("assets\imagenes\icono.png").convert_alpha()
 icono = pg.display.set_icon(icono_imagen)
 
-#Estadisticas de los enemigos y torres:
+#Carga de estadisticas de los enemigos y las torretas
 enemigos = {
     "Nor": { #Zombie normal
         "vida": 5,
         "velocidad": 1.5,
         "daño": 1,
         "recompensa": 5,
-        "imagen": "assets/imagenes/zombies/zombie_normal_nuevo.png",
+        "imagen": "assets/imagenes/zombies/zombie_normal.png",
         },
     "Len": { #Zombie lento, con mayor vida
         "vida": 25,
@@ -55,4 +69,24 @@ enemigos = {
         "recompensa": 0,
         "imagen": "imagen",
         },
+}
+
+torretas = {
+    "Flecha": { #Dispara a los enemigos uno por uno
+        "costo": 15,
+        "daño": 5,
+        "espera": 1.5,
+        },
+    "Base": { #Copia y pega
+        "costo": 0,
+        "daño": 0,
+        "espera": 0,
+        },
+}
+
+#Carga de estadisticas del jugador
+
+jugador = {
+    "vida": 0,
+    "dinero": 0,
 }
