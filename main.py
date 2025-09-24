@@ -24,8 +24,11 @@ while jugando:
             #Al hacer click izquierdo
             if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
                 posicion_mouse = pg.mouse.get_pos() #Se obtiene la posicion del ratón
+                
+                #Si esta dentro del mapa, se crea una torreta
                 if posicion_mouse[0] < 720 and posicion_mouse[1] < 720:
                     crear_torreta(posicion_mouse, grupo_torretas)
+
             #Salir del programa
             if evento.type == pg.QUIT:
                 jugando = False
