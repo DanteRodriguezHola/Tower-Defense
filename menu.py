@@ -25,8 +25,8 @@ class Boton:
         return evento.type == pg.MOUSEBUTTONDOWN and self.hover
 
 # Crear botones una sola vez
-boton_jugar = Boton(50, 50, jugar_img, jugar_hover)
-boton_salir = Boton(100, 150, salir_img, salir_hover)
+boton_jugar = Boton(185, 270, jugar_img, jugar_hover)
+boton_salir = Boton(207, 320, salir_img, salir_hover)
 
 def menu():
     ventana.blit(fondo_menu, (0, 0))
