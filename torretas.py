@@ -14,14 +14,14 @@ class Torreta(pg.sprite.Sprite):
         self.rect.center = (self.x, self.y)
     
 def crear_torreta(posicion_mouse, grupo_torretas):
-    imagen_torreta = pg.image.load("assets/imagenes/torretas/torreta_tanque_chica.png").convert_alpha()
+    imagen_torreta = pg.image.load("assets/imagenes/torretas/torretas_HD/torreta_tanque.png").convert_alpha()
     
     celda_x = posicion_mouse[0] // tamano_celda
     celda_y = posicion_mouse[1] // tamano_celda
-    celda_numero = (celda_y * 30) + celda_x
+    celda_numero = (celda_y * 15) + celda_x
 
     #Se comprueba si donde se va a colocar la torreta esta fuera del sendero.
-    if world.tile_map[celda_numero] == 16: 
+    if world.tile_map[celda_numero] == 7: 
         espacio_libre = True
         #Esto comprueba si donde esta ubicado el mouse ya hay otra torreta.
         for torreta in grupo_torretas:

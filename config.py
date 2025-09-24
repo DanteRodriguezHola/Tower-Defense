@@ -5,15 +5,15 @@ import pygame as pg
 clock = pg.time.Clock()
 
 #Definir las dimesiones de la pantalla
-ancho_mapa = 570
-alto_mapa = 570
+ancho_mapa = 720
+alto_mapa = 720
 
 ancho_tienda = 130
 alto_tienda = 130
 
-tamano_celda = 19
+tamano_celda = 48
 
-#Tamaño de la ventana: 700 x 700
+#Tamaño de la ventana: 850 x 850
 ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa + alto_tienda)) 
 
 
