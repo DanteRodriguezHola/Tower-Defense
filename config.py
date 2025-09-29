@@ -8,13 +8,12 @@ clock = pg.time.Clock()
 ancho_mapa = 720
 alto_mapa = 720
 
-ancho_tienda = 130
-alto_tienda = 130
+ancho_tienda = 260
 
 tamano_celda = 48
 
-#Tamaño de la ventana: 850 x 850
-ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa + alto_tienda)) 
+#Tamaño de la ventana: 850 x 980
+ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa)) 
 
 
 world = cargar_mapa()
