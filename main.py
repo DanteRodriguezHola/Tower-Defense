@@ -20,7 +20,6 @@ while jugando:
             if boton_salir.click(evento):
                 jugando = False
             if boton_jugar.click(evento):
-                print("¡Jugar presionado!")
                 estado = "JUEGO"
 
     # Dibujar según estado
