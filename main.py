@@ -10,7 +10,16 @@ jugando = True
 
 #Carga de los botones
 imagen_boton_tanque = pg.image.load("assets/imagenes/tienda/boton_tanque.png").convert_alpha()
-boton_tanque = Button(imagen_boton_tanque, (c.ancho_mapa + c.ancho_tienda / 2), 180, True)
+boton_tanque = Button(imagen_boton_tanque, (c.ancho_mapa + c.ancho_tienda / 18), 20, True)
+
+imagen_boton_lanzallamas = pg.image.load("assets/imagenes/tienda/boton_lanzallamas.png").convert_alpha()
+boton_lanzallamas = Button(imagen_boton_lanzallamas, (c.ancho_mapa + c.ancho_tienda / 18), 92, True)
+
+imagen_boton_mejorar = pg.image.load("assets/imagenes/tienda/boton_mejorar.png").convert_alpha()
+boton_mejorar = Button(imagen_boton_mejorar, (c.ancho_mapa + c.ancho_tienda / 18), 164, True)
+
+imagen_boton_cancelar = pg.image.load("assets/imagenes/tienda/boton_cancelar.png").convert_alpha()
+boton_cancelar = Button(imagen_boton_cancelar, (c.ancho_mapa + c.ancho_tienda / 18), 236, True)
 
 grupo_torretas = pg.sprite.Group()
 subrondas = procesar_ronda("1")
@@ -28,6 +37,14 @@ while jugando:
         oleada.draw(c.ventana)
         if boton_tanque.draw(c.ventana):
             creando_torretas = True
+
+        if boton_lanzallamas.draw(c.ventana):
+            creando_torretas = True
+
+        boton_mejorar.draw(c.ventana)
+
+        if boton_cancelar.draw(c.ventana):
+            creando_torretas = False
 
         grupo_torretas.draw(c.ventana)
         
@@ -51,3 +68,4 @@ pg.quit()
 
 if __name__ == "__main__":
     pass
+    c.world.draw(c.ventana)
