@@ -1,4 +1,5 @@
 import pygame as pg
+import json
 
 class World():
     def __init__(self, data, map_image):
@@ -19,3 +20,11 @@ class World():
         
     def draw(self, surface):
         surface.blit(self.image, (0, 0))
+
+def cargar_mapa():
+    mapa_imagen = pg.image.load('assets/imagenes/mapa.png').convert_alpha()
+    with open('map.tmj') as file:
+        world_data = json.load(file)
+    world = World(world_data, mapa_imagen)
+    world.process_data()
+    return world
