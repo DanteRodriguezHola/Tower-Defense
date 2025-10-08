@@ -8,7 +8,7 @@ class Torreta(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         #Estadisticas de la torre
         self.range = 120
-        self.delay = 1500
+        self.delay = 500
 
         self.selected = False
         self.last_shot = pg.time.get_ticks()
