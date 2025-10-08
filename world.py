@@ -1,3 +1,5 @@
+import config as c
+
 import pygame as pg
 import json
 
@@ -15,11 +17,13 @@ class World():
                 for obj in layer["objects"]:
                     waypoint_data = obj["polyline"]
                     self.process_waypoints(waypoint_data)
+    
     def process_waypoints(self, data):
         for punto in data:
             temp_x = punto.get('x')
             temp_y = punto.get('y')
-            self.waypoints.append((temp_x, temp_y))  
+            self.waypoints.append((temp_x, temp_y))
+    
     def draw(self, surface):
         surface.blit(self.image, (0, 0))
 
@@ -29,4 +33,5 @@ def cargar_mapa():
         world_data = json.load(file)
     world = World(world_data, mapa_imagen)
     world.process_data()
+    
     return world

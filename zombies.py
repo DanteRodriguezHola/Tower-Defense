@@ -16,9 +16,13 @@ class Enemy(pg.sprite.Sprite):
         self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
+        
     def update(self):
         self.move()
         self.rotate()
+
     def move(self):
         if self.target_waypoint < len(self.waypoints):
             self.target = Vector2(self.waypoints[self.target_waypoint])
