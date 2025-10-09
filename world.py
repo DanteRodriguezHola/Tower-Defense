@@ -1,5 +1,4 @@
-import config as c
-
+import const as ct
 import pygame as pg
 import json
 
@@ -9,6 +8,8 @@ class World():
         self.waypoints = []
         self.level_data = data
         self.image = map_image
+        self.health = ct.Vida
+        self.money  = ct.Dinero
     def process_data(self):
         for layer in self.level_data["layers"]:
             if layer["name"] == "tilemap":

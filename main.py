@@ -1,9 +1,12 @@
 import config as c
+import const
 from rondas import procesar_ronda
 from torretas import crear_torreta, seleccionar_torreta
 from tienda import cargar_tienda
 from botones import Button
 import pygame as pg
+pg.init()
+pg.font.init()
 
 # Carga de los botones
 imagen_boton_tanque = pg.image.load("assets/imagenes/tienda/boton_tanque.png").convert_alpha()
@@ -22,6 +25,12 @@ jugando = True
 creando_torretas = False
 torreta_seleccionada = None
 
+text_font = pg.font.SysFont("Consolas", 40, bold =  True)
+large_font = pg.font.SysFont("Consolas", 52)
+def draw_text(text, font, text_color, x, y):
+    img = font.render(text, True, text_color)
+    c.ventana.blit(img, (x, y))
+
 while jugando:
     c.clock.tick(60)
     c.world.draw(c.ventana)
@@ -38,6 +47,9 @@ while jugando:
     if boton_tanque.draw(c.ventana):
         creando_torretas = True
 
+    draw_text(str(c.world.health), text_font, "grey100", 780, 605)
+    draw_text(str(c.world.money), text_font, "grey100", 780, 668)
+
     grupo_torretas.draw(c.ventana)
     for torreta in grupo_torretas:
         torreta.draw(c.ventana)
@@ -51,7 +63,9 @@ while jugando:
             if creando_torretas:
                 #Si esta dentro del mapa, se crea una torreta
                 if posicion_mouse[0] < c.ancho_mapa and posicion_mouse[1] < c.alto_mapa:
-                    crear_torreta(posicion_mouse, grupo_torretas)
+                    if const.costo_torreta < c.world.money and crear_torreta(posicion_mouse, grupo_torretas):
+                        crear_torreta(posicion_mouse, grupo_torretas)
+                        c.world.money -= const.costo_torreta
                 else:
                     torreta_seleccionada = seleccionar_torreta(posicion_mouse, grupo_torretas)
         #Salir del programa

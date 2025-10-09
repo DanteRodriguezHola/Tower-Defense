@@ -83,6 +83,9 @@ def crear_torreta(posicion_mouse, grupo_torretas):
         if espacio_libre:
             torreta = Torreta(imagen_torreta, celda_x, celda_y)   # 30
             grupo_torretas.add(torreta)
+            return True
+        else:
+            return False
 
 def seleccionar_torreta(posicion_mouse, grupo_torretas):
     celda_x = posicion_mouse[0] // tamano_celda
