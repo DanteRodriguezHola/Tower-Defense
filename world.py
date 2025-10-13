@@ -1,5 +1,4 @@
 import config as c
-import enemy_list as e
 
 import pygame as pg
 import json
@@ -33,12 +32,7 @@ class World():
             temp_x = punto.get('x')
             temp_y = punto.get('y')
             self.waypoints.append((temp_x, temp_y))
-
-    def process_enemies(self):
-        enemies = e.enemy_spawn_data[self.level - 1]
     
-
-
 def cargar_mapa():
     mapa_imagen = pg.image.load('assets/imagenes/mapa.png').convert_alpha()
     with open('map.tmj') as file:

@@ -1,18 +1,20 @@
-from config import ventana
+import config as c
+from estadisticas import estadisticas_enemigos as estadisticas
 from pygame.math import Vector2
 import math
 
 import pygame as pg
 
 class Enemy(pg.sprite.Sprite):
-    def __init__(self, waypoints, vida, velocidad, daño, recompensa, imagen): # Añadir: vida, velocidad, daño y recompensa.
+    def __init__(self, enemy_type, waypoints): # Añadir: vida, velocidad, daño y recompensa.
         pg.sprite.Sprite.__init__(self)
         self.waypoints = waypoints
         self.pos = Vector2(self.waypoints[0])
         self.target_waypoint = 1
-        self.speed = velocidad
+        self.health = estadisticas.get(enemy_type)["vida"]
+        self.speed = estadisticas.get(enemy_type)["velocidad"]
         self.angle = 0
-        self.original_image = imagen
+        self.original_image = estadisticas.get(enemy_type)["imagen"]
         self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos

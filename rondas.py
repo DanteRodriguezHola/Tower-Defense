@@ -1,41 +1,29 @@
-from config import ventana, world
-
-from estadisticas import estadisticas_enemigos
-from zombies import Enemy
-
-import pygame as pg
 import os
 
-def obtener_ruta_ronda(numero_ronda):
-    nombre_archivo = "ronda_" + numero_ronda + ".txt"
-    ruta_carpeta = os.path.dirname(__file__)
-    ruta_rondas = os.path.join(ruta_carpeta, "rondas")
-    ruta_archivo = os.path.join(ruta_rondas, nombre_archivo)
-    return ruta_archivo
+def obtener_ruta_archivo(numero_ronda):
+    nombre_archivo_ronda = "ronda_" + numero_ronda + ".txt"
+    ruta_carpeta_actual = os.path.dirname(__file__)
+    ruta_carpeta_rondas = os.path.join(ruta_carpeta_actual, "rondas")
+    ruta_archivo_ronda = os.path.join(ruta_carpeta_rondas, nombre_archivo_ronda)
+    return ruta_archivo_ronda
 
-def procesar_ronda(numero_ronda):
-    subrondas = []
-    ruta_archivo = obtener_ruta_ronda(numero_ronda)
-    with open(ruta_archivo, "r") as ronda:
-        for subronda in ronda:
-            enemigos = procesar_subronda(subronda)
-            subrondas.append(enemigos)
-    return subrondas
+def procesar_rondas():
+    diccionarios_enemigos = []
+    ruta_archivo_ronda = obtener_ruta_archivo("2")
+    with open(ruta_archivo_ronda, "r") as ronda:
+        for oleada in ronda:
+            diccionario_enemigos = crear_diccionarios_enemigos(oleada)
+            diccionarios_enemigos.append(diccionario_enemigos)
+    return diccionarios_enemigos
 
-def procesar_subronda(subronda):   
-    enemigos = []
-    oleada = subronda.split()
-    for tipo_de_enemigo in oleada:
-        enemigo = obtener_datos_enemigos(tipo_de_enemigo)
-        enemigos.append(enemigo)
-    return enemigos
+def crear_diccionarios_enemigos(oleada):
+    diccionario_enemigos = {}
+    oleada = oleada.split()
+    for enemigo in oleada:
+        enemigo = enemigo.split("_")
+        tipo_enemigo = enemigo[0]
+        cantidad_enemigo = enemigo[1]
+        diccionario_enemigos.update({tipo_enemigo: cantidad_enemigo})
+    return diccionario_enemigos
 
-def obtener_datos_enemigos(tipo):
-    datos = estadisticas_enemigos[tipo]
-    vida = datos["vida"]
-    velocidad = datos["velocidad"]
-    daño = datos["dano"]
-    recompensa = datos["recompensa"]
-    imagen = pg.image.load(datos["imagen"]).convert_alpha()
-    
-    return Enemy(world.waypoints, vida, velocidad, daño, recompensa, imagen)
+enemy_spawn_data = procesar_rondas()

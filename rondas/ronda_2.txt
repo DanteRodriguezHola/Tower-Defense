@@ -1,5 +1,5 @@
-Nor Nor Len
-Nor Nor Len Len
-Rap Nor Nor
-Rap Rap Nor Nor
-Rap Rap Rap Nor Nor Nor Jf1
+Nor_2 Len_1
+Nor_2 Len_2
+Rap_1 Nor_1
+Rap_2 Nor_2
+Rap_3 Nor_3
