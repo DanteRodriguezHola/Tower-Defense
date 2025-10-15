@@ -1,14 +1,14 @@
 estadisticas_enemigos = {
     "Nor": { #Zombie normal
         "vida": 5,
-        "velocidad": 1.5,
+        "velocidad": 10,
         "dano": 1,
         "recompensa": 5,
         "imagen": "assets/imagenes/zombies/zombie_normal.png",
         },
     "Len": { #Zombie lento, con mayor vida
         "vida": 25,
-        "velocidad": 0.7,
+        "velocidad": 5,
         "dano": 3,
         "recompensa": 30,
         "imagen": "assets/imagenes/zombies/zombie_lento.png",

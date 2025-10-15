@@ -9,7 +9,7 @@ def obtener_ruta_archivo(numero_ronda):
 
 def procesar_rondas():
     diccionarios_enemigos = []
-    ruta_archivo_ronda = obtener_ruta_archivo("2")
+    ruta_archivo_ronda = obtener_ruta_archivo("1")
     with open(ruta_archivo_ronda, "r") as ronda:
         for oleada in ronda:
             diccionario_enemigos = crear_diccionarios_enemigos(oleada)
@@ -22,7 +22,7 @@ def crear_diccionarios_enemigos(oleada):
     for enemigo in oleada:
         enemigo = enemigo.split("_")
         tipo_enemigo = enemigo[0]
-        cantidad_enemigo = enemigo[1]
+        cantidad_enemigo = int(enemigo[1])
         diccionario_enemigos.update({tipo_enemigo: cantidad_enemigo})
     return diccionario_enemigos
 

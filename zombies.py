@@ -14,10 +14,11 @@ class Enemy(pg.sprite.Sprite):
         self.health = estadisticas.get(enemy_type)["vida"]
         self.speed = estadisticas.get(enemy_type)["velocidad"]
         self.angle = 0
-        self.original_image = estadisticas.get(enemy_type)["imagen"]
+        self.original_image = pg.image.load(estadisticas.get(enemy_type)["imagen"]).convert_alpha()
         self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+    
     def draw(self, surface):
         surface.blit(self.image, self.rect)
         
