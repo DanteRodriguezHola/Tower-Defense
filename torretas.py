@@ -88,3 +88,7 @@ def seleccionar_torreta(posicion_mouse, grupo_torretas):
     for torreta in grupo_torretas:
         if (celda_x,  celda_y) == (torreta.tile_x, torreta.tile_y):
             return torreta
+        
+def limpiar_seleccion(grupo_torretas):
+    for torreta in grupo_torretas:
+        torreta.selected = False

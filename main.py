@@ -1,7 +1,7 @@
 import config as c
 
 from zombies import Enemy
-from torretas import crear_torreta, seleccionar_torreta
+from torretas import crear_torreta, seleccionar_torreta, limpiar_seleccion
 from tienda import cargar_tienda
 import botones as b
 import pygame as pg
@@ -56,6 +56,9 @@ while estado == "jugando":
             posicion_mouse = pg.mouse.get_pos() #Se obtiene la posicion del ratón
             #Si esta dentro del mapa, se crea una torreta
             if posicion_mouse[0] < c.ancho_mapa and posicion_mouse[1] < c.alto_mapa:
+                torreta_seleccionada = None
+
+                limpiar_seleccion(grupo_torretas)
                 if creando_torretas:
                     crear_torreta(posicion_mouse, grupo_torretas)
                 else:
