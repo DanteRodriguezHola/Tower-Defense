@@ -1,6 +1,7 @@
 import config as c
 from rondas import enemy_spawn_data
 
+import random
 import pygame as pg
 import json
 
@@ -40,6 +41,7 @@ class World():
             enemies_to_spawn = enemies[enemy_type]
             for enemy in range(enemies_to_spawn):
                 self.enemy_list.append(enemy_type)
+        random.shuffle(self.enemy_list)
     
 def cargar_mapa():
     mapa_imagen = pg.image.load('assets/imagenes/mapa.png').convert_alpha()
