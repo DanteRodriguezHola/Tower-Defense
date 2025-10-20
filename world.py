@@ -1,23 +1,30 @@
+import const as ct
 import pygame as pg
 import json
 
 class World():
     def __init__(self, data, map_image):
+        self.tile_map = []
         self.waypoints = []
         self.level_data = data
         self.image = map_image
+        self.health = ct.Vida
+        self.money  = ct.Dinero
     def process_data(self):
         for layer in self.level_data["layers"]:
-            if layer["name"] == "waypoints":
+            if layer["name"] == "tilemap":
+                self.tile_map = layer["data"]
+            elif layer["name"] == "waypoints":
                 for obj in layer["objects"]:
                     waypoint_data = obj["polyline"]
                     self.process_waypoints(waypoint_data)
+    
     def process_waypoints(self, data):
         for punto in data:
             temp_x = punto.get('x')
             temp_y = punto.get('y')
             self.waypoints.append((temp_x, temp_y))
-        
+    
     def draw(self, surface):
         surface.blit(self.image, (0, 0))
 
@@ -27,4 +34,5 @@ def cargar_mapa():
         world_data = json.load(file)
     world = World(world_data, mapa_imagen)
     world.process_data()
+    
     return world
