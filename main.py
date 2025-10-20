@@ -25,22 +25,34 @@ while estado == "jugando":
     for enemigo in grupo_enemigos:
         enemigo.update()
         enemigo.draw(c.ventana)
-
-    grupo_torretas.update(grupo_enemigos)
+    
+    for torreta in grupo_torretas:
+        torreta.update(grupo_enemigos)
+        torreta.draw(c.ventana)
 
     if torreta_seleccionada:
         torreta_seleccionada.selected = True
-    #Dibujo de los grupos
-    for torreta in grupo_torretas:
-        torreta.draw(c.ventana)
+    
+
+    cargar_tienda()
 
     if b.boton_tanque.draw(c.ventana):
+        tipo_torreta = "Tanque"
+        creando_torretas = True
+    
+    if b.boton_lanzallamas.draw(c.ventana):
+        tipo_torreta = "Lanzallamas"
         creando_torretas = True
 
     if creando_torretas:
-        if b.boton_reembolso.draw(c.ventana):
+        if b.boton_cancelar.draw(c.ventana):
             creando_torretas = False
 
+    if torreta_seleccionada != None:
+        b.boton_mejora.draw(c.ventana)
+        if b.boton_reembolso.draw(c.ventana):
+            torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
+    
     #Aparición de enemigos
     if pg.time.get_ticks() - last_enemy_spawn > c.cooldown:
         if c.world.spawned_enemies < len(c.world.enemy_list):
@@ -60,13 +72,12 @@ while estado == "jugando":
 
                 limpiar_seleccion(grupo_torretas)
                 if creando_torretas:
-                    crear_torreta(posicion_mouse, grupo_torretas)
+                    crear_torreta(tipo_torreta, posicion_mouse, grupo_torretas)
                 else:
                     torreta_seleccionada = seleccionar_torreta(posicion_mouse, grupo_torretas)
-            
         #Salir del programa
         if evento.type == pg.QUIT:
-            jugando = False
+            estado == "menu"
     pg.display.flip()
 pg.quit()
 

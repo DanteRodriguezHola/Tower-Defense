@@ -27,6 +27,7 @@ cooldown = 500 #milisegundo
 
 #Posiciones de los botones de la tienda
 
-pos_1 =10
-
+pos_1 = 10
+pos_2 = 72
+pos_5 = 472
 pos_6 = 534
