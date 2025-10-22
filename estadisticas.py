@@ -47,22 +47,22 @@ estadisticas_torretas = {
     "Tanque":
     [
         {
-            "dano": 20,
-            "rango": 220,
+            "dano": 2,
+            "rango": 130,
             "espera": 0,
             "costo": 150,
             "imagen": "assets/imagenes/torretas/torreta_tanque_I.png",
         },
         {
-            "dano": 50,
-            "rango": 240,
+            "dano": 5,
+            "rango": 140,
             "espera": 0,
             "costo": 1250,
             "imagen": "assets/imagenes/torretas/torreta_tanque_II.png",
         },
         {
-            "dano": 150,
-            "rango": 260,
+            "dano": 15,
+            "rango": 150,
             "espera": 0,
             "costo": 5000,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
@@ -72,21 +72,21 @@ estadisticas_torretas = {
     [
         {
             "dano": 0,
-            "rango": 120,
+            "rango": 115,
             "espera": 0,
             "costo": 0,
             "imagen": "assets/imagenes/torretas/torreta_lanzallamas_I.png",
         },
         {
             "dano": 0,
-            "rango": 350,
+            "rango": 130,
             "espera": 0,
             "costo": 0,
             "imagen": "assets/imagenes/torretas/torreta_bomba_II.png",
         },
         {
             "dano": 0,
-            "rango": 400,
+            "rango": 170,
             "espera": 0,
             "costo": 0,
             "imagen": "assets/imagenes/torretas/torreta_bomba_III.png",

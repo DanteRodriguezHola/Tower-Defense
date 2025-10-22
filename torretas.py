@@ -7,10 +7,13 @@ import pygame as pg
 class Torreta(pg.sprite.Sprite):
     def __init__(self, tipo_torreta, nivel_torreta, celda_x, celda_y):
         pg.sprite.Sprite.__init__(self)
+        self.type = tipo_torreta
+        self.upgrade_level = nivel_torreta
 
-        estadisticas_torretas = estadisticas[tipo_torreta][nivel_torreta - 1]
+        estadisticas_torreta = estadisticas[self.type][self.upgrade_level - 1]
         #Estadisticas de la torre
-        self.range = estadisticas_torretas["rango"]
+
+        self.range = estadisticas_torreta["rango"]
         self.delay = 10
         self.selected = False
 
@@ -25,7 +28,7 @@ class Torreta(pg.sprite.Sprite):
         self.y = (self.tile_y + 0.5) * c.tamano_celda
         
         #Se carga la imagen de la torreta
-        self.original_image = pg.image.load(estadisticas_torretas["imagen"]).convert_alpha()
+        self.original_image = pg.image.load(estadisticas_torreta["imagen"]).convert_alpha()
         self.angle = 0
         self.image = pg.transform.rotate(self.original_image, self.angle)
         #Se obtiene la hitbox de la torreta
@@ -52,6 +55,30 @@ class Torreta(pg.sprite.Sprite):
     def update(self, grupo_enemigos):
         if pg.time.get_ticks() - self.last_shot > self.delay:
             self.elegir_objetivo(grupo_enemigos)
+
+    def mejorar_torreta(self):
+        self.upgrade_level += 1
+
+        estadisticas_torreta = estadisticas[self.type][self.upgrade_level - 1]
+
+        self.range = estadisticas_torreta["rango"]
+        
+                #Se carga la imagen de la torreta
+        self.original_image = pg.image.load(estadisticas_torreta["imagen"]).convert_alpha()
+        self.angle = 0
+        self.image = pg.transform.rotate(self.original_image, self.angle)
+        #Se obtiene la hitbox de la torreta
+        self.rect = self.image.get_rect() 
+        self.rect.center = (self.x, self.y)
+
+        self.range_image = pg.Surface((self.range * 2, self.range * 2))
+        self.range_image.fill((0, 0, 0))
+        self.range_image.set_colorkey((0, 0, 0))
+        pg.draw.circle(self.range_image, "grey100", (self.range, self.range), self.range)
+
+        self.range_image.set_alpha(100)
+        self.range_rect = self.range_image.get_rect()
+        self.range_rect.center = self.rect.center
 
     def elegir_objetivo(self, grupo_enemigos):
         distancia_x = 0

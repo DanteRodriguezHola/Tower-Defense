@@ -1,13 +1,13 @@
 import config as c
 import const
 
-from rondas import procesar_ronda
 from zombies import Enemy
 from torretas import crear_torreta, seleccionar_torreta, limpiar_seleccion
 from tienda import cargar_tienda
 
 import botones as b
 import pygame as pg
+
 pg.init()
 pg.font.init()
 
@@ -21,7 +21,7 @@ last_enemy_spawn = pg.time.get_ticks()
 creando_torretas = False
 torreta_seleccionada = None
 
-nivel_torreta = 3
+nivel_torreta = 1
 
 while estado == "jugando":
     c.clock.tick(60) 
@@ -56,10 +56,14 @@ while estado == "jugando":
             creando_torretas = False
 
     if torreta_seleccionada != None:
-        b.boton_mejora.draw(c.ventana)
+        if torreta_seleccionada.upgrade_level < 3:
+            if b.boton_mejora.draw(c.ventana):
+                torreta_seleccionada.mejorar_torreta()
+        
         if b.boton_reembolso.draw(c.ventana):
             torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
-    
+
+
     #Aparición de enemigos
     if pg.time.get_ticks() - last_enemy_spawn > c.cooldown:
         if c.world.spawned_enemies < len(c.world.enemy_list):

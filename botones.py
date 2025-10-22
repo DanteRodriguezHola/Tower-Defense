@@ -32,16 +32,21 @@ class Button(pg.sprite.Sprite):
 
 #Carga de imagenes y creación de los botones
 imagen_boton_tanque = pg.image.load("assets/imagenes/tienda/boton_tanque.png").convert_alpha()
-boton_tanque = Button(imagen_boton_tanque, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_1, True)
+imagen_boton_tanque_hover = pg.image.load("assets/imagenes/tienda/boton_tanque_hover.png").convert_alpha()
+boton_tanque = Button(imagen_boton_tanque, imagen_boton_tanque_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_1, True)
 
 imagen_boton_lanzallamas = pg.image.load("assets/imagenes/tienda/boton_lanzallamas.png").convert_alpha()
-boton_lanzallamas = Button(imagen_boton_lanzallamas, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_2, True)
+imagen_boton_lanzallamas_hover = pg.image.load("assets/imagenes/tienda/boton_lanzallamas_hover.png").convert_alpha()
+boton_lanzallamas = Button(imagen_boton_lanzallamas, imagen_boton_lanzallamas_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_2, True)
 
 imagen_boton_cancelar = pg.image.load("assets/imagenes/tienda/boton_cancelar.png").convert_alpha()
-boton_cancelar = Button(imagen_boton_cancelar, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
+imagen_boton_cancelar_hover = pg.image.load("assets/imagenes/tienda/boton_cancelar_hover.png").convert_alpha()
+boton_cancelar = Button(imagen_boton_cancelar, imagen_boton_cancelar_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
 
 imagen_boton_mejora = pg.image.load("assets/imagenes/tienda/boton_mejora.png").convert_alpha()
-boton_mejora = Button(imagen_boton_mejora, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_5, True)
+imagen_boton_mejora_hover = pg.image.load("assets/imagenes/tienda/boton_mejora_hover.png").convert_alpha()
+boton_mejora = Button(imagen_boton_mejora, imagen_boton_mejora_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_5, True)
 
 imagen_boton_reembolso = pg.image.load("assets/imagenes/tienda/boton_reembolso.png").convert_alpha()
-boton_reembolso = Button(imagen_boton_reembolso, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
+imagen_boton_reembolso_hover = pg.image.load("assets/imagenes/tienda/boton_reembolso_hover.png").convert_alpha()
+boton_reembolso = Button(imagen_boton_reembolso, imagen_boton_reembolso_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
