@@ -16,6 +16,8 @@ last_enemy_spawn = pg.time.get_ticks()
 creando_torretas = False
 torreta_seleccionada = None
 
+nivel_torreta = 3
+
 while estado == "jugando":
     c.clock.tick(60) 
     c.world.draw(c.ventana)
@@ -72,7 +74,7 @@ while estado == "jugando":
 
                 limpiar_seleccion(grupo_torretas)
                 if creando_torretas:
-                    crear_torreta(tipo_torreta, posicion_mouse, grupo_torretas)
+                    crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas)
                 else:
                     torreta_seleccionada = seleccionar_torreta(posicion_mouse, grupo_torretas)
         #Salir del programa

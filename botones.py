@@ -26,6 +26,7 @@ class Button(pg.sprite.Sprite):
 
         return accion
 
+#Carga de imagenes y creación de los botones
 imagen_boton_tanque = pg.image.load("assets/imagenes/tienda/boton_tanque.png").convert_alpha()
 boton_tanque = Button(imagen_boton_tanque, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_1, True)
 
