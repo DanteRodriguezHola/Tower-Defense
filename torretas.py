@@ -18,6 +18,13 @@ class Torreta(pg.sprite.Sprite):
         self.selected = False
 
         self.last_shot = pg.time.get_ticks()
+        
+        if tipo_torreta == "Tanque":
+            self.precio = 100
+            self.reembolso = 75
+        elif tipo_torreta == "Lanzallamas":
+            self.precio = 150
+            self.reembolso = 112
 
         #Posicion original
         self.tile_x = celda_x
@@ -93,6 +100,9 @@ class Torreta(pg.sprite.Sprite):
             if distancia < self.range:
                 self.target = enemigo
                 self.angle = math.degrees(math.atan2(-distancia_y, distancia_x))
+                self.image = pg.transform.rotate(self.original_image, self.angle)
+                self.rect = self.image.get_rect(center=(self.x, self.y))
+
 
 def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
     imagen_torreta = pg.image.load("assets/imagenes/torretas/torreta_tanque_I.png").convert_alpha()
@@ -110,9 +120,10 @@ def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
                 espacio_libre = False
         #Se crea la torreta.
         if espacio_libre:
-            torreta = Torreta(tipo_torreta, nivel_torreta, celda_x, celda_y)   # 30
-            grupo_torretas.add(torreta)
-            return True
+            if c.money >= torreta.precio:
+                grupo_torretas.add(torreta)
+                c.money -= torreta.prec
+                return True
         else:
             return False
 
