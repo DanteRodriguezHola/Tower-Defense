@@ -80,6 +80,3 @@ while estado == "jugando":
             estado == "menu"
     pg.display.flip()
 pg.quit()
-
-if __name__ == "__main__":
-    pass
