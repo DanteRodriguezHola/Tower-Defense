@@ -61,6 +61,7 @@ while jugando:
         b.boton_mejora.draw(c.ventana)
         if b.boton_reembolso.draw(c.ventana):
             torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
+            c.money += torreta.reembolso
     
     #Aparición de enemigos
     if pg.time.get_ticks() - last_enemy_spawn > c.cooldown:
