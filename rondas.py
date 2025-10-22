@@ -1,4 +1,6 @@
-from config import ventana, world, enemigos
+from config import ventana, world
+
+from estadisticas import estadisticas_enemigos
 from zombies import Enemy
 
 import pygame as pg
@@ -29,10 +31,10 @@ def procesar_subronda(subronda):
     return enemigos
 
 def obtener_datos_enemigos(tipo):
-    datos = enemigos[tipo]
+    datos = estadisticas_enemigos[tipo]
     vida = datos["vida"]
     velocidad = datos["velocidad"]
-    daño = datos["daño"]
+    daño = datos["dano"]
     recompensa = datos["recompensa"]
     imagen = pg.image.load(datos["imagen"]).convert_alpha()
     
