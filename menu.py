@@ -1,6 +1,7 @@
 import pygame as pg
 from config import ventana
 
+huergo = pg.image.load('assets/imagenes/huergo.png').convert_alpha()
 fondo_menu = pg.image.load('assets/imagenes/menu/menu.png').convert_alpha()
 jugar_img = pg.image.load('assets/imagenes/menu/boton_jugar.png').convert_alpha()
 salir_img = pg.image.load('assets/imagenes/menu/boton_salir.png').convert_alpha()
@@ -37,5 +38,7 @@ def menu():
 
     boton_jugar.dibujar(ventana)
     boton_salir.dibujar(ventana)
+
+    ventana.blit(huergo, (0, 0))
 
     return boton_jugar, boton_salir
