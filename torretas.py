@@ -73,6 +73,9 @@ class Torreta(pg.sprite.Sprite):
             if distancia < self.range:
                 self.target = enemigo
                 self.angle = math.degrees(math.atan2(-distancia_y, distancia_x))
+                self.image = pg.transform.rotate(self.original_image, self.angle)
+                self.rect = self.image.get_rect(center=(self.x, self.y))
+
 
 def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
     imagen_torreta = pg.image.load("assets/imagenes/torretas/torreta_tanque_I.png").convert_alpha()
