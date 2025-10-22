@@ -16,8 +16,12 @@ class Torreta(pg.sprite.Sprite):
 
         self.last_shot = pg.time.get_ticks()
         
-        self.precio = 100
-        self.reembolso = 75
+        if tipo_torreta == "Tanque":
+            self.precio = 100
+            self.reembolso = 75
+        elif tipo_torreta == "Lanzallamas":
+            self.precio = 150
+            self.reembolso = 112
 
         #Posicion original
         self.tile_x = celda_x
