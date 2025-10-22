@@ -15,6 +15,8 @@ class Torreta(pg.sprite.Sprite):
         self.selected = False
 
         self.last_shot = pg.time.get_ticks()
+        
+        self.precio = 100
 
         #Posicion original
         self.tile_x = celda_x
@@ -84,7 +86,9 @@ def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
         #Se crea la torreta.
         if espacio_libre:
             torreta = Torreta(tipo_torreta, nivel_torreta, celda_x, celda_y)   # 30
-            grupo_torretas.add(torreta)
+            if c.money >= torreta.precio:
+                grupo_torretas.add(torreta)
+                c.money -= torreta.precio
 
 def seleccionar_torreta(posicion_mouse, grupo_torretas):
     celda_x = posicion_mouse[0] // c.tamano_celda
