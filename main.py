@@ -1,24 +1,31 @@
 import config as c
-
 from zombies import Enemy
 from torretas import crear_torreta, seleccionar_torreta, limpiar_seleccion
 from tienda import cargar_tienda
 import botones as b
 import pygame as pg
+pg.init()
+pg.font.init()
 
 grupo_torretas = pg.sprite.Group()
 grupo_enemigos = pg.sprite.Group()
 
 #Variables que controlan el juego:
-estado = "jugando"
+jugando = True
 
 last_enemy_spawn = pg.time.get_ticks()
 creando_torretas = False
 torreta_seleccionada = None
 
-nivel_torreta = 3
+text_font = pg.font.SysFont("Consolas", 40, bold =  True) 
+large_font = pg.font.SysFont("Consolas", 52) 
+def draw_text(text, font, text_color, x, y):
+    img = font.render(text, True, text_color)
+    c.ventana.blit(img, (x, y))
 
-while estado == "jugando":
+nivel_torreta = 1
+
+while jugando:
     c.clock.tick(60) 
     c.world.draw(c.ventana)
     cargar_tienda()
@@ -63,6 +70,9 @@ while estado == "jugando":
             grupo_enemigos.add(enemigo)
             c.world.spawned_enemies += 1
             last_enemy_spawn = pg.time.get_ticks()
+    
+    draw_text(str(c.health), text_font, "grey100", 780, 605)
+    draw_text(str(c.money), text_font, "grey100", 780, 668)
 
     for evento in pg.event.get():
         #Al hacer click izquierdo
@@ -79,6 +89,6 @@ while estado == "jugando":
                     torreta_seleccionada = seleccionar_torreta(posicion_mouse, grupo_torretas)
         #Salir del programa
         if evento.type == pg.QUIT:
-            estado == "menu"
+            jugando = False
     pg.display.flip()
 pg.quit()
