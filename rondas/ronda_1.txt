@@ -1,4 +1,5 @@
-Nor
-Len
-Rap
-Nor Len Rap
+Nor_2
+Nor_5
+Nor_5 Len_2
+Nor_5 Len_5
+Nor_10 Len_8

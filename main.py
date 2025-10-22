@@ -1,104 +1,89 @@
 import config as c
 import const
+
 from rondas import procesar_ronda
-from torretas import crear_torreta, seleccionar_torreta
+from zombies import Enemy
+from torretas import crear_torreta, seleccionar_torreta, limpiar_seleccion
 from tienda import cargar_tienda
-from botones import Button
+
+import botones as b
 import pygame as pg
 pg.init()
 pg.font.init()
 
-jugando = True
-estado = "MENU"   # puede ser "MENU" o "JUEGO"
-
 grupo_torretas = pg.sprite.Group()
-subrondas = procesar_ronda("1")
-
 grupo_enemigos = pg.sprite.Group()
-for subronda in subrondas:
-    grupo_enemigos.add(subronda)
 
-# Variables que controlan el juego:
-jugando = True
+#Variables que controlan el juego:
+estado = "jugando"
+
+last_enemy_spawn = pg.time.get_ticks()
 creando_torretas = False
 torreta_seleccionada = None
 
-text_font = pg.font.SysFont("Consolas", 40, bold =  True)
-large_font = pg.font.SysFont("Consolas", 52)
-def draw_text(text, font, text_color, x, y):
-    img = font.render(text, True, text_color)
-    c.ventana.blit(img, (x, y))
+nivel_torreta = 3
 
-while jugando:
-    c.clock.tick(60)
+while estado == "jugando":
+    c.clock.tick(60) 
     c.world.draw(c.ventana)
     cargar_tienda()
 
-    # Actualización y dibujo de enemigos
-    grupo_enemigos.update()
+    #Actualizacion de los grupos
     for enemigo in grupo_enemigos:
+        enemigo.update()
         enemigo.draw(c.ventana)
+    
+    for torreta in grupo_torretas:
+        torreta.update(grupo_enemigos)
+        torreta.draw(c.ventana)
 
-    # Actualización y dibujo de torretas
-    grupo_torretas.update(grupo_enemigos)
+    if torreta_seleccionada:
+        torreta_seleccionada.selected = True
+    
 
-    if boton_tanque.draw(c.ventana):
+    cargar_tienda()
+
+    if b.boton_tanque.draw(c.ventana):
+        tipo_torreta = "Tanque"
+        creando_torretas = True
+    
+    if b.boton_lanzallamas.draw(c.ventana):
+        tipo_torreta = "Lanzallamas"
         creando_torretas = True
 
-    draw_text(str(c.world.health), text_font, "grey100", 780, 605)
-    draw_text(str(c.world.money), text_font, "grey100", 780, 668)
+    if creando_torretas:
+        if b.boton_cancelar.draw(c.ventana):
+            creando_torretas = False
 
-    grupo_torretas.draw(c.ventana)
-    for torreta in grupo_torretas:
-        torreta.draw(c.ventana)
+    if torreta_seleccionada != None:
+        b.boton_mejora.draw(c.ventana)
+        if b.boton_reembolso.draw(c.ventana):
+            torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
+    
+    #Aparición de enemigos
+    if pg.time.get_ticks() - last_enemy_spawn > c.cooldown:
+        if c.world.spawned_enemies < len(c.world.enemy_list):
+            tipo_enemigo = c.world.enemy_list[c.world.spawned_enemies]
+            enemigo = Enemy(tipo_enemigo, c.world.waypoints)
+            grupo_enemigos.add(enemigo)
+            c.world.spawned_enemies += 1
+            last_enemy_spawn = pg.time.get_ticks()
 
     for evento in pg.event.get():
         #Al hacer click izquierdo
         if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
             posicion_mouse = pg.mouse.get_pos() #Se obtiene la posicion del ratón
-            
-            #Si se a pulsado el boton de la torreta
-            if creando_torretas:
-                #Si esta dentro del mapa, se crea una torreta
-                if posicion_mouse[0] < c.ancho_mapa and posicion_mouse[1] < c.alto_mapa:
-                    if const.costo_torreta < c.world.money and crear_torreta(posicion_mouse, grupo_torretas):
-                        crear_torreta(posicion_mouse, grupo_torretas)
-                        c.world.money -= const.costo_torreta
+            #Si esta dentro del mapa, se crea una torreta
+            if posicion_mouse[0] < c.ancho_mapa and posicion_mouse[1] < c.alto_mapa:
+                torreta_seleccionada = None
+
+                limpiar_seleccion(grupo_torretas)
+                if creando_torretas:
+                    crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas)
                 else:
                     torreta_seleccionada = seleccionar_torreta(posicion_mouse, grupo_torretas)
         #Salir del programa
         if evento.type == pg.QUIT:
-            jugando = False
-
+            estado == "menu"
     pg.display.flip()
-
-pg.quit()
-
-while jugando:
-    clock.tick(60)
-    ventana.fill((0, 0, 0))
-
-    for evento in pg.event.get():
-        if evento.type == pg.QUIT:
-            jugando = False
-
-        if estado == "MENU":
-            if boton_salir.click(evento):
-                jugando = False
-            if boton_jugar.click(evento):
-                estado = "JUEGO"
-
-    # Dibujar según estado
-    if estado == "MENU":
-        menu()
-    elif estado == "JUEGO":
-        world.draw(ventana)
-        for subronda in subrondas:
-            oleada = pg.sprite.Group()
-            oleada.add(subronda)
-            oleada.update()
-            oleada.draw(ventana)
-
-    pg.display.flip()
-
 pg.quit()
