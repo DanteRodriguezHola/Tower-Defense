@@ -51,7 +51,6 @@ estadisticas_torretas = {
             "rango": 130,
             "espera": 0,
             "precio": 150,
-            "reembolso": 50,
             "imagen": "assets/imagenes/torretas/torreta_tanque_I.png",
         },
         {
@@ -59,7 +58,6 @@ estadisticas_torretas = {
             "rango": 140,
             "espera": 0,
             "precio": 600,
-            "reembolso": 200,
             "imagen": "assets/imagenes/torretas/torreta_tanque_II.png",
         },
         {
@@ -67,7 +65,6 @@ estadisticas_torretas = {
             "rango": 150,
             "espera": 0,
             "precio": 3000,
-            "reembolso": 1000,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         }
     ],
@@ -78,7 +75,6 @@ estadisticas_torretas = {
             "rango": 115,
             "espera": 0,
             "precio": 0,
-            "reembolso": 1000,
             "imagen": "assets/imagenes/torretas/torreta_lanzallamas_I.png",
         },
         {
@@ -86,7 +82,6 @@ estadisticas_torretas = {
             "rango": 130,
             "espera": 0,
             "precio": 0,
-            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_bomba_II.png",
         },
         {
@@ -94,7 +89,6 @@ estadisticas_torretas = {
             "rango": 170,
             "espera": 0,
             "precio": 0,
-            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_bomba_III.png",
         },
     ],
@@ -105,7 +99,6 @@ estadisticas_torretas = {
             "rango": 0,
             "espera": 0,
             "precio": 0,
-            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         },
         {
@@ -113,7 +106,6 @@ estadisticas_torretas = {
             "rango": 0,
             "espera": 0,
             "precio": 0,
-            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         },
         {
@@ -121,7 +113,6 @@ estadisticas_torretas = {
             "rango": 0,
             "espera": 0,
             "precio": 0,
-            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         },
     ]

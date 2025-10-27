@@ -71,8 +71,9 @@ while jugando:
                 precio_mejora = (estadisticas_torretas[torreta_seleccionada.type])[torreta_seleccionada.upgrade_level]["precio"]
                 if c.money >= precio_mejora:
                     torreta_seleccionada.mejorar_torreta()
-                    print(precio_mejora)
                     c.money -= precio_mejora
+                else:
+                    print("¡No tienes suficiente dinero!")
         
         if b.boton_reembolso.draw(c.ventana):
             torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
