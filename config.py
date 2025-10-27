@@ -22,3 +22,14 @@ titulo = pg.display.set_caption("Stray Tower Defense")
 
 icono_imagen = pg.image.load("assets\imagenes\icono.png").convert_alpha()
 icono = pg.display.set_icon(icono_imagen)
+
+cooldown = 500 #milisegundo
+
+health = 100
+money = 3750
+#Posiciones de los botones de la tienda
+
+pos_1 = 10
+pos_2 = 72
+pos_5 = 472
+pos_6 = 534

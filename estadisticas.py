@@ -44,19 +44,81 @@ estadisticas_enemigos = {
 }
 
 estadisticas_torretas = {
-    "Flecha": { #Dispara a los enemigos uno por uno
-        "costo": 15,
-        "dano": 5,
-        "espera": 1.5,
+    "Tanque":
+    [
+        {
+            "dano": 2,
+            "rango": 130,
+            "espera": 0,
+            "precio": 150,
+            "imagen": "assets/imagenes/torretas/torreta_tanque_I.png",
         },
-    "Base": { #Copia y pega
-        "costo": 0,
-        "dano": 0,
-        "espera": 0,
+        {
+            "dano": 5,
+            "rango": 140,
+            "espera": 0,
+            "precio": 600,
+            "imagen": "assets/imagenes/torretas/torreta_tanque_II.png",
         },
+        {
+            "dano": 15,
+            "rango": 150,
+            "espera": 0,
+            "precio": 3000,
+            "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
+        }
+    ],
+    "Lanzallamas":
+    [
+        {
+            "dano": 0,
+            "rango": 115,
+            "espera": 0,
+            "precio": 0,
+            "imagen": "assets/imagenes/torretas/torreta_lanzallamas_I.png",
+        },
+        {
+            "dano": 0,
+            "rango": 130,
+            "espera": 0,
+            "precio": 0,
+            "imagen": "assets/imagenes/torretas/torreta_bomba_II.png",
+        },
+        {
+            "dano": 0,
+            "rango": 170,
+            "espera": 0,
+            "precio": 0,
+            "imagen": "assets/imagenes/torretas/torreta_bomba_III.png",
+        },
+    ],
+    "Base":
+    [
+        {
+            "dano": 0,
+            "rango": 0,
+            "espera": 0,
+            "precio": 0,
+            "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
+        },
+        {
+            "dano": 0,
+            "rango": 0,
+            "espera": 0,
+            "precio": 0,
+            "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
+        },
+        {
+            "dano": 0,
+            "rango": 0,
+            "espera": 0,
+            "precio": 0,
+            "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
+        },
+    ]
 }
 
 estadisticas_jugador = {
-    "vida": 0,
-    "dinero": 0,
+    "vida": 1000,
+    "dinero": 500,
 }
