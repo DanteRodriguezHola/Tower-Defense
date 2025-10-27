@@ -1,5 +1,4 @@
-import const as ct
-import config as c
+from estadisticas import estadisticas_jugador as estadisticas
 from rondas import enemy_spawn_data
 
 import random
@@ -14,8 +13,6 @@ class World():
         self.waypoints = []
         self.level_data = data
         self.image = map_image
-        self.health = ct.Vida
-        self.money  = ct.Dinero
 
         self.enemy_list = []
         self.spawned_enemies = 0

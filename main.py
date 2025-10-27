@@ -1,15 +1,12 @@
 import config as c
 
 from zombies import Enemy
-from torretas import crear_torreta, seleccionar_torreta, limpiar_seleccion
+import torretas as t
 from tienda import cargar_tienda
 
-from estadisticas import estadisticas_torretas
+import estadisticas as e
 import botones as b
 import pygame as pg
-
-pg.init()
-pg.font.init()
 
 pg.init()
 pg.font.init()
@@ -67,16 +64,16 @@ while jugando:
     if torreta_seleccionada != None:
         if torreta_seleccionada.upgrade_level < 3:
             if b.boton_mejora.draw(c.ventana):
-                precio_mejora = (estadisticas_torretas[torreta_seleccionada.type])[torreta_seleccionada.upgrade_level]["precio"]
-                if c.money >= precio_mejora:
+                precio_mejora = (e.estadisticas_torretas[torreta_seleccionada.type])[torreta_seleccionada.upgrade_level]["precio"]
+                if e.estadisticas_jugador["dinero"] >= precio_mejora:
                     torreta_seleccionada.mejorar_torreta()
-                    c.money -= precio_mejora
+                    e.estadisticas_jugador["dinero"] -= precio_mejora
                 else:
                     print("¡No tienes suficiente dinero!")
         
         if b.boton_reembolso.draw(c.ventana):
             torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
-            c.money += torreta.refund
+            e.estadisticas_jugador["dinero"] += torreta.refund
     
     #Aparición de enemigos
     if pg.time.get_ticks() - last_enemy_spawn > c.cooldown:
@@ -87,8 +84,8 @@ while jugando:
             c.world.spawned_enemies += 1
             last_enemy_spawn = pg.time.get_ticks()
     
-    draw_text(str(c.health), text_font, "grey100", 780, 605)
-    draw_text(str(c.money), text_font, "grey100", 780, 668)
+    draw_text(str(e.estadisticas_jugador["vida"]), text_font, "grey100", 780, 605)
+    draw_text(str(e.estadisticas_jugador["dinero"]), text_font, "grey100", 780, 668)
 
     for evento in pg.event.get():
         #Al hacer click izquierdo
@@ -98,11 +95,11 @@ while jugando:
             if posicion_mouse[0] < c.ancho_mapa and posicion_mouse[1] < c.alto_mapa:
                 torreta_seleccionada = None
 
-                limpiar_seleccion(grupo_torretas)
+                t.limpiar_seleccion(grupo_torretas)
                 if creando_torretas:
-                    crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas)
+                    t.crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas)
                 else:
-                    torreta_seleccionada = seleccionar_torreta(posicion_mouse, grupo_torretas)
+                    torreta_seleccionada = t.seleccionar_torreta(posicion_mouse, grupo_torretas)
         #Salir del programa
         if evento.type == pg.QUIT:
             jugando = False

@@ -1,4 +1,4 @@
-from estadisticas import estadisticas_torretas as estadisticas
+import estadisticas as e
 import config as c
 
 import math
@@ -10,7 +10,7 @@ class Torreta(pg.sprite.Sprite):
         self.type = tipo_torreta
         self.upgrade_level = nivel_torreta
 
-        estadisticas_torreta = estadisticas[self.type][self.upgrade_level - 1]
+        estadisticas_torreta = e.estadisticas_torretas[self.type][self.upgrade_level - 1]
         #Estadisticas de la torre
 
         self.range = estadisticas_torreta["rango"]
@@ -61,7 +61,7 @@ class Torreta(pg.sprite.Sprite):
     def mejorar_torreta(self):
         self.upgrade_level += 1
 
-        estadisticas_torreta = estadisticas[self.type][self.upgrade_level - 1]
+        estadisticas_torreta = e.estadisticas_torretas[self.type][self.upgrade_level - 1]
 
         self.range = estadisticas_torreta["rango"]
         self.refund = (estadisticas_torreta["precio"]) // 5
@@ -117,9 +117,9 @@ def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
         
         #Se crea la torreta.
         if espacio_libre:
-            precio_torreta = estadisticas[tipo_torreta][nivel_torreta - 1]["precio"]
-            if c.money >= precio_torreta:
-                c.money -= precio_torreta
+            precio_torreta = e.estadisticas_torretas[tipo_torreta][nivel_torreta - 1]["precio"]
+            if e.estadisticas_jugador["dinero"] >= precio_torreta:
+                e.estadisticas_jugador["dinero"] -= precio_torreta
                 torreta = Torreta(tipo_torreta, nivel_torreta, celda_x, celda_y)
                 grupo_torretas.add(torreta)
                 return True

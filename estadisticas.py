@@ -119,6 +119,6 @@ estadisticas_torretas = {
 }
 
 estadisticas_jugador = {
-    "vida": 1000,
-    "dinero": 500,
+    "vida": 100,
+    "dinero": 10000000000000,
 }
