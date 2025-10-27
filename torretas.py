@@ -14,17 +14,22 @@ class Torreta(pg.sprite.Sprite):
         #Estadisticas de la torre
 
         self.range = estadisticas_torreta["rango"]
+        self.price = estadisticas_torreta["precio"]
+        self.refund = estadisticas_torreta["reembolso"]
+
         self.delay = 10
         self.selected = False
 
         self.last_shot = pg.time.get_ticks()
         
-        if tipo_torreta == "Tanque":
-            self.precio = 100
-            self.reembolso = 75
-        elif tipo_torreta == "Lanzallamas":
-            self.precio = 150
-            self.reembolso = 112
+        match tipo_torreta:
+            case "Tanque":
+                self.precio = 100
+                self.reembolso = 75
+
+            case "Lanzallamas":
+                self.precio = 150
+                self.reembolso = 112
 
         #Posicion original
         self.tile_x = celda_x
@@ -118,11 +123,13 @@ def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
         for torreta in grupo_torretas:
             if (celda_x,  celda_y) == (torreta.tile_x, torreta.tile_y):
                 espacio_libre = False
+        
         #Se crea la torreta.
         if espacio_libre:
-            if c.money >= torreta.precio:
+            torreta = Torreta(tipo_torreta, nivel_torreta, celda_x, celda_y)
+            if c.money >= torreta.price:
                 grupo_torretas.add(torreta)
-                c.money -= torreta.prec
+                c.money -= torreta.price
                 return True
         else:
             return False
