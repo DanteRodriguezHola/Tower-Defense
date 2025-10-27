@@ -16,20 +16,11 @@ class Torreta(pg.sprite.Sprite):
         self.range = estadisticas_torreta["rango"]
         self.price = estadisticas_torreta["precio"]
         self.refund = estadisticas_torreta["reembolso"]
-
+        
         self.delay = 10
         self.selected = False
 
         self.last_shot = pg.time.get_ticks()
-        
-        match tipo_torreta:
-            case "Tanque":
-                self.precio = 100
-                self.reembolso = 75
-
-            case "Lanzallamas":
-                self.precio = 150
-                self.reembolso = 112
 
         #Posicion original
         self.tile_x = celda_x
@@ -74,8 +65,9 @@ class Torreta(pg.sprite.Sprite):
         estadisticas_torreta = estadisticas[self.type][self.upgrade_level - 1]
 
         self.range = estadisticas_torreta["rango"]
+        self.refund = estadisticas_torreta["reembolso"]
         
-                #Se carga la imagen de la torreta
+        #Se carga la imagen de la torreta
         self.original_image = pg.image.load(estadisticas_torreta["imagen"]).convert_alpha()
         self.angle = 0
         self.image = pg.transform.rotate(self.original_image, self.angle)

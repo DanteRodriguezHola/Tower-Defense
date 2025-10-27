@@ -5,8 +5,10 @@ from zombies import Enemy
 from torretas import crear_torreta, seleccionar_torreta, limpiar_seleccion
 from tienda import cargar_tienda
 
+from estadisticas import estadisticas_torretas
 import botones as b
 import pygame as pg
+
 pg.init()
 pg.font.init()
 
@@ -23,9 +25,9 @@ last_enemy_spawn = pg.time.get_ticks()
 creando_torretas = False
 torreta_seleccionada = None
 
-nivel_torreta = 1
 text_font = pg.font.SysFont("Consolas", 40, bold =  True) 
 large_font = pg.font.SysFont("Consolas", 52) 
+
 def draw_text(text, font, text_color, x, y):
     img = font.render(text, True, text_color)
     c.ventana.blit(img, (x, y))
@@ -48,7 +50,6 @@ while jugando:
 
     if torreta_seleccionada:
         torreta_seleccionada.selected = True
-    
 
     cargar_tienda()
 
@@ -67,11 +68,15 @@ while jugando:
     if torreta_seleccionada != None:
         if torreta_seleccionada.upgrade_level < 3:
             if b.boton_mejora.draw(c.ventana):
-                torreta_seleccionada.mejorar_torreta()
+                precio_mejora = (estadisticas_torretas[torreta_seleccionada.type])[torreta_seleccionada.upgrade_level]["precio"]
+                if c.money >= precio_mejora:
+                    torreta_seleccionada.mejorar_torreta()
+                    print(precio_mejora)
+                    c.money -= precio_mejora
         
         if b.boton_reembolso.draw(c.ventana):
             torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
-            c.money += torreta.reembolso
+            c.money += torreta.refund
     
     #Aparición de enemigos
     if pg.time.get_ticks() - last_enemy_spawn > c.cooldown:

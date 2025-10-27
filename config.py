@@ -26,7 +26,7 @@ icono = pg.display.set_icon(icono_imagen)
 cooldown = 500 #milisegundo
 
 health = 100
-money = 250
+money = 500
 
 #Posiciones de los botones de la tienda
 
