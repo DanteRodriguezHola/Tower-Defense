@@ -1,5 +1,4 @@
 import config as c
-import const
 
 from zombies import Enemy
 from torretas import crear_torreta, seleccionar_torreta, limpiar_seleccion
