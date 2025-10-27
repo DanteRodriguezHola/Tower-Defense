@@ -51,6 +51,7 @@ estadisticas_torretas = {
             "rango": 220,
             "espera": 0,
             "costo": 150,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_I.png",
         },
         {
@@ -58,6 +59,7 @@ estadisticas_torretas = {
             "rango": 240,
             "espera": 0,
             "costo": 1250,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_II.png",
         },
         {
@@ -65,6 +67,7 @@ estadisticas_torretas = {
             "rango": 260,
             "espera": 0,
             "costo": 5000,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         }
     ],
@@ -74,7 +77,8 @@ estadisticas_torretas = {
             "dano": 0,
             "rango": 120,
             "espera": 0,
-            "costo": 0,
+            "costo": 300,
+            "reembolso": 180,
             "imagen": "assets/imagenes/torretas/torreta_lanzallamas_I.png",
         },
         {
@@ -82,6 +86,7 @@ estadisticas_torretas = {
             "rango": 350,
             "espera": 0,
             "costo": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_bomba_II.png",
         },
         {
@@ -89,6 +94,7 @@ estadisticas_torretas = {
             "rango": 400,
             "espera": 0,
             "costo": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_bomba_III.png",
         },
     ],
@@ -99,6 +105,7 @@ estadisticas_torretas = {
             "rango": 0,
             "espera": 0,
             "costo": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         },
         {
@@ -106,6 +113,7 @@ estadisticas_torretas = {
             "rango": 0,
             "espera": 0,
             "costo": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         },
         {
@@ -113,6 +121,7 @@ estadisticas_torretas = {
             "rango": 0,
             "espera": 0,
             "costo": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         },
     ]
