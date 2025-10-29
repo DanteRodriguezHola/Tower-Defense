@@ -9,14 +9,15 @@ class Torreta(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.type = tipo_torreta
         self.upgrade_level = nivel_torreta
+        
 
-        estadisticas_torreta = e.estadisticas_torretas[self.type][self.upgrade_level - 1]
-        #Estadisticas de la torre
+        estadisticas_torreta = e.torretas[self.type][self.upgrade_level - 1]
 
+        self.damage = estadisticas_torreta["dano"]
         self.range = estadisticas_torreta["rango"]
         self.refund = (estadisticas_torreta["precio"]) // 5
-        
-        self.delay = 10
+        self.delay = estadisticas_torreta["espera"]
+
         self.selected = False
 
         self.last_shot = pg.time.get_ticks()
@@ -61,10 +62,12 @@ class Torreta(pg.sprite.Sprite):
     def mejorar_torreta(self):
         self.upgrade_level += 1
 
-        estadisticas_torreta = e.estadisticas_torretas[self.type][self.upgrade_level - 1]
+        estadisticas_torreta = e.torretas[self.type][self.upgrade_level - 1]
 
+        self.damage = estadisticas_torreta["dano"]
         self.range = estadisticas_torreta["rango"]
         self.refund = (estadisticas_torreta["precio"]) // 5
+        self.delay = estadisticas_torreta["espera"]
         
         #Se carga la imagen de la torreta
         self.original_image = pg.image.load(estadisticas_torreta["imagen"]).convert_alpha()
@@ -88,21 +91,22 @@ class Torreta(pg.sprite.Sprite):
         distancia_y = 0
 
         for enemigo in grupo_enemigos:
-            distancia_x = enemigo.pos[0] - self.x
-            distancia_y = enemigo.pos[1] - self.y
+            if enemigo.health > 0:
+                distancia_x = enemigo.pos[0] - self.x
+                distancia_y = enemigo.pos[1] - self.y
 
-            distancia = math.sqrt(distancia_x ** 2 + distancia_y ** 2)
+                distancia = math.sqrt(distancia_x ** 2 + distancia_y ** 2)
 
-            if distancia < self.range:
-                self.target = enemigo
-                self.angle = math.degrees(math.atan2(-distancia_y, distancia_x))
-                self.image = pg.transform.rotate(self.original_image, self.angle)
-                self.rect = self.image.get_rect(center=(self.x, self.y))
-
+                if distancia < self.range:
+                    self.target = enemigo
+                    self.last_shot = pg.time.get_ticks()
+                    self.angle = math.degrees(math.atan2(-distancia_y, distancia_x))
+                    self.image = pg.transform.rotate(self.original_image, self.angle)
+                    self.rect = self.image.get_rect(center=(self.x, self.y))
+                    self.target.health -= self.damage
+                    print("Daño")
 
 def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
-    imagen_torreta = pg.image.load("assets/imagenes/torretas/torreta_tanque_I.png").convert_alpha()
-    
     celda_x = posicion_mouse[0] // c.tamano_celda
     celda_y = posicion_mouse[1] // c.tamano_celda
     celda_numero = (celda_y * 15) + celda_x
@@ -117,9 +121,9 @@ def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
         
         #Se crea la torreta.
         if espacio_libre:
-            precio_torreta = e.estadisticas_torretas[tipo_torreta][nivel_torreta - 1]["precio"]
-            if e.estadisticas_jugador["dinero"] >= precio_torreta:
-                e.estadisticas_jugador["dinero"] -= precio_torreta
+            precio_torreta = e.torretas[tipo_torreta][nivel_torreta - 1]["precio"]
+            if e.jugador["dinero"] >= precio_torreta:
+                e.jugador["dinero"] -= precio_torreta
                 torreta = Torreta(tipo_torreta, nivel_torreta, celda_x, celda_y)
                 grupo_torretas.add(torreta)
                 return True

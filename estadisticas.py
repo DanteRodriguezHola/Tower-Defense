@@ -1,4 +1,4 @@
-estadisticas_enemigos = {
+enemigos = {
     "Nor": { #Zombie normal
         "vida": 5,
         "velocidad": 1.5,
@@ -7,7 +7,7 @@ estadisticas_enemigos = {
         "imagen": "assets/imagenes/zombies/zombie_normal.png",
         },
     "Len": { #Zombie lento, con mayor vida
-        "vida": 25,
+        "vida": 1000,
         "velocidad": 0.7,
         "dano": 3,
         "recompensa": 30,
@@ -43,27 +43,27 @@ estadisticas_enemigos = {
         },
 }
 
-estadisticas_torretas = {
+torretas = {
     "Tanque":
     [
         {
             "dano": 2,
             "rango": 130,
-            "espera": 0,
+            "espera": 1500,
             "precio": 150,
             "imagen": "assets/imagenes/torretas/torreta_tanque_I.png",
         },
         {
             "dano": 5,
             "rango": 140,
-            "espera": 0,
+            "espera": 1200,
             "precio": 600,
             "imagen": "assets/imagenes/torretas/torreta_tanque_II.png",
         },
         {
             "dano": 15,
             "rango": 150,
-            "espera": 0,
+            "espera": 900,
             "precio": 3000,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         }
@@ -118,7 +118,7 @@ estadisticas_torretas = {
     ]
 }
 
-estadisticas_jugador = {
+jugador = {
     "vida": 100,
-    "dinero": 10000000000000,
+    "dinero": 6000,
 }

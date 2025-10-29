@@ -1,4 +1,5 @@
-from estadisticas import estadisticas_enemigos as estadisticas
+import estadisticas as e
+
 import config as c
 
 from pygame.math import Vector2
@@ -12,11 +13,14 @@ class Enemy(pg.sprite.Sprite):
         self.waypoints = waypoints
         self.pos = Vector2(self.waypoints[0])
         self.target_waypoint = 1
-        self.health = estadisticas.get(enemy_type)["vida"]
-        self.speed = estadisticas.get(enemy_type)["velocidad"]
-        self.reward = estadisticas.get(enemy_type)["recompensa"]
+        
+        self.health = e.enemigos.get(enemy_type)["vida"]
+        self.damage = e.enemigos.get(enemy_type)["dano"]
+        self.speed = e.enemigos.get(enemy_type)["velocidad"]
+        self.reward = e.enemigos.get(enemy_type)["recompensa"]
+
         self.angle = 0
-        self.original_image = pg.image.load(estadisticas.get(enemy_type)["imagen"]).convert_alpha()
+        self.original_image = pg.image.load(e.enemigos.get(enemy_type)["imagen"]).convert_alpha()
         self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
@@ -27,12 +31,14 @@ class Enemy(pg.sprite.Sprite):
     def update(self):
         self.move()
         self.rotate()
+        self.check_alive()
 
     def move(self):
         if self.target_waypoint < len(self.waypoints):
             self.target = Vector2(self.waypoints[self.target_waypoint])
             self.movement = self.target - self.pos
         else:
+            e.jugador["vida"] -= self.damage
             self.kill()
 
         dist = self.movement.length()
@@ -49,3 +55,8 @@ class Enemy(pg.sprite.Sprite):
         self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+
+    def check_alive(self):
+        if self.health <= 0:
+            self.kill()
+            e.jugador["dinero"] += self.reward

@@ -1,4 +1,4 @@
-from estadisticas import estadisticas_jugador as estadisticas
+import estadisticas as e
 from rondas import enemy_spawn_data
 
 import random
