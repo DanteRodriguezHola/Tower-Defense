@@ -7,9 +7,9 @@ def obtener_ruta_archivo(numero_ronda):
     ruta_archivo_ronda = os.path.join(ruta_carpeta_rondas, nombre_archivo_ronda)
     return ruta_archivo_ronda
 
-def procesar_rondas():
+def procesar_rondas(numero_de_ronda):
     diccionarios_enemigos = []
-    ruta_archivo_ronda = obtener_ruta_archivo("1")
+    ruta_archivo_ronda = obtener_ruta_archivo(numero_de_ronda)
     with open(ruta_archivo_ronda, "r") as ronda:
         for oleada in ronda:
             diccionario_enemigos = crear_diccionarios_enemigos(oleada)
@@ -26,4 +26,4 @@ def crear_diccionarios_enemigos(oleada):
         diccionario_enemigos.update({tipo_enemigo: cantidad_enemigo})
     return diccionario_enemigos
 
-enemy_spawn_data = procesar_rondas()
+enemy_spawn_data = procesar_rondas("1")

@@ -39,6 +39,7 @@ class Enemy(pg.sprite.Sprite):
             self.movement = self.target - self.pos
         else:
             e.jugador["vida"] -= self.damage
+            c.world.missed_enemies += 1
             self.kill()
 
         dist = self.movement.length()
@@ -58,5 +59,6 @@ class Enemy(pg.sprite.Sprite):
 
     def check_alive(self):
         if self.health <= 0:
-            self.kill()
+            c.world.killed_enemies += 1
             e.jugador["dinero"] += self.reward
+            self.kill()

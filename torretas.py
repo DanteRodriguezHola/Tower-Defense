@@ -105,7 +105,7 @@ class Torreta(pg.sprite.Sprite):
                     self.image = pg.transform.rotate(self.original_image, self.angle)
                     self.rect = self.image.get_rect(center = (self.x, self.y))
                     self.target.health -= self.damage
-                    print("Auch!")
+                    print("¡Auch!")
                     break
 
 def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):

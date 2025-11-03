@@ -19,6 +19,7 @@ grupo_enemigos = pg.sprite.Group()
 jugando = True
 
 last_enemy_spawn = pg.time.get_ticks()
+level_started = False
 creando_torretas = False
 torreta_seleccionada = None
 
@@ -50,6 +51,7 @@ while jugando:
     cargar_tienda()
 
     #Actualizacion de los grupos
+
     for enemigo in grupo_enemigos:
         enemigo.update()
         enemigo.draw(c.ventana)
@@ -71,6 +73,8 @@ while jugando:
         tipo_torreta = "Lanzallamas"
         creando_torretas = True
 
+
+
     if creando_torretas:
         if b.boton_cancelar.draw(c.ventana):
             creando_torretas = False
@@ -88,21 +92,32 @@ while jugando:
         if b.boton_reembolso.draw(c.ventana):
             torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
             e.jugador["dinero"] += torreta.refund
-    
-    #Aparición de enemigos
-    if pg.time.get_ticks() - last_enemy_spawn > c.cooldown:
-        if c.world.spawned_enemies < len(c.world.enemy_list):
-            tipo_enemigo = c.world.enemy_list[c.world.spawned_enemies]
-            enemigo = Enemy(tipo_enemigo, c.world.waypoints)
-            grupo_enemigos.add(enemigo)
-            c.world.spawned_enemies += 1
-            last_enemy_spawn = pg.time.get_ticks()
+
+    if level_started == False:
+        if b.boton_comenzar.draw(c.ventana):
+            level_started = True
+    else:
+        if pg.time.get_ticks() - last_enemy_spawn > c.cooldown:
+            if c.world.spawned_enemies < len(c.world.enemy_list):
+                tipo_enemigo = c.world.enemy_list[c.world.spawned_enemies]
+                enemigo = Enemy(tipo_enemigo, c.world.waypoints)
+                grupo_enemigos.add(enemigo)
+                c.world.spawned_enemies += 1
+                last_enemy_spawn = pg.time.get_ticks()
+
+    if c.world.check_level_complete() == True:
+        c.world.level += 1
+        last_enemy_spawn = pg.time.get_ticks()
+        level_started = False
+        c.world.reset_level()
+        c.world.process_enemies()
     
     draw_text(str(e.jugador["vida"]), text_font, "grey100", 780, 605)
     draw_text(str(e.jugador["dinero"]), text_font, "grey100", 780, 668)
 
     if e.jugador["vida"] <= 0:
         jugando = False
+        print("¡Perdiste!")
 
     for evento in pg.event.get():
         #Al hacer click izquierdo

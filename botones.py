@@ -50,3 +50,7 @@ boton_mejora = Button(imagen_boton_mejora, imagen_boton_mejora_hover, (c.ancho_m
 imagen_boton_reembolso = pg.image.load("assets/imagenes/tienda/boton_reembolso.png").convert_alpha()
 imagen_boton_reembolso_hover = pg.image.load("assets/imagenes/tienda/boton_reembolso_hover.png").convert_alpha()
 boton_reembolso = Button(imagen_boton_reembolso, imagen_boton_reembolso_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
+
+imagen_boton_comenzar = pg.image.load("assets/imagenes/tienda/boton_comenzar.png").convert_alpha()
+imagen_boton_comenzar_hover = pg.image.load("assets/imagenes/tienda/boton_comenzar_hover.png").convert_alpha()
+boton_comenzar = Button(imagen_boton_comenzar, imagen_boton_comenzar_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_5_a, True)

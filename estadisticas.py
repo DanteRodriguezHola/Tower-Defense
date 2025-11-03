@@ -10,7 +10,7 @@ enemigos = {
         "vida": 60,
         "velocidad": 0.7,
         "dano": 5,
-        "recompensa": 500,
+        "recompensa": 150,
         "imagen": "assets/imagenes/zombies/zombie_lento.png",
         },
     "Rap": { #Zombie rapido, con misma vida
@@ -71,7 +71,7 @@ torretas = {
     "Lanzallamas":
     [
         {
-            "dano": 0,
+            "dano": 1,
             "rango": 115,
             "espera": 0,
             "precio": 0,

@@ -29,5 +29,8 @@ cooldown = 1000 #milisegundos
 
 pos_1 = 10
 pos_2 = 72
+pos_3 = 134
+pos_4 = 196
+pos_5_a = 258
 pos_5 = 472
 pos_6 = 534

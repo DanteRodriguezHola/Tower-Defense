@@ -1,5 +1,5 @@
 import estadisticas as e
-from rondas import enemy_spawn_data
+from rondas import procesar_rondas
 
 import random
 import pygame as pg
@@ -16,6 +16,8 @@ class World():
 
         self.enemy_list = []
         self.spawned_enemies = 0
+        self.killed_enemies = 0
+        self.missed_enemies = 0
 
     def draw(self, surface):
         surface.blit(self.image, (0, 0))
@@ -36,13 +38,28 @@ class World():
             self.waypoints.append((temp_x, temp_y))
 
     def process_enemies(self):
-        enemies = enemy_spawn_data[self.level - 1]
+        try:
+            enemy_spawn_data = procesar_rondas("1")
+            enemies = enemy_spawn_data[self.level - 1]
+        except:
+            enemy_spawn_data = procesar_rondas("2")
+            enemies = enemy_spawn_data[self.level - 1]
         for enemy_type in enemies:
             enemies_to_spawn = enemies[enemy_type]
             for enemy in range(enemies_to_spawn):
                 self.enemy_list.append(enemy_type)
         random.shuffle(self.enemy_list)
     
+    def check_level_complete(self):
+        if (self.killed_enemies + self.missed_enemies) == len(self.enemy_list):
+            return True
+        
+    def reset_level(self):
+        self.enemy_list = []
+        self.spawned_enemies = 0
+        self.killed_enemies = 0
+        self.missed_enemies = 0
+
 def cargar_mapa():
     mapa_imagen = pg.image.load('assets/imagenes/mapa.png').convert_alpha()
     with open('map.tmj') as file:
