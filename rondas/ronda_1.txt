@@ -1,5 +1,5 @@
-Nor_100 Len_100 Rap_100
-Nor_5
-Nor_5 Len_2
-Nor_5 Len_5
-Nor_10 Len_8
+Nor_2
+Nor_4
+Nor_6
+Len_1
+Nor_8 Len_2

@@ -1,23 +1,23 @@
 enemigos = {
     "Nor": { #Zombie normal
-        "vida": 5,
+        "vida": 12,
         "velocidad": 1.5,
         "dano": 1,
-        "recompensa": 5,
+        "recompensa": 75,
         "imagen": "assets/imagenes/zombies/zombie_normal.png",
         },
     "Len": { #Zombie lento, con mayor vida
-        "vida": 1000,
+        "vida": 60,
         "velocidad": 0.7,
-        "dano": 3,
-        "recompensa": 30,
+        "dano": 5,
+        "recompensa": 500,
         "imagen": "assets/imagenes/zombies/zombie_lento.png",
         },
     "Rap": { #Zombie rapido, con misma vida
-        "vida": 5,
+        "vida": 18,
         "velocidad": 2.8,
         "dano": 3,
-        "recompensa": 10,
+        "recompensa": 100,
         "imagen": "assets/imagenes/zombies/zombie_rapido.png",
         },
     "Jf1": { #Primer jefe, posee muchisima vida. Hace dano a la torre segun la vida que tenga en ese momento.
@@ -49,21 +49,21 @@ torretas = {
         {
             "dano": 2,
             "rango": 130,
-            "espera": 1500,
+            "espera": 1300,
             "precio": 150,
             "imagen": "assets/imagenes/torretas/torreta_tanque_I.png",
         },
         {
             "dano": 5,
             "rango": 140,
-            "espera": 1200,
+            "espera": 1000,
             "precio": 600,
             "imagen": "assets/imagenes/torretas/torreta_tanque_II.png",
         },
         {
             "dano": 15,
             "rango": 150,
-            "espera": 900,
+            "espera": 800,
             "precio": 3000,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         }
@@ -120,5 +120,5 @@ torretas = {
 
 jugador = {
     "vida": 100,
-    "dinero": 6000,
+    "dinero": 525,
 }

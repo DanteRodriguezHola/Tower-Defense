@@ -87,6 +87,8 @@ class Torreta(pg.sprite.Sprite):
         self.range_rect.center = self.rect.center
 
     def elegir_objetivo(self, grupo_enemigos):
+        self.last_shot = pg.time.get_ticks()
+
         distancia_x = 0
         distancia_y = 0
 
@@ -99,12 +101,12 @@ class Torreta(pg.sprite.Sprite):
 
                 if distancia < self.range:
                     self.target = enemigo
-                    self.last_shot = pg.time.get_ticks()
-                    self.angle = math.degrees(math.atan2(-distancia_y, distancia_x))
+                    self.angle = math.degrees(math.atan2(-(distancia_y), distancia_x))
                     self.image = pg.transform.rotate(self.original_image, self.angle)
-                    self.rect = self.image.get_rect(center=(self.x, self.y))
+                    self.rect = self.image.get_rect(center = (self.x, self.y))
                     self.target.health -= self.damage
-                    print("Daño")
+                    print("Auch!")
+                    break
 
 def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
     celda_x = posicion_mouse[0] // c.tamano_celda
