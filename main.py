@@ -137,3 +137,6 @@ while jugando:
             jugando = False
     pg.display.flip()
 pg.quit()
+
+
+#voy a agregar q veas cunta vida le queda a un xombie si le pnes el mouse encima
