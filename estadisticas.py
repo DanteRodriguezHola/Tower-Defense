@@ -5,6 +5,7 @@ enemigos = {
         "dano": 1,
         "recompensa": 75,
         "imagen": "assets/imagenes/zombies/zombie_normal.png",
+        "imagen_auch": "assets/imagenes/zombies/zombie_normal_auch.png",
         },
     "Len": { #Zombie lento, con mayor vida
         "vida": 60,
@@ -12,6 +13,7 @@ enemigos = {
         "dano": 5,
         "recompensa": 150,
         "imagen": "assets/imagenes/zombies/zombie_lento.png",
+        "imagen_auch": "assets/imagenes/zombies/zombie_lento_auch.png",
         },
     "Rap": { #Zombie rapido, con misma vida
         "vida": 18,
@@ -19,6 +21,7 @@ enemigos = {
         "dano": 3,
         "recompensa": 100,
         "imagen": "assets/imagenes/zombies/zombie_rapido.png",
+        "imagen_auch": "assets/imagenes/zombies/zombie_rapido_auch.png",
         },
     "Jf1": { #Primer jefe, posee muchisima vida. Hace dano a la torre segun la vida que tenga en ese momento.
         "vida": 100,

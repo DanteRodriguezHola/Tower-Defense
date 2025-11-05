@@ -21,6 +21,7 @@ class Enemy(pg.sprite.Sprite):
 
         self.angle = 0
         self.original_image = pg.image.load(e.enemigos.get(enemy_type)["imagen"]).convert_alpha()
+        self.auch_image = pg.image.load(e.enemigos.get(enemy_type)["imagen_auch"]).convert_alpha()
         self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
