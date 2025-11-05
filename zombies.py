@@ -25,6 +25,9 @@ class Enemy(pg.sprite.Sprite):
         self.image = pg.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
+
+        self.is_hurt = False
+        self.hurt_time = 0
     
     def draw(self, surface):
         surface.blit(self.image, self.rect)
@@ -33,6 +36,15 @@ class Enemy(pg.sprite.Sprite):
         self.move()
         self.rotate()
         self.check_alive()
+        self.update_hurt_state()
+    
+    def update_hurt_state(self):
+        if self.is_hurt:
+            if pg.time.get_ticks() - self.hurt_time < 150:
+                self.image = pg.transform.rotate(self.auch_image, self.angle)
+            else:
+                self.image = pg.transform.rotate(self.original_image, self.angle)
+                self.is_hurt = False
 
     def move(self):
         if self.target_waypoint < len(self.waypoints):
@@ -63,3 +75,8 @@ class Enemy(pg.sprite.Sprite):
             c.world.killed_enemies += 1
             e.jugador["dinero"] += self.reward
             self.kill()
+    
+    def take_damage(self, amount):
+        self.health -= amount
+        self.is_hurt = True
+        self.hurt_time = pg.time.get_ticks()

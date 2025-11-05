@@ -104,7 +104,7 @@ class Torreta(pg.sprite.Sprite):
                     self.angle = math.degrees(math.atan2(-(distancia_y), distancia_x))
                     self.image = pg.transform.rotate(self.original_image, self.angle)
                     self.rect = self.image.get_rect(center = (self.x, self.y))
-                    self.target.health -= self.damage
+                    self.target.take_damage(self.damage)
                     print("¡Auch!")
                     break
 
