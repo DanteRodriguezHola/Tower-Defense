@@ -1,5 +1,4 @@
 import estadisticas as e
-
 import config as c
 
 from pygame.math import Vector2
