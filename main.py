@@ -1,3 +1,7 @@
+# ------------------------------- #
+
+# IMPORTACIONES #
+
 import config as c
 
 from zombies import Enemy
@@ -8,6 +12,8 @@ import torretas as t
 import estadisticas as e
 import botones as b
 import pygame as pg
+
+# ------------------------------- #
 
 pg.init()
 pg.font.init()
@@ -70,7 +76,7 @@ while jugando:
         creando_torretas = True
     
     if b.boton_lanzallamas.draw(c.ventana):
-        tipo_torreta = "Lanzallamas"
+        tipo_torreta = "Dinamita"
         creando_torretas = True
 
 

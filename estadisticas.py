@@ -71,28 +71,28 @@ torretas = {
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         }
     ],
-    "Lanzallamas":
+    "Dinamita":
     [
         {
             "dano": 1,
             "rango": 115,
             "espera": 0,
             "precio": 0,
-            "imagen": "assets/imagenes/torretas/torreta_lanzallamas_I.png",
+            "imagen": "assets/imagenes/torretas/torreta_dinamita_I.png",
         },
         {
             "dano": 0,
             "rango": 130,
             "espera": 0,
             "precio": 0,
-            "imagen": "assets/imagenes/torretas/torreta_bomba_II.png",
+            "imagen": "assets/imagenes/torretas/torreta_dinamita_II.png",
         },
         {
             "dano": 0,
             "rango": 170,
             "espera": 0,
             "precio": 0,
-            "imagen": "assets/imagenes/torretas/torreta_bomba_III.png",
+            "imagen": "assets/imagenes/torretas/torreta_dinamita_III.png",
         },
     ],
     "Base":
