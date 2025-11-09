@@ -74,7 +74,7 @@ torretas = {
     "Dinamita":
     [
         {
-            "dano": 1,
+            "dano": 0,
             "rango": 115,
             "espera": 0,
             "precio": 0,
@@ -123,5 +123,5 @@ torretas = {
 
 jugador = {
     "vida": 100,
-    "dinero": 525,
+    "dinero": 500,
 }

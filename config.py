@@ -25,7 +25,9 @@ icono = pg.display.set_icon(icono_imagen)
 
 cooldown = 1000 #milisegundos
 
-#Posiciones de los botones de la tienda
+# ------------------------------- #
+
+# Posiciones de los botones #
 
 pos_1 = 10
 pos_2 = 72
@@ -34,3 +36,14 @@ pos_4 = 196
 pos_5_a = 258
 pos_5 = 472
 pos_6 = 534
+
+# ------------------------------- #
+
+# Atajos de teclado #
+
+atajos = pg.key.get_pressed()
+
+atajo_tanque = pg.K_1
+atajo_dinamita = pg.K_2
+atajo_cancelar_reembolso = pg.K_0
+atajo_comenzar = pg.K_SPACE

@@ -1,6 +1,6 @@
 # ------------------------------- #
 
-# IMPORTACIONES #
+# Importaciones #
 
 import config as c
 
@@ -48,15 +48,33 @@ def mejorar_torreta(torreta_seleccionada):
     posicion_mouse = (celda_x, celda_y)
 
     t.crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas)
+
+def mejorar_torreta_seleccionada(torreta_seleccionada):
+    if torreta_seleccionada.upgrade_level >= 3:
+        return
     
+    if not(b.boton_mejora.draw(c.ventana)):
+        return
+    
+    precio_mejora = (e.torretas[torreta_seleccionada.type])[torreta_seleccionada.upgrade_level]["precio"]
+    
+    if e.jugador["dinero"] < precio_mejora:
+        return
+    
+    torreta_seleccionada.mejorar_torreta()
+    e.jugador["dinero"] -= precio_mejora
+
 nivel_torreta = 1
+
+tecla_presionada = None
 
 while jugando:
     c.clock.tick(60) 
     c.world.draw(c.ventana)
-    cargar_tienda()
 
-    #Actualizacion de los grupos
+    # ------------------------------- #
+
+    # Actualizacion de los grupos #
 
     for enemigo in grupo_enemigos:
         enemigo.update()
@@ -66,42 +84,48 @@ while jugando:
         torreta.update(grupo_enemigos)
         torreta.draw(c.ventana)
 
-    if torreta_seleccionada:
-        torreta_seleccionada.selected = True
+    # ------------------------------- #
+    
+    # Actualizacion de la tienda y los botones #
 
     cargar_tienda()
 
-    if b.boton_tanque.draw(c.ventana):
+    if torreta_seleccionada:
+        torreta_seleccionada.selected = True
+
+    if b.boton_tanque.draw(c.ventana) or tecla_presionada == c.atajo_tanque:
         tipo_torreta = "Tanque"
         creando_torretas = True
     
-    if b.boton_lanzallamas.draw(c.ventana):
+    if b.boton_dinamita.draw(c.ventana) or tecla_presionada == c.atajo_dinamita:
         tipo_torreta = "Dinamita"
         creando_torretas = True
 
-
-
     if creando_torretas:
-        if b.boton_cancelar.draw(c.ventana):
+        if b.boton_cancelar.draw(c.ventana) or tecla_presionada == c.atajo_cancelar_reembolso:
             creando_torretas = False
+            
 
-    if torreta_seleccionada != None:
-        if torreta_seleccionada.upgrade_level < 3:
-            if b.boton_mejora.draw(c.ventana):
-                precio_mejora = (e.torretas[torreta_seleccionada.type])[torreta_seleccionada.upgrade_level]["precio"]
-                if e.jugador["dinero"] >= precio_mejora:
-                    torreta_seleccionada.mejorar_torreta()
-                    e.jugador["dinero"] -= precio_mejora
-                else:
-                    print("¡No tienes suficiente dinero!")
+    if not(torreta_seleccionada == None):
+        mejorar_torreta_seleccionada(torreta_seleccionada)
         
-        if b.boton_reembolso.draw(c.ventana):
+        if b.boton_reembolso.draw(c.ventana) or tecla_presionada == c.atajo_cancelar_reembolso:
             torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
             e.jugador["dinero"] += torreta.refund
 
     if level_started == False:
-        if b.boton_comenzar.draw(c.ventana):
+        if b.boton_comenzar.draw(c.ventana) or tecla_presionada == c.atajo_comenzar:
             level_started = True
+            
+    draw_text(str(e.jugador["vida"]), text_font, "grey100", 780, 605)
+    draw_text(str(e.jugador["dinero"]), text_font, "grey100", 780, 668)
+
+    # ------------------------------- #
+
+    if level_started == False:
+        if b.boton_comenzar.draw(c.ventana) or tecla_presionada == c.atajo_comenzar:
+            level_started = True
+    
     else:
         if pg.time.get_ticks() - last_enemy_spawn > c.cooldown:
             if c.world.spawned_enemies < len(c.world.enemy_list):
@@ -111,22 +135,25 @@ while jugando:
                 c.world.spawned_enemies += 1
                 last_enemy_spawn = pg.time.get_ticks()
 
+    tecla_presionada = None
+
     if c.world.check_level_complete() == True:
         c.world.level += 1
         last_enemy_spawn = pg.time.get_ticks()
         level_started = False
         c.world.reset_level()
         c.world.process_enemies()
-    
-    draw_text(str(e.jugador["vida"]), text_font, "grey100", 780, 605)
-    draw_text(str(e.jugador["dinero"]), text_font, "grey100", 780, 668)
 
     if e.jugador["vida"] <= 0:
         jugando = False
         print("¡Perdiste!")
 
     for evento in pg.event.get():
+        if evento.type == pg.QUIT:
+            jugando = False
+
         #Al hacer click izquierdo
+
         if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
             posicion_mouse = pg.mouse.get_pos() #Se obtiene la posicion del ratón
             #Si esta dentro del mapa, se crea una torreta
@@ -139,7 +166,11 @@ while jugando:
                 else:
                     torreta_seleccionada = t.seleccionar_torreta(posicion_mouse, grupo_torretas)
         #Salir del programa
-        if evento.type == pg.QUIT:
-            jugando = False
+
+        if evento.type == pg.KEYDOWN:
+            tecla_presionada = evento.key
+
     pg.display.flip()
+
+    
 pg.quit()

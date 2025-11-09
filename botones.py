@@ -41,7 +41,7 @@ boton_tanque = Button(imagen_boton_tanque, imagen_boton_tanque_hover, (c.ancho_m
 
 imagen_boton_dinamita = pg.image.load("assets/imagenes/tienda/boton_dinamita.png").convert_alpha()
 imagen_boton_dinamita_hover = pg.image.load("assets/imagenes/tienda/boton_dinamita_hover.png").convert_alpha()
-boton_lanzallamas = Button(imagen_boton_dinamita, imagen_boton_dinamita_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_2, True)
+boton_dinamita = Button(imagen_boton_dinamita, imagen_boton_dinamita_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_2, True)
 
 imagen_boton_cancelar = pg.image.load("assets/imagenes/tienda/boton_cancelar.png").convert_alpha()
 imagen_boton_cancelar_hover = pg.image.load("assets/imagenes/tienda/boton_cancelar_hover.png").convert_alpha()
