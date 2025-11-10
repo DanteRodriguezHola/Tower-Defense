@@ -11,6 +11,7 @@ class Torreta(pg.sprite.Sprite):
         # ------------------------------ #
 
         # Estadisticas #
+
         self.type = tipo_torreta
         self.upgrade_level = nivel_torreta
 
@@ -20,6 +21,10 @@ class Torreta(pg.sprite.Sprite):
         self.range = estadisticas_torreta["rango"]
         self.refund = (estadisticas_torreta["precio"]) // 5
         self.delay = estadisticas_torreta["espera"]
+        try:
+            self.upgrade_cost = e.torretas[self.type][self.upgrade_level]["precio"]
+        except:
+            self.upgrade_cost = 0
 
         # ------------------------------ #
 
@@ -65,6 +70,9 @@ class Torreta(pg.sprite.Sprite):
             self.elegir_objetivo(grupo_enemigos)
 
     def mejorar_torreta(self):
+
+        # Eliminar esto #
+
         self.upgrade_level += 1
 
         estadisticas_torreta = e.torretas[self.type][self.upgrade_level - 1]
@@ -73,6 +81,10 @@ class Torreta(pg.sprite.Sprite):
         self.range = estadisticas_torreta["rango"]
         self.refund = (estadisticas_torreta["precio"]) // 5
         self.delay = estadisticas_torreta["espera"]
+        try:
+            self.upgrade_cost = e.torretas[self.type][self.upgrade_level]["precio"]
+        except:
+            self.upgrade_cost = 0
         
         #Se carga la imagen de la torreta
         self.original_image = estadisticas_torreta["imagen"]
@@ -153,4 +165,6 @@ def limpiar_seleccion(grupo_torretas):
 
 # ------------------------------- #
 
-# A hacer: Reestructurar el sistema de mejora. En vez de que se repita todo el codigo, que se elimine la torreta, y que se reemplaze por la torreta mejorada.
+# A hacer: Reestructurar el sistema de mejora. 
+# En vez de que se repita todo el codigo, 
+# que se elimine la torreta, y que se reemplaze por la torreta mejorada.

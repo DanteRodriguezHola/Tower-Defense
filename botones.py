@@ -61,6 +61,27 @@ class TurretButton(Button):
 
         return super().draw(surface, pressed_key)
 
+class UpgradeButton(Button):
+    def __init__(self, spritesheet, atajo_teclado, x, y, single_click):
+        super().__init__(spritesheet, atajo_teclado, x, y, single_click)
+
+
+    def draw(self, surface, pressed_key, selected_turret,):
+        if self.check_upgrade_available(selected_turret) == False:
+            surface.blit(self.images["blocked"], self.rect)
+            return False
+        
+        return super().draw(surface, pressed_key)
+        
+    def check_upgrade_available(self, selected_turret):
+        if not(selected_turret.upgrade_level < 3):
+            return False
+        
+        if not(e.jugador["dinero"] >= selected_turret.upgrade_cost):
+            return False
+        
+        return True
+
 # ------------------------------- #
 
 # Carga de spritesheets y creación de los botones #
