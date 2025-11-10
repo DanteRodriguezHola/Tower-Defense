@@ -96,7 +96,7 @@ while c.jugando:
         mejorar_torreta_seleccionada(c.torreta_seleccionada)
         
         if b.boton_reembolsar.draw(c.ventana, tecla_presionada) or tecla_presionada == c.atajo_cancelar_reembolso:
-            torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
+            c.torreta_seleccionada = grupo_torretas.remove(c.torreta_seleccionada)
             e.jugador["dinero"] += torreta.refund
 
     draw_text(str(e.jugador["vida"]), text_font, "grey100", 780, 605)

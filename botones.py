@@ -30,24 +30,22 @@ class Button(pg.sprite.Sprite):
         self.single_click = single_click
     
     def draw(self, surface, pressed_key):
-        accion = False
         posicion_mouse = pg.mouse.get_pos()
-
-        if self.rect.collidepoint(posicion_mouse) or pressed_key == self.hotkey:
-            surface.blit(self.images["hover"], self.rect)
-            
-            if (pg.mouse.get_pressed()[0] == 1 and self.clicked == False) or pressed_key == self.hotkey:
-                accion = True
-
-                if self.single_click:
-                    self.clicked = True
-        else:
+        accion = False
+        
+        if not(self.rect.collidepoint(posicion_mouse) or pressed_key == self.hotkey):
             surface.blit(self.images["normal"], self.rect)
+            return accion
+        
+        surface.blit(self.images["hover"], self.rect)
+        
+        if ((pg.mouse.get_pressed()[0] == 1 and self.clicked == False) or pressed_key == self.hotkey):
+            accion = True
+            if self.single_click:
+                self.clicked = True
+            return accion
 
-        if pg.mouse.get_pressed()[0] == 0:
-            self.clicked = False
-            
-        return accion
+        self.clicked = False
 
 class TurretButton(Button):
     def __init__(self, spritesheet, atajo_teclado, x , y, single_click, tipo_torreta):
@@ -55,16 +53,13 @@ class TurretButton(Button):
         self.turret_type = tipo_torreta
 
     def draw(self, surface, pressed_key):
-        accion = False
         costo_torreta = e.torretas[self.turret_type][0]["precio"]
 
-        if e.jugador["dinero"] < costo_torreta:
+        if not(e.jugador["dinero"] >= costo_torreta):
             surface.blit(self.images["blocked"], self.rect)
-        
-        else:
-            accion = super().draw(surface, pressed_key)
+            return False
 
-        return accion
+        return super().draw(surface, pressed_key)
 
 # ------------------------------- #
 
