@@ -1,21 +1,27 @@
+from spritesheet import Spritesheet
+
 import config as c
 import pygame as pg
 
+
 class Button(pg.sprite.Sprite):
-    def __init__(self, imagen, imagen_hover, x , y, single_click):
-        self.image = imagen
-        self.image_hov = imagen_hover
-        self.rect = self.image.get_rect()
+    def __init__(self, imagenes, x , y, single_click):
+        self.image_normal = imagenes.get("normal")
+        self.image_hover = imagenes.get("hover")
+        self.image_blocked = imagenes.get("bloqueado")
+
+        self.rect = self.image_normal.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
         self.single_click = single_click
+    
     def draw(self, surface):
         accion = False
         posicion_mouse = pg.mouse.get_pos()
 
         if self.rect.collidepoint(posicion_mouse):
             # CAPAZ ESTOY MAL, HAY Q VER---------
-            surface.blit(self.image_hov, self.rect)
+            surface.blit(self.image_hover, self.rect)
             # mi proceso-------------
             if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 accion = True
@@ -23,7 +29,7 @@ class Button(pg.sprite.Sprite):
                 if self.single_click:
                     self.clicked = True
         else:
-            surface.blit(self.image, self.rect)
+            surface.blit(self.image_normal, self.rect)
 
         if pg.mouse.get_pressed()[0] == 0:
             self.clicked = False
@@ -35,28 +41,64 @@ class Button(pg.sprite.Sprite):
 
 # Carga de imagenes y creación de los botones #
 
-imagen_boton_tanque = pg.image.load("assets/imagenes/tienda/boton_tanque.png").convert_alpha()
-imagen_boton_tanque_hover = pg.image.load("assets/imagenes/tienda/boton_tanque_hover.png").convert_alpha()
-boton_tanque = Button(imagen_boton_tanque, imagen_boton_tanque_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_1, True)
+spritesheet_boton_tanque = Spritesheet("assets/imagenes/tienda/spritesheet_boton_tanque.png")
 
-imagen_boton_dinamita = pg.image.load("assets/imagenes/tienda/boton_dinamita.png").convert_alpha()
-imagen_boton_dinamita_hover = pg.image.load("assets/imagenes/tienda/boton_dinamita_hover.png").convert_alpha()
-boton_dinamita = Button(imagen_boton_dinamita, imagen_boton_dinamita_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_2, True)
+imagenes_boton_tanque = {
+    "normal": spritesheet_boton_tanque.obtener_imagen(240, 52, 0, 0),
+    "hover": spritesheet_boton_tanque.obtener_imagen(240, 52, 0, 52),
+    "bloqueado": spritesheet_boton_tanque.obtener_imagen(240, 52, 0, 104),
+}
 
-imagen_boton_cancelar = pg.image.load("assets/imagenes/tienda/boton_cancelar.png").convert_alpha()
-imagen_boton_cancelar_hover = pg.image.load("assets/imagenes/tienda/boton_cancelar_hover.png").convert_alpha()
-boton_cancelar = Button(imagen_boton_cancelar, imagen_boton_cancelar_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
+boton_tanque = Button(imagenes_boton_tanque, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_1, True)
 
-imagen_boton_mejora = pg.image.load("assets/imagenes/tienda/boton_mejora.png").convert_alpha()
-imagen_boton_mejora_hover = pg.image.load("assets/imagenes/tienda/boton_mejora_hover.png").convert_alpha()
-boton_mejora = Button(imagen_boton_mejora, imagen_boton_mejora_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_5, True)
+spritesheet_boton_explosivos = Spritesheet("assets/imagenes/tienda/spritesheet_boton_explosivos.png")
 
-imagen_boton_reembolso = pg.image.load("assets/imagenes/tienda/boton_reembolso.png").convert_alpha()
-imagen_boton_reembolso_hover = pg.image.load("assets/imagenes/tienda/boton_reembolso_hover.png").convert_alpha()
-boton_reembolso = Button(imagen_boton_reembolso, imagen_boton_reembolso_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
+imagenes_boton_explosivos = {
+    "normal": spritesheet_boton_explosivos.obtener_imagen(240, 52, 0, 0),
+    "hover": spritesheet_boton_explosivos.obtener_imagen(240, 52, 0, 52),
+    "bloqueado": spritesheet_boton_explosivos.obtener_imagen(240, 52, 0, 104),
+}
 
-imagen_boton_comenzar = pg.image.load("assets/imagenes/tienda/boton_comenzar.png").convert_alpha()
-imagen_boton_comenzar_hover = pg.image.load("assets/imagenes/tienda/boton_comenzar_hover.png").convert_alpha()
-boton_comenzar = Button(imagen_boton_comenzar, imagen_boton_comenzar_hover, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_5_a, True)
+boton_explosivos = Button(imagenes_boton_explosivos, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_2, True)
+
+spritesheet_boton_comenzar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_comenzar.png")
+
+imagenes_boton_comenzar = {
+    "normal": spritesheet_boton_comenzar.obtener_imagen(240, 52, 0, 0),
+    "hover": spritesheet_boton_comenzar.obtener_imagen(240, 52, 0, 52),
+    "bloqueado": spritesheet_boton_comenzar.obtener_imagen(240, 52, 0, 104),
+}
+
+boton_comenzar = Button(imagenes_boton_comenzar, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_5_a, True)
+
+spritesheet_boton_mejorar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_mejorar.png")
+
+imagenes_boton_mejorar = {
+    "normal": spritesheet_boton_mejorar.obtener_imagen(240, 52, 0, 0),
+    "hover": spritesheet_boton_mejorar.obtener_imagen(240, 52, 0, 52),
+}
+
+boton_mejorar = Button(imagenes_boton_mejorar, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_5, True)
+
+spritesheet_boton_cancelar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_cancelar.png")
+
+imagenes_boton_cancelar = {
+    "normal": spritesheet_boton_cancelar.obtener_imagen(240, 52, 0, 0),
+    "hover": spritesheet_boton_cancelar.obtener_imagen(240, 52, 0, 52),
+}
+
+boton_cancelar = Button(imagenes_boton_cancelar, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
+
+spritesheet_boton_reembolsar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_reembolsar.png")
+
+imagenes_boton_reembolsar = {
+    "normal": spritesheet_boton_reembolsar.obtener_imagen(240, 52, 0, 0),
+    "hover": spritesheet_boton_reembolsar.obtener_imagen(240, 52, 0, 52),
+}
+
+boton_reembolsar = Button(imagenes_boton_reembolsar, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
+
+
+
 
 # ------------------------------- #

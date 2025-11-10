@@ -36,24 +36,11 @@ def draw_text(text, font, text_color, x, y):
     img = font.render(text, True, text_color)
     c.ventana.blit(img, (x, y))
 
-def mejorar_torreta(torreta_seleccionada):
-    e.jugador["dinero"] -= torreta_seleccionada.upgrade_cost
-
-    tipo_torreta = torreta_seleccionada.type
-    nivel_torreta = torreta_seleccionada.upgrade_level + 1
-
-    celda_x = torreta_seleccionada.tile_x
-    celda_y = torreta_seleccionada.tile_y
-
-    posicion_mouse = (celda_x, celda_y)
-
-    t.crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas)
-
 def mejorar_torreta_seleccionada(torreta_seleccionada):
     if torreta_seleccionada.upgrade_level >= 3:
         return
     
-    if not(b.boton_mejora.draw(c.ventana)):
+    if not(b.boton_mejorar.draw(c.ventana)):
         return
     
     precio_mejora = (e.torretas[torreta_seleccionada.type])[torreta_seleccionada.upgrade_level]["precio"]
@@ -65,7 +52,6 @@ def mejorar_torreta_seleccionada(torreta_seleccionada):
     e.jugador["dinero"] -= precio_mejora
 
 nivel_torreta = 1
-
 tecla_presionada = None
 
 while jugando:
@@ -97,7 +83,7 @@ while jugando:
         tipo_torreta = "Tanque"
         creando_torretas = True
     
-    if b.boton_dinamita.draw(c.ventana) or tecla_presionada == c.atajo_dinamita:
+    if b.boton_explosivos.draw(c.ventana) or tecla_presionada == c.atajo_dinamita:
         tipo_torreta = "Dinamita"
         creando_torretas = True
 
@@ -109,7 +95,7 @@ while jugando:
     if not(torreta_seleccionada == None):
         mejorar_torreta_seleccionada(torreta_seleccionada)
         
-        if b.boton_reembolso.draw(c.ventana) or tecla_presionada == c.atajo_cancelar_reembolso:
+        if b.boton_reembolsar.draw(c.ventana) or tecla_presionada == c.atajo_cancelar_reembolso:
             torreta_seleccionada = grupo_torretas.remove(torreta_seleccionada)
             e.jugador["dinero"] += torreta.refund
 
@@ -135,6 +121,17 @@ while jugando:
                 c.world.spawned_enemies += 1
                 last_enemy_spawn = pg.time.get_ticks()
 
+    # ------------------------------- #
+
+    # Trampas de desarollador #
+
+    if tecla_presionada == 43:
+        e.jugador["dinero"] += 100
+
+    if tecla_presionada == 45:
+        e.jugador["dinero"] -= 100
+
+    # ------------------------------- #
     tecla_presionada = None
 
     if c.world.check_level_complete() == True:
@@ -169,6 +166,7 @@ while jugando:
 
         if evento.type == pg.KEYDOWN:
             tecla_presionada = evento.key
+            print(tecla_presionada)
 
     pg.display.flip()
 

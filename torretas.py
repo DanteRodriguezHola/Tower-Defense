@@ -10,7 +10,6 @@ class Torreta(pg.sprite.Sprite):
         self.type = tipo_torreta
         self.upgrade_level = nivel_torreta
         
-
         estadisticas_torreta = e.torretas[self.type][self.upgrade_level - 1]
 
         self.damage = estadisticas_torreta["dano"]
@@ -105,8 +104,11 @@ class Torreta(pg.sprite.Sprite):
                     self.image = pg.transform.rotate(self.original_image, self.angle)
                     self.rect = self.image.get_rect(center = (self.x, self.y))
                     self.target.take_damage(self.damage)
-                    print("¡Auch!")
                     break
+
+# ------------------------------- #
+
+# Funciones #
 
 def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
     celda_x = posicion_mouse[0] // c.tamano_celda
@@ -142,3 +144,5 @@ def seleccionar_torreta(posicion_mouse, grupo_torretas):
 def limpiar_seleccion(grupo_torretas):
     for torreta in grupo_torretas:
         torreta.selected = False
+
+# ------------------------------- #
