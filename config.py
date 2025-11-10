@@ -4,28 +4,39 @@ import pygame as pg
 #Carga el reloj
 clock = pg.time.Clock()
 
-#Definicion las dimesiones de la ventana
+ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa)) 
+
+world = cargar_mapa()
+
+
+
+cooldown = 1000 #milisegundos
+
+# ------------------------------- #
+
+# Medidas de los elementos #
+
 ancho_mapa = 720
 alto_mapa = 720
 
 tamano_celda = 48
 
 ancho_tienda = 260
+columna_tienda = (ancho_mapa + ancho_tienda / 19)
 
-#Tamaño de la ventana total: 850 x 980
-ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa)) 
+ancho_boton = 240
+alto_boton = 52
 
-world = cargar_mapa()
+#------------------------------- #
 
-#Carga de elementos decorativos (titulo y icono del programa)
+# Elementos decorativos #
+
 titulo = pg.display.set_caption("Stray Tower Defense")
 
 icono_imagen = pg.image.load("assets\imagenes\icono.png").convert_alpha()
 icono = pg.display.set_icon(icono_imagen)
 
-cooldown = 1000 #milisegundos
-
-# ------------------------------- #
+#------------------------------- #
 
 # Posiciones de los botones #
 
