@@ -7,9 +7,13 @@ import pygame as pg
 class Torreta(pg.sprite.Sprite):
     def __init__(self, tipo_torreta, nivel_torreta, celda_x, celda_y):
         pg.sprite.Sprite.__init__(self)
+
+        # ------------------------------ #
+
+        # Estadisticas #
         self.type = tipo_torreta
         self.upgrade_level = nivel_torreta
-        
+
         estadisticas_torreta = e.torretas[self.type][self.upgrade_level - 1]
 
         self.damage = estadisticas_torreta["dano"]
@@ -17,20 +21,22 @@ class Torreta(pg.sprite.Sprite):
         self.refund = (estadisticas_torreta["precio"]) // 5
         self.delay = estadisticas_torreta["espera"]
 
+        # ------------------------------ #
+
         self.selected = False
 
         self.last_shot = pg.time.get_ticks()
 
-        #Posicion original
+        # Posicion original #
         self.tile_x = celda_x
         self.tile_y = celda_y
 
-        #Calcular el centro de la celda
+        # Calcular el centro de la celda #
         self.x = (self.tile_x + 0.5) * c.tamano_celda
         self.y = (self.tile_y + 0.5) * c.tamano_celda
         
         #Se carga la imagen de la torreta
-        self.original_image = pg.image.load(estadisticas_torreta["imagen"]).convert_alpha()
+        self.original_image = estadisticas_torreta["imagen"]
         self.angle = 0
         self.image = pg.transform.rotate(self.original_image, self.angle)
         #Se obtiene la hitbox de la torreta
@@ -69,7 +75,7 @@ class Torreta(pg.sprite.Sprite):
         self.delay = estadisticas_torreta["espera"]
         
         #Se carga la imagen de la torreta
-        self.original_image = pg.image.load(estadisticas_torreta["imagen"]).convert_alpha()
+        self.original_image = estadisticas_torreta["imagen"]
         self.angle = 0
         self.image = pg.transform.rotate(self.original_image, self.angle)
         #Se obtiene la hitbox de la torreta

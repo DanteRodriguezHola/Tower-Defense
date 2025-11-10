@@ -1,3 +1,8 @@
+from spritesheet import Spritesheet
+import config as c
+
+spritesheet_torreta_tanque = Spritesheet("assets/imagenes/torretas/spritesheet_torreta_tanque.png")
+
 enemigos = {
     "Nor": { #Zombie normal
         "vida": 12,
@@ -59,21 +64,21 @@ torretas = {
             "rango": 130,
             "espera": 1300,
             "precio": 150,
-            "imagen": "assets/imagenes/torretas/torreta_tanque_I.png",
+            "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 0),
         },
         {
             "dano": 5,
             "rango": 140,
             "espera": 1000,
             "precio": 600,
-            "imagen": "assets/imagenes/torretas/torreta_tanque_II.png",
+            "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 50),
         },
         {
             "dano": 15,
             "rango": 150,
             "espera": 800,
             "precio": 3000,
-            "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
+            "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 100),
         }
     ],
     "Explosivos":

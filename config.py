@@ -22,6 +22,9 @@ tamano_celda = 48
 ancho_tienda = 260
 columna_tienda = (ancho_mapa + ancho_tienda / 19)
 
+ancho_torreta = 50
+alto_torreta = 50
+
 ancho_boton = 240
 alto_boton = 52
 

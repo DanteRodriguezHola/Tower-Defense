@@ -1,4 +1,3 @@
-import estadisticas as e
 from rondas import procesar_rondas
 
 import random
