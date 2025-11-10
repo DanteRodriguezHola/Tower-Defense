@@ -64,7 +64,7 @@ while c.jugando:
 
     # ------------------------------- #
 
-    # Actualizacion de los grupos #
+    # Actualizacion de las torretas y los enemigos #
 
     for enemigo in grupo_enemigos:
         enemigo.update()
@@ -120,17 +120,18 @@ while c.jugando:
 
     # Trampas de desarollador #
 
-    if tecla_presionada == 43:
+    if tecla_presionada == 43: # +
         e.jugador["dinero"] += 100
 
-    if tecla_presionada == 45:
+    if tecla_presionada == 45: # -
         e.jugador["dinero"] -= 100
 
-    if tecla_presionada == 1073742053:
+    if tecla_presionada == 1073742053: # Shift derecho
         for enemigo in grupo_enemigos:
-            enemigo.pygame.sprite.kill()
+            enemigo.kill()
 
     # ------------------------------- #
+
     tecla_presionada = None
 
     if c.world.check_level_complete() == True:
@@ -142,13 +143,14 @@ while c.jugando:
 
     if e.jugador["vida"] <= 0:
         jugando = False
-        print("¡Perdiste!")
 
     for evento in pg.event.get():
+        # Al salir del programa #
+
         if evento.type == pg.QUIT:
             c.jugando = False
 
-        #Al hacer click izquierdo
+        # Al hacer click izquierdo # 
 
         if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
             posicion_mouse = pg.mouse.get_pos() #Se obtiene la posicion del ratón
@@ -161,13 +163,12 @@ while c.jugando:
                     t.crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas)
                 else:
                     c.torreta_seleccionada = t.seleccionar_torreta(posicion_mouse, grupo_torretas)
-        #Salir del programa
+        
+        # Al presionar alguna tecla #
 
         if evento.type == pg.KEYDOWN:
             tecla_presionada = evento.key
             print(tecla_presionada)
 
     pg.display.flip()
-
-    
 pg.quit()
