@@ -21,6 +21,10 @@ pg.font.init()
 grupo_torretas = pg.sprite.Group()
 grupo_enemigos = pg.sprite.Group()
 
+grupo_botones_torretas = pg.sprite.Group()
+
+grupo_botones_torretas.add(b.boton_tanque, b.boton_explosivos)
+
 #Variables que controlan el juego:
 jugando = True
 
@@ -76,16 +80,14 @@ while jugando:
 
     cargar_tienda()
 
+    for boton in grupo_botones_torretas:
+        if boton.draw(c.ventana) or tecla_presionada == boton.hotkey:
+            print(boton)
+            tipo_torreta = "Tanque"
+            creando_torretas = True
+
     if torreta_seleccionada:
         torreta_seleccionada.selected = True
-
-    if b.boton_tanque.draw(c.ventana) or tecla_presionada == c.atajo_tanque:
-        tipo_torreta = "Tanque"
-        creando_torretas = True
-    
-    if b.boton_explosivos.draw(c.ventana) or tecla_presionada == c.atajo_dinamita:
-        tipo_torreta = "Dinamita"
-        creando_torretas = True
 
     if creando_torretas:
         if b.boton_cancelar.draw(c.ventana) or tecla_presionada == c.atajo_cancelar_reembolso:
@@ -130,6 +132,9 @@ while jugando:
 
     if tecla_presionada == 45:
         e.jugador["dinero"] -= 100
+
+    if tecla_presionada == 1073742053:
+        grupo_enemigos = pg.sprite.Group()
 
     # ------------------------------- #
     tecla_presionada = None

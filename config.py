@@ -41,9 +41,10 @@ pos_6 = 534
 
 # Atajos de teclado #
 
-atajos = pg.key.get_pressed()
-
 atajo_tanque = pg.K_1
-atajo_dinamita = pg.K_2
-atajo_cancelar_reembolso = pg.K_0
+atajo_explosivos = pg.K_2
 atajo_comenzar = pg.K_SPACE
+atajo_mejorar = pg.K_9
+atajo_cancelar_reembolso = pg.K_0
+
+# ------------------------------- #
