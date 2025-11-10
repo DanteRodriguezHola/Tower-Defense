@@ -28,18 +28,6 @@ def draw_text(text, font, text_color, x, y):
     img = font.render(text, True, text_color)
     c.ventana.blit(img, (x, y))
 
-def boton_mejorar_click(torreta_seleccionada):
-    if torreta_seleccionada.upgrade_level >= 3:
-        return False
-    
-    if not(b.boton_mejorar.draw(c.ventana, tecla_presionada)):
-        return False
-    
-    if not(e.jugador["dinero"] >= torreta_seleccionada.upgrade_cost):
-        return False
-
-    return True
-
 nivel_torreta = 1
 tecla_presionada = None
 
@@ -90,10 +78,10 @@ while c.jugando:
             c.creando_torretas = False
 
     if not(c.torreta_seleccionada == None):
-        if boton_mejorar_click(c.torreta_seleccionada):
+        if b.boton_mejorar.draw(c.ventana, tecla_presionada, c.torreta_seleccionada):
             e.jugador["dinero"] -= c.torreta_seleccionada.upgrade_cost
             c.torreta_seleccionada.mejorar_torreta()
-        
+            
         if b.boton_reembolsar.draw(c.ventana, tecla_presionada) or tecla_presionada == c.atajo_cancelar_reembolso:
             c.torreta_seleccionada = grupo_torretas.remove(c.torreta_seleccionada)
             e.jugador["dinero"] += torreta.refund
@@ -149,6 +137,12 @@ while c.jugando:
         if evento.type == pg.QUIT:
             c.jugando = False
 
+        # Al presionar alguna tecla #
+
+        if evento.type == pg.KEYDOWN:
+            tecla_presionada = evento.key
+            print(tecla_presionada)
+
         # Al hacer click izquierdo # 
 
         if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
@@ -163,11 +157,6 @@ while c.jugando:
                 else:
                     c.torreta_seleccionada = t.seleccionar_torreta(posicion_mouse, grupo_torretas)
         
-        # Al presionar alguna tecla #
-
-        if evento.type == pg.KEYDOWN:
-            tecla_presionada = evento.key
-            print(tecla_presionada)
     mouse_pos = pg.mouse.get_pos()
     for enemigo in grupo_enemigos:
         enemigo.ver_info(mouse_pos, c.ventana)

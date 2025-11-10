@@ -66,8 +66,8 @@ class UpgradeButton(Button):
         super().__init__(spritesheet, atajo_teclado, x, y, single_click)
 
 
-    def draw(self, surface, pressed_key, selected_turret,):
-        if self.check_upgrade_available(selected_turret) == False:
+    def draw(self, surface, pressed_key, selected_turret):
+        if (self.check_upgrade_available(selected_turret) == False):
             surface.blit(self.images["blocked"], self.rect)
             return False
         
@@ -96,7 +96,7 @@ spritesheet_boton_comenzar = Spritesheet("assets/imagenes/tienda/spritesheet_bot
 boton_comenzar = Button(spritesheet_boton_comenzar, c.atajo_comenzar, c.columna_tienda, c.pos_5_a, True)
 
 spritesheet_boton_mejorar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_mejorar.png")
-boton_mejorar = Button(spritesheet_boton_mejorar, c.atajo_mejorar, c.columna_tienda, c.pos_5, True)
+boton_mejorar = UpgradeButton(spritesheet_boton_mejorar, c.atajo_mejorar, c.columna_tienda, c.pos_5, True)
 
 spritesheet_boton_cancelar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_cancelar.png")
 boton_cancelar = Button(spritesheet_boton_cancelar, c.atajo_cancelar_reembolso, c.columna_tienda, c.pos_6, True)
