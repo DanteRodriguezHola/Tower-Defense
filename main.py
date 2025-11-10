@@ -135,6 +135,7 @@ while c.jugando:
     tecla_presionada = None
 
     if c.world.check_level_complete() == True:
+        c.world.oleada += 1 #no se
         c.world.level += 1
         c.last_enemy_spawn = pg.time.get_ticks()
         c.level_started = False
