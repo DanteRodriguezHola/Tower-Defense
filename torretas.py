@@ -152,3 +152,5 @@ def limpiar_seleccion(grupo_torretas):
         torreta.selected = False
 
 # ------------------------------- #
+
+# A hacer: Reestructurar el sistema de mejora. En vez de que se repita todo el codigo, que se elimine la torreta, y que se reemplaze por la torreta mejorada.
