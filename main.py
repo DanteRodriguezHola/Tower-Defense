@@ -169,6 +169,9 @@ while c.jugando:
         if evento.type == pg.KEYDOWN:
             tecla_presionada = evento.key
             print(tecla_presionada)
+    mouse_pos = pg.mouse.get_pos()
+    for enemigo in grupo_enemigos:
+        enemigo.ver_info(mouse_pos, c.ventana)
 
     pg.display.flip()
 pg.quit()

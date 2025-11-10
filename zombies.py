@@ -6,6 +6,10 @@ from pygame.math import Vector2
 import math
 
 import pygame as pg
+pg.init()
+pg.font.init()
+
+fuente = pg.font.SysFont("Consolas", 20)
 
 class Enemy(pg.sprite.Sprite):
     def __init__(self, enemy_type, waypoints): # Añadir: vida, velocidad, daño y recompensa.
@@ -18,6 +22,7 @@ class Enemy(pg.sprite.Sprite):
         self.damage = e.enemigos.get(enemy_type)["dano"]
         self.speed = e.enemigos.get(enemy_type)["velocidad"]
         self.reward = e.enemigos.get(enemy_type)["recompensa"]
+        self.enemy_type = enemy_type
 
         self.angle = 0
         self.original_image = pg.image.load(e.enemigos.get(enemy_type)["imagen"]).convert_alpha()
@@ -80,3 +85,8 @@ class Enemy(pg.sprite.Sprite):
         self.health -= amount
         self.is_hurt = True
         self.hurt_time = pg.time.get_ticks()
+    
+    def ver_info(self, mouse_pos, ventana):
+        if self.rect.collidepoint(mouse_pos):
+            texto = fuente.render(("Vida: " + str(self.health) + "/" + str(e.enemigos.get(self.enemy_type)["vida"])), True, (0, 0, 0))
+            ventana.blit(texto, (0, 0))
