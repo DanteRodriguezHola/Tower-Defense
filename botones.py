@@ -2,7 +2,7 @@ from spritesheet import Spritesheet
 
 import config as c
 import pygame as pg
-
+import estadisticas as e
 
 class Button(pg.sprite.Sprite):
     def __init__(self, spritesheet, atajo_teclado, x , y, single_click):
@@ -29,13 +29,14 @@ class Button(pg.sprite.Sprite):
         self.clicked = False
         self.single_click = single_click
     
-    def draw(self, surface):
+    def draw(self, surface, pressed_key):
         accion = False
         posicion_mouse = pg.mouse.get_pos()
 
-        if self.rect.collidepoint(posicion_mouse):
+        if self.rect.collidepoint(posicion_mouse) or pressed_key == self.hotkey:
             surface.blit(self.images["hover"], self.rect)
-            if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
+            
+            if (pg.mouse.get_pressed()[0] == 1 and self.clicked == False) or pressed_key == self.hotkey:
                 accion = True
 
                 if self.single_click:
@@ -48,15 +49,32 @@ class Button(pg.sprite.Sprite):
             
         return accion
 
+class TurretButton(Button):
+    def __init__(self, spritesheet, atajo_teclado, x , y, single_click, tipo_torreta):
+        super().__init__(spritesheet, atajo_teclado, x , y, single_click)
+        self.turret_type = tipo_torreta
+
+    def draw(self, surface, pressed_key):
+        accion = False
+        costo_torreta = e.torretas[self.turret_type][0]["precio"]
+
+        if e.jugador["dinero"] < costo_torreta:
+            surface.blit(self.images["blocked"], self.rect)
+        
+        else:
+            accion = super().draw(surface, pressed_key)
+
+        return accion
+
 # ------------------------------- #
 
 # Carga de spritesheets y creación de los botones #
 
 spritesheet_boton_tanque = Spritesheet("assets/imagenes/tienda/spritesheet_boton_tanque.png")
-boton_tanque = Button(spritesheet_boton_tanque, c.atajo_tanque, c.columna_tienda, c.pos_1, True)
+boton_tanque = TurretButton(spritesheet_boton_tanque, c.atajo_tanque, c.columna_tienda, c.pos_1, True, "Tanque")
 
 spritesheet_boton_explosivos = Spritesheet("assets/imagenes/tienda/spritesheet_boton_explosivos.png")
-boton_explosivos = Button(spritesheet_boton_explosivos, c.atajo_explosivos, c.columna_tienda, c.pos_2, True)
+boton_explosivos = TurretButton(spritesheet_boton_explosivos, c.atajo_explosivos, c.columna_tienda, c.pos_2, True, "Explosivos")
 
 spritesheet_boton_comenzar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_comenzar.png")
 boton_comenzar = Button(spritesheet_boton_comenzar, c.atajo_comenzar, c.columna_tienda, c.pos_5_a, True)

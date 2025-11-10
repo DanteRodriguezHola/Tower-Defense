@@ -76,13 +76,13 @@ torretas = {
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         }
     ],
-    "Dinamita":
+    "Explosivos":
     [
         {
             "dano": 0,
             "rango": 115,
             "espera": 0,
-            "precio": 0,
+            "precio": 1000,
             "imagen": "assets/imagenes/torretas/torreta_dinamita_I.png",
         },
         {
