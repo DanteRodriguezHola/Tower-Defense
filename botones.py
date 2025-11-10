@@ -5,20 +5,26 @@ import pygame as pg
 
 
 class Button(pg.sprite.Sprite):
-    def __init__(self, imagenes, atajo_teclado, x , y, single_click):
+    def __init__(self, spritesheet, atajo_teclado, x , y, single_click):
         pg.sprite.Sprite.__init__(self)
 
-        # ------------------------------- #
+        self.images = {
+            "normal": "",
+            "hover": "",
+            "blocked": "",
+        }
 
-        self.image_normal = imagenes.get("normal")
-        self.image_hover = imagenes.get("hover")
-        self.image_blocked = imagenes.get("bloqueado")
+        numero = 0
+
+        for image in self.images:
+            self.images[image] = spritesheet.obtener_imagen(c.ancho_boton, c.alto_boton, 0, numero)
+            numero += 52
 
         # ------------------------------- #
 
         self.hotkey = atajo_teclado
 
-        self.rect = self.image_normal.get_rect()
+        self.rect = self.images["normal"].get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False
         self.single_click = single_click
@@ -28,14 +34,14 @@ class Button(pg.sprite.Sprite):
         posicion_mouse = pg.mouse.get_pos()
 
         if self.rect.collidepoint(posicion_mouse):
-            surface.blit(self.image_hover, self.rect)
+            surface.blit(self.images["hover"], self.rect)
             if pg.mouse.get_pressed()[0] == 1 and self.clicked == False:
                 accion = True
 
                 if self.single_click:
                     self.clicked = True
         else:
-            surface.blit(self.image_normal, self.rect)
+            surface.blit(self.images["normal"], self.rect)
 
         if pg.mouse.get_pressed()[0] == 0:
             self.clicked = False
@@ -44,63 +50,28 @@ class Button(pg.sprite.Sprite):
 
 # ------------------------------- #
 
-# Carga de imagenes y creación de los botones #
+# Carga de spritesheets y creación de los botones #
 
 spritesheet_boton_tanque = Spritesheet("assets/imagenes/tienda/spritesheet_boton_tanque.png")
-
-imagenes_boton_tanque = {
-    "normal": spritesheet_boton_tanque.obtener_imagen(240, 52, 0, 0),
-    "hover": spritesheet_boton_tanque.obtener_imagen(240, 52, 0, 52),
-    "bloqueado": spritesheet_boton_tanque.obtener_imagen(240, 52, 0, 104),
-}
-
-boton_tanque = Button(imagenes_boton_tanque, c.atajo_tanque, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_1, True)
+boton_tanque = Button(spritesheet_boton_tanque, c.atajo_tanque, c.columna_tienda, c.pos_1, True)
 
 spritesheet_boton_explosivos = Spritesheet("assets/imagenes/tienda/spritesheet_boton_explosivos.png")
-
-imagenes_boton_explosivos = {
-    "normal": spritesheet_boton_explosivos.obtener_imagen(240, 52, 0, 0),
-    "hover": spritesheet_boton_explosivos.obtener_imagen(240, 52, 0, 52),
-    "bloqueado": spritesheet_boton_explosivos.obtener_imagen(240, 52, 0, 104),
-}
-
-boton_explosivos = Button(imagenes_boton_explosivos, c.atajo_explosivos, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_2, True)
+boton_explosivos = Button(spritesheet_boton_explosivos, c.atajo_explosivos, c.columna_tienda, c.pos_2, True)
 
 spritesheet_boton_comenzar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_comenzar.png")
-
-imagenes_boton_comenzar = {
-    "normal": spritesheet_boton_comenzar.obtener_imagen(240, 52, 0, 0),
-    "hover": spritesheet_boton_comenzar.obtener_imagen(240, 52, 0, 52),
-    "bloqueado": spritesheet_boton_comenzar.obtener_imagen(240, 52, 0, 104),
-}
-
-boton_comenzar = Button(imagenes_boton_comenzar, c.atajo_comenzar, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_5_a, True)
+boton_comenzar = Button(spritesheet_boton_comenzar, c.atajo_comenzar, c.columna_tienda, c.pos_5_a, True)
 
 spritesheet_boton_mejorar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_mejorar.png")
-
-imagenes_boton_mejorar = {
-    "normal": spritesheet_boton_mejorar.obtener_imagen(240, 52, 0, 0),
-    "hover": spritesheet_boton_mejorar.obtener_imagen(240, 52, 0, 52),
-}
-
-boton_mejorar = Button(imagenes_boton_mejorar, c.atajo_mejorar, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_5, True)
+boton_mejorar = Button(spritesheet_boton_mejorar, c.atajo_mejorar, c.columna_tienda, c.pos_5, True)
 
 spritesheet_boton_cancelar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_cancelar.png")
-
-imagenes_boton_cancelar = {
-    "normal": spritesheet_boton_cancelar.obtener_imagen(240, 52, 0, 0),
-    "hover": spritesheet_boton_cancelar.obtener_imagen(240, 52, 0, 52),
-}
-
-boton_cancelar = Button(imagenes_boton_cancelar, c.atajo_cancelar_reembolso, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
+boton_cancelar = Button(spritesheet_boton_cancelar, c.atajo_cancelar_reembolso, c.columna_tienda, c.pos_6, True)
 
 spritesheet_boton_reembolsar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_reembolsar.png")
-
-imagenes_boton_reembolsar = {
-    "normal": spritesheet_boton_reembolsar.obtener_imagen(240, 52, 0, 0),
-    "hover": spritesheet_boton_reembolsar.obtener_imagen(240, 52, 0, 52),
-}
-
-boton_reembolsar = Button(imagenes_boton_reembolsar, c.atajo_cancelar_reembolso, (c.ancho_mapa + c.ancho_tienda / 19), c.pos_6, True)
+boton_reembolsar = Button(spritesheet_boton_reembolsar, c.atajo_cancelar_reembolso, c.columna_tienda, c.pos_6, True)
 
 # ------------------------------- #
+
+# Que hacer a futuro #
+
+# Hacer que todos las imagenes de los botones se encuentren en una solo spritesheet

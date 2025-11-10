@@ -134,7 +134,8 @@ while jugando:
         e.jugador["dinero"] -= 100
 
     if tecla_presionada == 1073742053:
-        grupo_enemigos = pg.sprite.Group()
+        for enemigo in grupo_enemigos:
+            enemigo.pygame.sprite.kill()
 
     # ------------------------------- #
     tecla_presionada = None
