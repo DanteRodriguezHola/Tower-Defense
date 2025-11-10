@@ -1,19 +1,6 @@
 from world import cargar_mapa
 import pygame as pg
 
-#Carga el reloj
-clock = pg.time.Clock()
-
-ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa)) 
-
-world = cargar_mapa()
-
-
-
-cooldown = 1000 #milisegundos
-
-# ------------------------------- #
-
 # Medidas de los elementos #
 
 ancho_mapa = 720
@@ -28,6 +15,19 @@ ancho_boton = 240
 alto_boton = 52
 
 #------------------------------- #
+
+#Carga el reloj
+clock = pg.time.Clock()
+
+ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa)) 
+
+world = cargar_mapa()
+
+
+
+cooldown = 1000 #milisegundos
+
+# ------------------------------- #
 
 # Elementos decorativos #
 
