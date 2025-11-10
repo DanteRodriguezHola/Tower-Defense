@@ -3,6 +3,7 @@
 # Importaciones #
 
 import config as c
+import menu
 
 from zombies import Enemy
 
@@ -58,7 +59,21 @@ def mejorar_torreta_seleccionada(torreta_seleccionada):
 nivel_torreta = 1
 tecla_presionada = None
 
+estado = "menu"
+
 while jugando:
+    if estado == "menu":
+        boton_jugar, boton_salir = menu.menu()
+        for evento in pg.event.get():
+            if evento.type == pg.QUIT:
+                jugando = False
+            if boton_jugar.click(evento):
+                estado = "jugando"
+            if boton_salir.click(evento):
+                jugando = False
+
+        pg.display.flip()
+        continue
     c.clock.tick(60) 
     c.world.draw(c.ventana)
 

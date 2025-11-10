@@ -6,6 +6,7 @@ jugar_img = pg.image.load('assets/imagenes/menu/boton_jugar.png').convert_alpha(
 salir_img = pg.image.load('assets/imagenes/menu/boton_salir.png').convert_alpha()
 jugar_hover = pg.image.load('assets/imagenes/menu/boton_jugar_hover.png').convert_alpha()
 salir_hover = pg.image.load('assets/imagenes/menu/boton_salir_hover.png').convert_alpha()
+huergo = pg.image.load('assets/imagenes/menu/logo_huergo.png').convert_alpha()
 
 class Boton:
     def __init__(self, x, y, imagen_normal, imagen_hover):
@@ -25,11 +26,12 @@ class Boton:
         return evento.type == pg.MOUSEBUTTONDOWN and self.hover
 
 # Crear botones una sola vez
-boton_jugar = Boton(101, 270, jugar_img, jugar_hover)
-boton_salir = Boton(165, 370, salir_img, salir_hover)
+boton_jugar = Boton(306, 420, jugar_img, jugar_hover)
+boton_salir = Boton(370, 520, salir_img, salir_hover)
 
 def menu():
     ventana.blit(fondo_menu, (0, 0))
+    ventana.blit(huergo, (810, 558))
     mouse_pos = pg.mouse.get_pos()
 
     boton_jugar.actualizar(mouse_pos)
