@@ -38,23 +38,11 @@ class World():
             temp_y = punto.get('y')
             self.waypoints.append((temp_x, temp_y))
 
-    """
-    def terminar_ronda(self):
-        self.niveles_terminados += 1
-        print("world.py linea 43 niveles terminados:")
-        print(self.niveles_terminados)
-        if self.niveles_terminados == 5:
-            print("world.py linea 46 self.oleada:")
-            print("\n\n entre aca porque termino la ronda \n\n")
-            self.oleada += 1
-            self.niveles_terminados = 0
-    """
     def check_level_complete(self):
         if (self.killed_enemies + self.missed_enemies) == len(self.enemy_list):
             print(self.killed_enemies)
             print(self.missed_enemies)
             print(len(self.enemy_list))
-            #self.terminar_ronda()
             return True
         
     def reset_level(self):
@@ -76,11 +64,6 @@ class World():
             for enemy in range(enemies_to_spawn):
                 self.enemy_list.append(enemy_type)
         random.shuffle(self.enemy_list)
-"""crea una lista asi por ejemplo:
-si te daba el diccionario asi: {"Nor" : 2, "Len" : 3}
-te devuelve la lista enemy_list asi = ["Nor", "Nor", "Len", "Len", "Len"]
-procesar_rondas
-"""
 
 def cargar_mapa():
     mapa_imagen = pg.image.load('assets/imagenes/mapa.png').convert_alpha()
