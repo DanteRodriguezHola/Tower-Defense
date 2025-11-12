@@ -36,11 +36,11 @@ while c.jugando:
         boton_jugar, boton_salir = menu.menu()
         for evento in pg.event.get():
             if evento.type == pg.QUIT:
-                jugando = False
+                c.jugando = False
             if boton_jugar.click(evento):
                 c.estado = "jugando"
             if boton_salir.click(evento):
-                jugando = False
+                c.jugando = False
 
         pg.display.flip()
         continue

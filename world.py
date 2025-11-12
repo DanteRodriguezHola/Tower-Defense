@@ -40,6 +40,7 @@ class World():
 
     def check_level_complete(self):
         if (self.killed_enemies + self.missed_enemies) == len(self.enemy_list):
+            print(self.level)
             return True
         
     def reset_level(self):
@@ -55,6 +56,7 @@ class World():
         except IndexError:
             self.level = 0
             self.oleada += 1
+            print(self.oleada)
             enemy_spawn_data = procesar_rondas(self.oleada)
             enemies = enemy_spawn_data[self.level]
         for enemy_type in enemies:
