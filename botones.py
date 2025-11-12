@@ -41,8 +41,11 @@ class Button(pg.sprite.Sprite):
         
         if ((pg.mouse.get_pressed()[0] == 1 and self.clicked == False) or pressed_key == self.hotkey):
             accion = True
+
             if self.single_click:
                 self.clicked = True
+                print("clicked")
+
             return accion
 
         self.clicked = False
@@ -55,19 +58,18 @@ class TurretButton(Button):
     def draw(self, surface, pressed_key):
         costo_torreta = e.torretas[self.turret_type][0]["precio"]
 
-        if not(e.jugador["dinero"] >= costo_torreta):
+        if e.jugador["dinero"] < costo_torreta:
             surface.blit(self.images["blocked"], self.rect)
             return False
-
+        
         return super().draw(surface, pressed_key)
 
 class UpgradeButton(Button):
     def __init__(self, spritesheet, atajo_teclado, x, y, single_click):
         super().__init__(spritesheet, atajo_teclado, x, y, single_click)
 
-
     def draw(self, surface, pressed_key, selected_turret):
-        if (self.check_upgrade_available(selected_turret) == False):
+        if self.check_upgrade_available(selected_turret) == False:
             surface.blit(self.images["blocked"], self.rect)
             return False
         
@@ -78,6 +80,9 @@ class UpgradeButton(Button):
             return False
         
         if not(e.jugador["dinero"] >= selected_turret.upgrade_cost):
+            return False
+        
+        if self.clicked == False:
             return False
         
         return True
@@ -96,7 +101,7 @@ spritesheet_boton_comenzar = Spritesheet("assets/imagenes/tienda/spritesheet_bot
 boton_comenzar = Button(spritesheet_boton_comenzar, c.atajo_comenzar, c.columna_tienda, c.pos_5_a, True)
 
 spritesheet_boton_mejorar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_mejorar.png")
-boton_mejorar = UpgradeButton(spritesheet_boton_mejorar, c.atajo_mejorar, c.columna_tienda, c.pos_5, True)
+boton_mejorar = UpgradeButton(spritesheet_boton_mejorar, c.atajo_mejorar, c.columna_tienda, c.pos_5, False)
 
 spritesheet_boton_cancelar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_cancelar.png")
 boton_cancelar = Button(spritesheet_boton_cancelar, c.atajo_cancelar_reembolso, c.columna_tienda, c.pos_6, True)

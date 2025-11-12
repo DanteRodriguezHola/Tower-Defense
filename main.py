@@ -19,7 +19,7 @@ import pygame as pg
 grupo_torretas = pg.sprite.Group()
 grupo_enemigos = pg.sprite.Group()
 grupo_botones_torretas = pg.sprite.Group()
-grupo_botones_torretas.add(b.boton_tanque, b.boton_explosivos)
+grupo_botones_torretas.add(b.boton_tanque)
 
 text_font = pg.font.SysFont("Consolas", 40, bold =  True) 
 large_font = pg.font.SysFont("Consolas", 52) 
@@ -79,13 +79,11 @@ while c.jugando:
 
     if not(c.torreta_seleccionada == None):
         if b.boton_mejorar.draw(c.ventana, tecla_presionada, c.torreta_seleccionada):
-            e.jugador["dinero"] -= c.torreta_seleccionada.upgrade_cost
-            c.torreta_seleccionada.mejorar_torreta()
+            c.torreta_seleccionada = t.mejorar_torreta(c.torreta_seleccionada, grupo_torretas)
             
         if b.boton_reembolsar.draw(c.ventana, tecla_presionada) or tecla_presionada == c.atajo_cancelar_reembolso:
             c.torreta_seleccionada = grupo_torretas.remove(c.torreta_seleccionada)
-            e.jugador["dinero"] += torreta.refund
-
+            
     draw_text(str(e.jugador["vida"]), text_font, "grey100", 780, 605)
     draw_text(str(e.jugador["dinero"]), text_font, "grey100", 780, 668)
 
