@@ -23,10 +23,10 @@ enemigos = {
         },
 
     "Rap": { #Zombie rapido, con misma vida
-        "vida": 8,
-        "velocidad": 2.8,
+        "vida": 10,
+        "velocidad": 3.3,
         "dano": 3,
-        "recompensa": 50,
+        "recompensa": 25,
         "imagen": "assets/imagenes/zombies/zombie_rapido.png",
         "imagen_auch": "assets/imagenes/zombies/zombie_rapido_auch.png",
         },

@@ -58,12 +58,14 @@ class World():
         except IndexError:
             self.level = 0
             self.oleada += 1
+            enemy_spawn_data = procesar_rondas(self.oleada)
             enemies = enemy_spawn_data[self.level]
         for enemy_type in enemies:
             enemies_to_spawn = enemies[enemy_type]
             for enemy in range(enemies_to_spawn):
                 self.enemy_list.append(enemy_type)
         random.shuffle(self.enemy_list)
+        
 
 def cargar_mapa():
     mapa_imagen = pg.image.load('assets/imagenes/mapa.png').convert_alpha()

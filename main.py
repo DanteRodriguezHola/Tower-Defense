@@ -92,6 +92,7 @@ while c.jugando:
     if c.level_started == False:
         if b.boton_comenzar.draw(c.ventana, tecla_presionada) or tecla_presionada == c.atajo_comenzar:
             c.level_started = True
+    
     else:
         if pg.time.get_ticks() - c.last_enemy_spawn > c.cooldown:
             if c.world.spawned_enemies < len(c.world.enemy_list):
@@ -113,7 +114,8 @@ while c.jugando:
 
     if tecla_presionada == 1073742053: # Shift derecho
         for enemigo in grupo_enemigos:
-            enemigo.kill()
+
+            enemigo.health = 0
 
     # ------------------------------- #
 
@@ -127,7 +129,7 @@ while c.jugando:
         c.world.process_enemies()
 
     if e.jugador["vida"] <= 0:
-        jugando = False
+        c.jugando = False
 
     for evento in pg.event.get():
         # Al salir del programa #

@@ -19,7 +19,7 @@ class Enemy(pg.sprite.Sprite):
         self.target_waypoint = 1
         
         self.health = e.enemigos.get(enemy_type)["vida"]
-        self.damage = e.enemigos.get(enemy_type)["dano"]
+        self.damage = e.enemigos.get(enemy_type)["dano"] 
         self.speed = e.enemigos.get(enemy_type)["velocidad"]
         self.reward = e.enemigos.get(enemy_type)["recompensa"]
         self.enemy_type = enemy_type

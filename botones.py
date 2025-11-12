@@ -82,9 +82,6 @@ class UpgradeButton(Button):
         if not(e.jugador["dinero"] >= selected_turret.upgrade_cost):
             return False
         
-        if self.clicked == False:
-            return False
-        
         return True
 
 # ------------------------------- #
