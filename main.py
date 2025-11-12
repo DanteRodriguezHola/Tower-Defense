@@ -19,7 +19,7 @@ import pygame as pg
 grupo_torretas = pg.sprite.Group()
 grupo_enemigos = pg.sprite.Group()
 grupo_botones_torretas = pg.sprite.Group()
-grupo_botones_torretas.add(b.boton_tanque, b.boton_explosivos)
+grupo_botones_torretas.add(b.boton_tanque)
 
 text_font = pg.font.SysFont("Consolas", 40, bold =  True) 
 large_font = pg.font.SysFont("Consolas", 52) 
@@ -27,21 +27,6 @@ large_font = pg.font.SysFont("Consolas", 52)
 def draw_text(text, font, text_color, x, y):
     img = font.render(text, True, text_color)
     c.ventana.blit(img, (x, y))
-
-def mejorar_torreta_seleccionada(torreta_seleccionada):
-    if torreta_seleccionada.upgrade_level >= 3:
-        return
-    
-    if not(b.boton_mejorar.draw(c.ventana, tecla_presionada)):
-        return
-    
-    precio_mejora = (e.torretas[torreta_seleccionada.type])[torreta_seleccionada.upgrade_level]["precio"]
-    
-    if e.jugador["dinero"] < precio_mejora:
-        return
-    
-    torreta_seleccionada.mejorar_torreta()
-    e.jugador["dinero"] -= precio_mejora
 
 nivel_torreta = 1
 tecla_presionada = None
@@ -93,12 +78,12 @@ while c.jugando:
             c.creando_torretas = False
 
     if not(c.torreta_seleccionada == None):
-        mejorar_torreta_seleccionada(c.torreta_seleccionada)
-        
+        if b.boton_mejorar.draw(c.ventana, tecla_presionada, c.torreta_seleccionada):
+            c.torreta_seleccionada = t.mejorar_torreta(c.torreta_seleccionada, grupo_torretas)
+            
         if b.boton_reembolsar.draw(c.ventana, tecla_presionada) or tecla_presionada == c.atajo_cancelar_reembolso:
             c.torreta_seleccionada = grupo_torretas.remove(c.torreta_seleccionada)
-            e.jugador["dinero"] += torreta.refund
-
+            
     draw_text(str(e.jugador["vida"]), text_font, "grey100", 780, 605)
     draw_text(str(e.jugador["dinero"]), text_font, "grey100", 780, 668)
 
@@ -121,7 +106,7 @@ while c.jugando:
     # Trampas de desarollador #
 
     if tecla_presionada == 43: # +
-        e.jugador["dinero"] += 99999
+        e.jugador["dinero"] += 100
 
     if tecla_presionada == 45: # -
         e.jugador["dinero"] -= 100
@@ -150,6 +135,12 @@ while c.jugando:
         if evento.type == pg.QUIT:
             c.jugando = False
 
+        # Al presionar alguna tecla #
+
+        if evento.type == pg.KEYDOWN:
+            tecla_presionada = evento.key
+            print(tecla_presionada)
+
         # Al hacer click izquierdo # 
 
         if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
@@ -165,9 +156,10 @@ while c.jugando:
                     c.torreta_seleccionada = t.seleccionar_torreta(posicion_mouse, grupo_torretas)
         
         # Al presionar alguna tecla #
-
         if evento.type == pg.KEYDOWN:
             tecla_presionada = evento.key
+            print(tecla_presionada)
+
     mouse_pos = pg.mouse.get_pos()
     for enemigo in grupo_enemigos:
         enemigo.ver_info(mouse_pos, c.ventana)
