@@ -14,7 +14,7 @@ enemigos = {
         },
 
     "Len": { #Zombie lento, con mayor vida
-        "vida": 40,
+        "vida": 50,
         "velocidad": 0.7,
         "dano": 7,
         "recompensa": 50,

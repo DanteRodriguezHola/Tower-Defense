@@ -40,9 +40,6 @@ class World():
 
     def check_level_complete(self):
         if (self.killed_enemies + self.missed_enemies) == len(self.enemy_list):
-            print(self.killed_enemies)
-            print(self.missed_enemies)
-            print(len(self.enemy_list))
             return True
         
     def reset_level(self):
