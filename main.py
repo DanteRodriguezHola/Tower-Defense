@@ -22,7 +22,7 @@ grupo_botones_torretas = pg.sprite.Group()
 grupo_botones_torretas.add(b.boton_tanque)
 
 text_font = pg.font.SysFont("Consolas", 40, bold =  True) 
-large_font = pg.font.SysFont("Consolas", 52) 
+small_font = pg.font.SysFont("Consolas", 16)
 
 def draw_text(text, font, text_color, x, y):
     img = font.render(text, True, text_color)

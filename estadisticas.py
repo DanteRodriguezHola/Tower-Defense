@@ -60,23 +60,23 @@ torretas = {
     "Tanque":
     [
         {
-            "dano": 2,
+            "dano": 3,
             "rango": 130,
-            "espera": 1300,
+            "espera": 1800,
             "precio": 150,
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 0),
         },
         {
-            "dano": 5,
-            "rango": 140,
-            "espera": 1000,
+            "dano": 6,
+            "rango": 145,
+            "espera": 1200,
             "precio": 600,
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 50),
         },
         {
-            "dano": 15,
-            "rango": 150,
-            "espera": 800,
+            "dano": 12,
+            "rango": 160,
+            "espera": 900,
             "precio": 3000,
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 100),
         }
