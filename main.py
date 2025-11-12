@@ -155,6 +155,11 @@ while c.jugando:
                 else:
                     c.torreta_seleccionada = t.seleccionar_torreta(posicion_mouse, grupo_torretas)
         
+        # Al presionar alguna tecla #
+        if evento.type == pg.KEYDOWN:
+            tecla_presionada = evento.key
+            print(tecla_presionada)
+
     mouse_pos = pg.mouse.get_pos()
     for enemigo in grupo_enemigos:
         enemigo.ver_info(mouse_pos, c.ventana)

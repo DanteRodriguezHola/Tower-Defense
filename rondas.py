@@ -1,4 +1,5 @@
 import os
+niveles = 0
 
 def obtener_ruta_archivo(numero_ronda):
     nombre_archivo_ronda = "ronda_" + numero_ronda + ".txt"
@@ -8,22 +9,18 @@ def obtener_ruta_archivo(numero_ronda):
     return ruta_archivo_ronda
 
 def procesar_rondas(numero_de_ronda):
-    diccionarios_enemigos = []
-    ruta_archivo_ronda = obtener_ruta_archivo(numero_de_ronda)
+    lista_enemigos = []
+    ruta_archivo_ronda = obtener_ruta_archivo(str(numero_de_ronda))
     with open(ruta_archivo_ronda, "r") as ronda:
         for oleada in ronda:
-            diccionario_enemigos = crear_diccionarios_enemigos(oleada)
-            diccionarios_enemigos.append(diccionario_enemigos)
-    return diccionarios_enemigos
+            dic_enemigos = crear_diccionarios_enemigos(oleada)
+            lista_enemigos.append(dic_enemigos)
+    return lista_enemigos
 
 def crear_diccionarios_enemigos(oleada):
     diccionario_enemigos = {}
     oleada = oleada.split()
-    for enemigo in oleada:
-        enemigo = enemigo.split("_")
-        tipo_enemigo = enemigo[0]
-        cantidad_enemigo = int(enemigo[1])
-        diccionario_enemigos.update({tipo_enemigo: cantidad_enemigo})
+    for enemy in oleada:
+        zombie, cantidad = enemy.split("_")
+        diccionario_enemigos.update({zombie: int(cantidad)})
     return diccionario_enemigos
-
-enemy_spawn_data = procesar_rondas("1")
