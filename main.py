@@ -43,7 +43,7 @@ while c.jugando:
                 c.jugando = False
         pg.display.flip()
         continue
-    
+
     elif c.estado == "ganaste":
         c.clock.tick(60)
         draw_text("GANASTE!!!", large_font, (0, 0, 0), 400, 300)
@@ -187,6 +187,6 @@ pg.quit()
 errores que descubri: 
 - si tenes suficiente dinero para hacer 2 mejoras hace las dos
 de una. 
-- al llegar a la ronda 11 se cierra el juego
+(ARREGLAO)- al llegar a la ronda 11 se cierra el juego
 - que pasa si perdes (probar)
 """
