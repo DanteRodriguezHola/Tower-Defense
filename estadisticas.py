@@ -60,7 +60,7 @@ torretas = {
     "Tanque":
     [
         {
-            "dano": 3,
+            "dano": 2,
             "rango": 130,
             "espera": 1800,
             "precio": 150,
@@ -68,7 +68,7 @@ torretas = {
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 0),
         },
         {
-            "dano": 6,
+            "dano": 5,
             "rango": 145,
             "espera": 1200,
             "precio": 600,
