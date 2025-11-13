@@ -98,8 +98,11 @@ class Torreta(pg.sprite.Sprite):
             "celda_x": self.tile_x,
             "celda_y": self.tile_y,
         }
-
         return informacion_torreta
+    
+    def reembolsar_torreta(self):
+        e.jugador["dinero"] += e.torretas[self.type][self.upgrade_level - 1]["reembolso"]
+
 
 # ------------------------------- #
 

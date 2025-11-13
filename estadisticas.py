@@ -31,7 +31,7 @@ enemigos = {
         "imagen_auch": "assets/imagenes/zombies/zombie_rapido_auch.png",
         },
 
-    "Jf1": { #Primer jefe, posee muchisima vida. Hace dano a la torre segun la vida que tenga en ese momento.
+    "Jf1": { #Primer jefe, posee muchisima vida. Hace dano al jugador según la vida que tenga en ese momento.
         "vida": 100,
         "velocidad": 1.3,
         "dano": "Igual a la vida final",
@@ -64,6 +64,7 @@ torretas = {
             "rango": 130,
             "espera": 1800,
             "precio": 150,
+            "reembolso": 50,
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 0),
         },
         {
@@ -71,13 +72,15 @@ torretas = {
             "rango": 145,
             "espera": 1200,
             "precio": 600,
+            "reembolso": 200,
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 50),
         },
         {
-            "dano": 12,
-            "rango": 160,
-            "espera": 900,
+            "dano": 10,
+            "rango": 150,
+            "espera": 800,
             "precio": 3000,
+            "reembolso": 1000,
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 100),
         }
     ],
@@ -88,6 +91,7 @@ torretas = {
             "rango": 115,
             "espera": 0,
             "precio": 1000,
+            "reembolso": 300,
             "imagen": "assets/imagenes/torretas/torreta_dinamita_I.png",
         },
         {
@@ -95,6 +99,7 @@ torretas = {
             "rango": 130,
             "espera": 0,
             "precio": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_dinamita_II.png",
         },
         {
@@ -102,6 +107,7 @@ torretas = {
             "rango": 170,
             "espera": 0,
             "precio": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_dinamita_III.png",
         },
     ],
@@ -112,6 +118,7 @@ torretas = {
             "rango": 0,
             "espera": 0,
             "precio": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         },
         {
@@ -119,6 +126,7 @@ torretas = {
             "rango": 0,
             "espera": 0,
             "precio": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         },
         {
@@ -126,6 +134,7 @@ torretas = {
             "rango": 0,
             "espera": 0,
             "precio": 0,
+            "reembolso": 0,
             "imagen": "assets/imagenes/torretas/torreta_tanque_III.png",
         },
     ]
