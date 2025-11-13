@@ -44,9 +44,12 @@ while c.jugando:
         pg.display.flip()
         continue
 
-    elif c.estado == "ganaste":
+    elif c.estado == "ganaste" or c.estado == "perdiste":
         c.clock.tick(60)
-        draw_text("GANASTE!!!", large_font, (0, 0, 0), 400, 300)
+        if c.estado == "ganaste":
+            draw_text("GANASTE!!!", large_font, (0, 0, 0), 400, 300)
+        else:
+            draw_text("PERDISTE!!!", large_font, (0, 0, 0), 400, 300)
         pg.display.flip()
 
         for evento in pg.event.get():
@@ -143,7 +146,7 @@ while c.jugando:
             c.world.process_enemies()
 
         if e.jugador["vida"] <= 0:
-            c.jugando = False
+            c.estado = "perdiste"
 
         for evento in pg.event.get():
             # Al salir del programa #
@@ -188,5 +191,5 @@ errores que descubri:
 - si tenes suficiente dinero para hacer 2 mejoras hace las dos
 de una. 
 (ARREGLAO)- al llegar a la ronda 11 se cierra el juego
-- que pasa si perdes (probar)
+(ARREGLAO)- se cierra cuando perdes
 """
