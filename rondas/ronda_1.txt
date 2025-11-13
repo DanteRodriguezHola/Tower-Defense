@@ -1,5 +1,1 @@
 Nor_2
-Nor_4
-Len_1
-Nor_6 Len_2
-Nor_12 Len_4

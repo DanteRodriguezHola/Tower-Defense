@@ -1,2 +1,1 @@
-Nor_5 Rap_5
-Len_15 Rap_10 Nor_25
+Rap_1

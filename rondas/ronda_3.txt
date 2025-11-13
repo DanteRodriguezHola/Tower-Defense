@@ -1,5 +1,1 @@
-Rap_5 Len_5 Nor_10
-Rap_5 Len_5 Nor_10
-Rap_5 Len_5 Nor_10
-Rap_5 Len_5 Nor_10
-Rap_10 Len_10 Nor_20
+Rap_2
