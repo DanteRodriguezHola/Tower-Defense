@@ -1,3 +1,4 @@
+from spritesheet import Spritesheet
 import estadisticas as e
 import config as c
 
@@ -42,6 +43,7 @@ class Torreta(pg.sprite.Sprite):
         
         #Se carga la imagen de la torreta
         self.original_image = estadisticas_torreta["imagen"]
+        self.image_upgrade_available = estadisticas_torreta["imagen_mejora"]
         self.angle = 0
         self.image = pg.transform.rotate(self.original_image, self.angle)
         #Se obtiene la hitbox de la torreta
@@ -63,6 +65,11 @@ class Torreta(pg.sprite.Sprite):
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
         
+        if e.jugador["dinero"] < self.upgrade_cost:
+            self.image = pg.transform.rotate(self.original_image, self.angle)
+        else:
+            self.image = pg.transform.rotate(self.image_upgrade_available, self.angle)
+    
         surface.blit(self.image, self.rect)
 
 
@@ -102,7 +109,6 @@ class Torreta(pg.sprite.Sprite):
     
     def reembolsar_torreta(self):
         e.jugador["dinero"] += e.torretas[self.type][self.upgrade_level - 1]["reembolso"]
-
 
 # ------------------------------- #
 

@@ -1,2 +1,5 @@
 Nor_5 Rap_5
-Len_15 Rap_10 Nor_25
+Nor_15 Len_15 Rap_10
+Nor_30 Len_15 Rap_50
+Nor_15 Len_75 Rap_30
+Nor_70 Len_125 Rap_80

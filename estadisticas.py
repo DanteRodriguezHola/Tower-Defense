@@ -66,6 +66,7 @@ torretas = {
             "precio": 150,
             "reembolso": 50,
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 0),
+            "imagen_mejora": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 50, 0),
         },
         {
             "dano": 5,
@@ -74,6 +75,7 @@ torretas = {
             "precio": 600,
             "reembolso": 200,
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 50),
+            "imagen_mejora": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 50, 50),
         },
         {
             "dano": 10,
@@ -82,6 +84,7 @@ torretas = {
             "precio": 3000,
             "reembolso": 1000,
             "imagen": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 0, 100),
+            "imagen_mejora": spritesheet_torreta_tanque.obtener_imagen(c.ancho_torreta, c.alto_torreta, 50, 100),
         }
     ],
     "Explosivos":

@@ -3,6 +3,7 @@
 # Importaciones #
 
 import config as c
+import texto as text
 import menu
 
 from zombies import Enemy
@@ -20,14 +21,6 @@ grupo_torretas = pg.sprite.Group()
 grupo_enemigos = pg.sprite.Group()
 grupo_botones_torretas = pg.sprite.Group()
 grupo_botones_torretas.add(b.boton_tanque)
-
-text_font = pg.font.SysFont("Consolas", 40, bold =  True) 
-large_font = pg.font.SysFont("Consolas", 56, bold =  True) 
-small_font = pg.font.SysFont("Consolas", 16)
-
-def draw_text(text, font, text_color, x, y):
-    img = font.render(text, True, text_color)
-    c.ventana.blit(img, (x, y))
 
 nivel_torreta = 1
 tecla_presionada = None
@@ -48,9 +41,9 @@ while c.jugando:
     elif c.estado == "ganaste" or c.estado == "perdiste":
         c.clock.tick(60)
         if c.estado == "ganaste":
-            draw_text("GANASTE!!!", large_font, (0, 0, 0), 400, 300)
+            text.draw_text("GANASTE!!!", text.large_font, (0, 0, 0), 400, 300)
         else:
-            draw_text("PERDISTE!!!", large_font, (0, 0, 0), 400, 300)
+            text.draw_text("PERDISTE!!!", text.large_font, (0, 0, 0), 400, 300)
         pg.display.flip()
 
         for evento in pg.event.get():
@@ -80,7 +73,7 @@ while c.jugando:
         cargar_tienda()
 
         for boton in grupo_botones_torretas:
-            if boton.draw(c.ventana, tecla_presionada):
+            if boton.draw(c.ventana):
                 tipo_torreta = boton.turret_type
                 c.creando_torretas = True
 
@@ -88,21 +81,21 @@ while c.jugando:
             c.torreta_seleccionada.selected = True
 
         if c.creando_torretas:
-            if b.boton_cancelar.draw(c.ventana, tecla_presionada) or tecla_presionada == c.atajo_cancelar_reembolso:
+            if b.boton_cancelar.draw(c.ventana):
                 c.creando_torretas = False
 
-        if not(c.torreta_seleccionada == None):
-            if b.boton_mejorar.draw(c.ventana, tecla_presionada, c.torreta_seleccionada):
+        if c.torreta_seleccionada != None:
+            if b.boton_mejorar.draw(c.ventana, c.torreta_seleccionada):
                 c.torreta_seleccionada = t.mejorar_torreta(c.torreta_seleccionada, grupo_torretas)
                 
-            if b.boton_reembolsar.draw(c.ventana, tecla_presionada) or tecla_presionada == c.atajo_cancelar_reembolso:
+            if b.boton_reembolsar.draw(c.ventana):
                 torreta_a_reembolsar = c.torreta_seleccionada
                 grupo_torretas.remove(torreta_a_reembolsar)
                 torreta_a_reembolsar.reembolsar_torreta()
                 c.torreta_seleccionada = None
                 
-        draw_text(str(e.jugador["vida"]), text_font, "grey100", 780, 605)
-        draw_text(str(e.jugador["dinero"]), text_font, "grey100", 780, 668)
+        text.draw_text(str(e.jugador["vida"]), text.text_font, "grey100", 780, 605)
+        text.draw_text(str(e.jugador["dinero"]), text.text_font, "grey100", 780, 668)
 
         # ------------------------------- #
 
@@ -112,6 +105,7 @@ while c.jugando:
                 e.jugador["dinero"] += 50
         
         else:
+            b.boton_comenzar.draw(c.ventana, tecla_presionada)
             if pg.time.get_ticks() - c.last_enemy_spawn > c.cooldown:
                 if c.world.spawned_enemies < len(c.world.enemy_list):
                     tipo_enemigo = c.world.enemy_list[c.world.spawned_enemies]
@@ -122,20 +116,9 @@ while c.jugando:
 
         # ------------------------------- #
 
-        # Trampas de desarollador #
-
-        if tecla_presionada == 43: # +
-            e.jugador["dinero"] += 10000
-
-        if tecla_presionada == 45: # -
-            e.jugador["dinero"] -= 100
-
         if tecla_presionada == 1073742053: # Shift derecho
             for enemigo in grupo_enemigos:
-
                 enemigo.health = 0
-
-        # ------------------------------- #
 
         tecla_presionada = None
 
@@ -159,7 +142,6 @@ while c.jugando:
 
             if evento.type == pg.KEYDOWN:
                 tecla_presionada = evento.key
-                print(tecla_presionada)
 
             # Al hacer click izquierdo # 
 
@@ -186,11 +168,3 @@ while c.jugando:
 
         pg.display.flip()
 pg.quit()
-
-"""
-errores que descubri: 
-- si tenes suficiente dinero para hacer 2 mejoras hace las dos
-de una. 
-(ARREGLAO)- al llegar a la ronda 11 se cierra el juego
-(ARREGLAO)- se cierra cuando perdes
-"""
