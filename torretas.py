@@ -1,7 +1,7 @@
 from config import pg
 
 import config as c
-import estadisticas as e
+import estadisticas
 import manager as m
 import math
 
@@ -17,7 +17,7 @@ class Torreta(pg.sprite.Sprite):
         self.type = tipo_torreta
         self.upgrade_level = nivel_torreta
 
-        estadisticas_torreta = e.torretas[self.type][self.upgrade_level - 1]
+        estadisticas_torreta = estadisticas.torretas[self.type][self.upgrade_level - 1]
 
         self.damage = estadisticas_torreta["dano"]
         self.range = estadisticas_torreta["rango"]
@@ -25,7 +25,7 @@ class Torreta(pg.sprite.Sprite):
         self.delay = estadisticas_torreta["espera"]
 
         try:
-            self.upgrade_cost = e.torretas[self.type][self.upgrade_level]["precio"]
+            self.upgrade_cost = estadisticas.torretas[self.type][self.upgrade_level]["precio"]
         except:
             self.upgrade_cost = 0
 
@@ -36,18 +36,22 @@ class Torreta(pg.sprite.Sprite):
         self.last_shot = pg.time.get_ticks()
 
         # Posicion original #
+
         self.tile_x = celda_x
         self.tile_y = celda_y
 
         # Calcular el centro de la celda #
+
         self.x = (self.tile_x + 0.5) * c.tamano_celda
         self.y = (self.tile_y + 0.5) * c.tamano_celda
-        
-        #Se carga la imagen de la torreta
+
+
         self.original_image = estadisticas_torreta["imagen"]
+        self.mask = pg.mask.from_surface(self.original_image)
+        self.original_outine = self.dibujar_contorno((255, 255, 0))
         self.angle = 0
         self.image = pg.transform.rotate(self.original_image, self.angle)
-        #Se obtiene la hitbox de la torreta
+        self.outline = pg.transform.rotate(self.original_outine, self.angle)
         self.rect = self.image.get_rect() 
         self.rect.center = (self.x, self.y)
 
@@ -66,6 +70,9 @@ class Torreta(pg.sprite.Sprite):
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
         
+        if estadisticas.jugador["dinero"] >= self.upgrade_cost:
+            surface.blit(self.outline, self.rect)
+
         surface.blit(self.image, self.rect)
 
 
@@ -107,9 +114,37 @@ class Torreta(pg.sprite.Sprite):
         if m.nivel_iniciado == False:
             self.refund *= 3
         
-        e.jugador["dinero"] += self.refund
+        estadisticas.jugador["dinero"] += self.refund
 
         return grupo_torretas.remove(self)
+    
+    def obtener_contorno(self):
+        contorno = []
+        ancho, alto = self.mask.get_size()
+        for y in range(alto):
+            for x in range(ancho):
+                if self.mask.get_at((x, y)):
+                    # Si algún vecino no está lleno, esto es borde
+                    vecinos = [
+                        self.mask.get_at((x-1, y)),
+                        self.mask.get_at((x+1, y)),
+                        self.mask.get_at((x, y-1)),
+                        self.mask.get_at((x, y+1))
+                    ]
+                    if not all(vecinos):
+                        contorno.append((x, y))
+
+        return contorno
+
+    def dibujar_contorno(self, color):
+            contorno = self.obtener_contorno(self.mask)
+            w, h = self.mask.get_size()
+            surf = pg.Surface((w, h), pg.SRCALPHA)
+
+            for (x, y) in contorno:
+                surf.set_at((x, y), color)
+
+            return surf
 
 
 # ------------------------------- #
@@ -131,9 +166,9 @@ def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
         
         #Se crea la torreta.
         if espacio_libre:
-            precio_torreta = e.torretas[tipo_torreta][nivel_torreta - 1]["precio"]
-            if e.jugador["dinero"] >= precio_torreta:
-                e.jugador["dinero"] -= precio_torreta
+            precio_torreta = estadisticas.torretas[tipo_torreta][nivel_torreta - 1]["precio"]
+            if estadisticas.jugador["dinero"] >= precio_torreta:
+                estadisticas.jugador["dinero"] -= precio_torreta
                 torreta = Torreta(tipo_torreta, nivel_torreta, celda_x, celda_y)
                 grupo_torretas.add(torreta)
                 return True
@@ -153,7 +188,7 @@ def limpiar_seleccion(grupo_torretas):
         torreta.selected = False
 
 def mejorar_torreta(torreta_actual, grupo_torretas):
-    e.jugador["dinero"] -= torreta_actual.upgrade_cost
+    estadisticas.jugador["dinero"] -= torreta_actual.upgrade_cost
 
     info = torreta_actual.obtener_informacion_torreta()
     grupo_torretas.remove(torreta_actual)

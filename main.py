@@ -151,6 +151,10 @@ while m.jugando:
         if e.jugador["vida"] <= 0:
             m.estado = "perdiste"
 
+# ------------------------------- #
+
+# Eventos #
+
         for evento in pg.event.get():
 
 # Al salir del programa #
@@ -162,7 +166,6 @@ while m.jugando:
 
             if evento.type == pg.KEYDOWN:
                 tecla_presionada = evento.key
-                print(tecla_presionada)
 
 # Al hacer click izquierdo # 
 
