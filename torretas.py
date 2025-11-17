@@ -1,8 +1,10 @@
-import estadisticas as e
-import config as c
+from config import pg
 
+import config as c
+import estadisticas as e
+import manager as m
 import math
-import pygame as pg
+
 
 class Torreta(pg.sprite.Sprite):
     def __init__(self, tipo_torreta, nivel_torreta, celda_x, celda_y):
@@ -19,8 +21,9 @@ class Torreta(pg.sprite.Sprite):
 
         self.damage = estadisticas_torreta["dano"]
         self.range = estadisticas_torreta["rango"]
-        self.refund = (estadisticas_torreta["precio"]) // 5
+        self.refund = (estadisticas_torreta["precio"]) // 3
         self.delay = estadisticas_torreta["espera"]
+
         try:
             self.upgrade_cost = e.torretas[self.type][self.upgrade_level]["precio"]
         except:
@@ -67,7 +70,7 @@ class Torreta(pg.sprite.Sprite):
 
 
     def update(self, grupo_enemigos):
-        if pg.time.get_ticks() - self.last_shot > self.delay:
+        if pg.time.get_ticks() - self.last_shot > self.delay / m.velocidad_juego:
             self.elegir_objetivo(grupo_enemigos)
 
     def elegir_objetivo(self, grupo_enemigos):
@@ -100,8 +103,13 @@ class Torreta(pg.sprite.Sprite):
         }
         return informacion_torreta
     
-    def reembolsar_torreta(self):
-        e.jugador["dinero"] += e.torretas[self.type][self.upgrade_level - 1]["reembolso"]
+    def reembolsar_torreta(self, grupo_torretas):
+        if m.nivel_iniciado == False:
+            self.refund *= 3
+        
+        e.jugador["dinero"] += self.refund
+
+        return grupo_torretas.remove(self)
 
 
 # ------------------------------- #

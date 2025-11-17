@@ -3,12 +3,12 @@
 # Importaciones #
 
 from world import cargar_mapa
+
 import pygame as pg
 
 # ------------------------------- #
 
 pg.init()
-pg.font.init()
 
 # ------------------------------- #
 
@@ -46,18 +46,6 @@ icono_imagen = pg.image.load("assets\imagenes\icono.png").convert_alpha()
 icono = pg.display.set_icon(icono_imagen)
 
 # ------------------------------ #
-
-# Variables que controlan el juego #
-
-jugando = True
-estado = "menu"
-last_enemy_spawn = pg.time.get_ticks()
-level_started = False
-creando_torretas = False
-torreta_seleccionada = None
-cooldown = 1500
-
-# ------------------------------- #
 
 # Posiciones de los botones #
 

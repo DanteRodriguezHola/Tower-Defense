@@ -1,12 +1,11 @@
-import estadisticas as e
+from config import pg
+from pygame.math import Vector2
 
 import config as c
-
-from pygame.math import Vector2
+import estadisticas as e
+import manager as m
 import math
 
-import pygame as pg
-pg.init()
 pg.font.init()
 
 fuente = pg.font.SysFont("Consolas", 20)
@@ -17,12 +16,18 @@ class Enemy(pg.sprite.Sprite):
         self.waypoints = waypoints
         self.pos = Vector2(self.waypoints[0])
         self.target_waypoint = 1
-        
+
+# ------------------------------- #
+
+# Estadisticas #
+
         self.health = e.enemigos.get(enemy_type)["vida"]
         self.damage = e.enemigos.get(enemy_type)["dano"] 
         self.speed = e.enemigos.get(enemy_type)["velocidad"]
         self.reward = e.enemigos.get(enemy_type)["recompensa"]
         self.enemy_type = enemy_type
+
+# ------------------------------- #
 
         self.angle = 0
         self.original_image = pg.image.load(e.enemigos.get(enemy_type)["imagen"]).convert_alpha()
@@ -62,7 +67,7 @@ class Enemy(pg.sprite.Sprite):
 
         dist = self.movement.length()
         if dist >= self.speed:
-            self.pos += self.movement.normalize() * self.speed
+            self.pos += self.movement.normalize() * self.speed * m.velocidad_juego
         else:
             if dist != 0:
                 self.pos += self.movement.normalize() * dist

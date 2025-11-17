@@ -44,8 +44,7 @@ class Button(pg.sprite.Sprite):
 
             if self.single_click:
                 self.clicked = True
-                #print("clicked")
-
+                
             return accion
 
         self.clicked = False
