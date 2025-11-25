@@ -3,7 +3,8 @@
 # Importaciones #
 
 from config import pg
-from menu import menu
+from cursor import cursor
+from menu import mostrar_menu
 from tienda import cargar_tienda
 from zombies import Enemy
 
@@ -33,36 +34,21 @@ tecla_presionada = None
 
 while m.jugando:
     if m.estado == "menu":
-        boton_jugar, boton_salir = menu()
-        for evento in pg.event.get():
-            if evento.type == pg.QUIT:
-                m.jugando = False
-            if boton_jugar.click(evento):
-                m.estado = "jugando"
-            if boton_salir.click(evento):
-                m.jugando = False
-        pg.display.flip()
-        continue
-
-    elif m.estado == "ganaste" or m.estado == "perdiste":
-        c.clock.tick(60)
-        if m.estado == "ganaste":
-            draw_text("GANASTE!!!", large_font, (0, 0, 0), 400, 300)
-        else:
-            draw_text("PERDISTE!!!", large_font, (0, 0, 0), 400, 300)
-        pg.display.flip()
+        mostrar_menu(m.estado)
 
         for evento in pg.event.get():
             if evento.type == pg.QUIT:
                 m.jugando = False
+
+        pg.display.flip()
     
     elif m.estado == "jugando":
         c.clock.tick(60) 
         c.world.draw(c.ventana)
 
-# ------------------------------- #
+    # ------------------------------- #
 
-# Actualizacion de las torretas y los enemigos #
+    # Actualizacion de las torretas y los enemigos #
 
         for enemigo in grupo_enemigos:
             enemigo.update()
@@ -72,38 +58,50 @@ while m.jugando:
             torreta.update(grupo_enemigos)
             torreta.draw(c.ventana)
 
-# ------------------------------- #
+    # ------------------------------- #
         
-# Actualizacion de la tienda y los botones #
-
+    # Actualizacion de la tienda y los botones #
         cargar_tienda()
 
         for boton in grupo_botones_torretas:
-            if boton.draw(c.ventana, tecla_presionada):
+            if boton.dibujar(c.ventana):
                 tipo_torreta = boton.turret_type
                 m.creando_torretas = True
 
+        if b.boton_velocidad.dibujar(c.ventana):
+            if b.boton_velocidad.clicked:
+                m.velocidad_juego = 2
+            else:
+                m.velocidad_juego = 1
+        
         if m.torreta_seleccionada:
             m.torreta_seleccionada.selected = True
 
         if m.creando_torretas:
-            if b.boton_cancelar.draw(c.ventana, tecla_presionada):
+            if b.boton_cancelar.dibujar(c.ventana):
                 m.creando_torretas = False
 
         if m.torreta_seleccionada != None:
-            if b.boton_mejorar.draw(c.ventana, tecla_presionada, m.torreta_seleccionada):
+            if b.boton_mejorar.dibujar(c.ventana, m.torreta_seleccionada):
                 m.torreta_seleccionada = t.mejorar_torreta(m.torreta_seleccionada, grupo_torretas)
                 
-            if b.boton_reembolsar.draw(c.ventana, tecla_presionada):
+            if b.boton_reembolsar.dibujar(c.ventana):
                 m.torreta_seleccionada = m.torreta_seleccionada.reembolsar_torreta(grupo_torretas)
-                
+
+        if e.jugador["vida"] <= 0:
+            e.jugador["vida"] = 0
+            m.estado = "derrota"
+
+        if c.world.oleada >= 3:
+            m.estado = "victoria"
+        
         draw_text(str(e.jugador["vida"]), text_font, "black", 780, 605)
         draw_text(str(e.jugador["dinero"]), text_font, "black", 780, 668)
 
 # ------------------------------- #
 
         if m.nivel_iniciado == False:
-            if b.boton_comenzar.draw(c.ventana, tecla_presionada) or tecla_presionada == c.atajo_comenzar:
+            if b.boton_comenzar.dibujar(c.ventana):
                 m.nivel_iniciado = True
                 e.jugador["dinero"] += 50
                 m.tiempo_spawn_enemigos -= 50
@@ -116,28 +114,23 @@ while m.jugando:
                     grupo_enemigos.add(enemigo)
                     c.world.spawned_enemies += 1
                     m.ultimo_spawn_enemigo = pg.time.get_ticks()
+        
+        cursor.draw(c.ventana)
 
 # ------------------------------- #
-
     # Trampas de desarollador #
 
         if tecla_presionada == 43: # +
-            e.jugador["dinero"] += 10000
+            e.jugador["dinero"] += 100
 
         if tecla_presionada == 45: # -
-            e.jugador["dinero"] -= 100
+            e.jugador["vida"] -= 100
 
         if tecla_presionada == 1073742053: # Shift derecho
             for enemigo in grupo_enemigos:
                 enemigo.health = 0
 
-        if tecla_presionada == 1073741909 and m.velocidad_juego < 2: # *
-            m.velocidad_juego += 0.5
-
-        if tecla_presionada == 1073741908 and m.velocidad_juego > 1: # *
-            m.velocidad_juego -= 0.5
-
-# ------------------------------- #
+    # ------------------------------- #
 
         tecla_presionada = None
 
@@ -148,26 +141,23 @@ while m.jugando:
             c.world.reset_level()
             c.world.process_enemies()
 
-        if e.jugador["vida"] <= 0:
-            m.estado = "perdiste"
+    # ------------------------------- #
 
-# ------------------------------- #
-
-# Eventos #
+    # Eventos #
 
         for evento in pg.event.get():
 
-# Al salir del programa #
+    # Al salir del programa #
 
             if evento.type == pg.QUIT:
                 m.jugando = False
 
-# Al presionar alguna tecla #
+    # Al presionar alguna tecla #
 
             if evento.type == pg.KEYDOWN:
                 tecla_presionada = evento.key
 
-# Al hacer click izquierdo # 
+    # Al hacer click izquierdo # 
 
             if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
                 posicion_mouse = pg.mouse.get_pos() #Se obtiene la posicion del ratón
@@ -180,18 +170,23 @@ while m.jugando:
                     else:
                         m.torreta_seleccionada = t.seleccionar_torreta(posicion_mouse, grupo_torretas)
             
-# Al presionar alguna tecla #
+    # Al presionar alguna tecla #
 
             if evento.type == pg.KEYDOWN:
                 tecla_presionada = evento.key
-                print(tecla_presionada)
 
         mouse_pos = pg.mouse.get_pos()
         for enemigo in grupo_enemigos:
             enemigo.ver_info(mouse_pos, c.ventana)
 
         pg.display.flip()
-pg.quit()
 
-# Errores que descubri: 
-# - Si tenes suficiente dinero para hacer 2 mejoras hace las dos de una.
+    elif m.estado == "victoria" or m.estado == "derrota":
+        mostrar_menu(m.estado)
+
+        for evento in pg.event.get():
+            if evento.type == pg.QUIT:
+                m.jugando = False
+
+        pg.display.flip()
+pg.quit()

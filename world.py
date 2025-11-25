@@ -70,10 +70,10 @@ class World():
         
 
 def cargar_mapa():
-    mapa_imagen = pg.image.load('assets/imagenes/mapa.png').convert_alpha()
+    imagen_mapa = pg.image.load('assets/imagenes/mapa.png').convert_alpha()
     with open('map.tmj') as file:
         world_data = json.load(file)
-    world = World(world_data, mapa_imagen)
+    world = World(world_data, imagen_mapa)
     world.process_data()
     world.process_enemies()
     return world

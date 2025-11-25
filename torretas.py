@@ -47,11 +47,8 @@ class Torreta(pg.sprite.Sprite):
 
 
         self.original_image = estadisticas_torreta["imagen"]
-        self.mask = pg.mask.from_surface(self.original_image)
-        self.original_outine = self.dibujar_contorno((255, 255, 0))
         self.angle = 0
         self.image = pg.transform.rotate(self.original_image, self.angle)
-        self.outline = pg.transform.rotate(self.original_outine, self.angle)
         self.rect = self.image.get_rect() 
         self.rect.center = (self.x, self.y)
 
@@ -69,15 +66,12 @@ class Torreta(pg.sprite.Sprite):
     def draw(self, surface):
         if self.selected:
             surface.blit(self.range_image, self.range_rect)
-        
-        if estadisticas.jugador["dinero"] >= self.upgrade_cost:
-            surface.blit(self.outline, self.rect)
 
         surface.blit(self.image, self.rect)
 
 
     def update(self, grupo_enemigos):
-        if pg.time.get_ticks() - self.last_shot > self.delay / m.velocidad_juego:
+        if pg.time.get_ticks() - self.last_shot > (self.delay / m.velocidad_juego):
             self.elegir_objetivo(grupo_enemigos)
 
     def elegir_objetivo(self, grupo_enemigos):
@@ -117,35 +111,6 @@ class Torreta(pg.sprite.Sprite):
         estadisticas.jugador["dinero"] += self.refund
 
         return grupo_torretas.remove(self)
-    
-    def obtener_contorno(self):
-        contorno = []
-        ancho, alto = self.mask.get_size()
-        for y in range(alto):
-            for x in range(ancho):
-                if self.mask.get_at((x, y)):
-                    # Si algún vecino no está lleno, esto es borde
-                    vecinos = [
-                        self.mask.get_at((x-1, y)),
-                        self.mask.get_at((x+1, y)),
-                        self.mask.get_at((x, y-1)),
-                        self.mask.get_at((x, y+1))
-                    ]
-                    if not all(vecinos):
-                        contorno.append((x, y))
-
-        return contorno
-
-    def dibujar_contorno(self, color):
-            contorno = self.obtener_contorno(self.mask)
-            w, h = self.mask.get_size()
-            surf = pg.Surface((w, h), pg.SRCALPHA)
-
-            for (x, y) in contorno:
-                surf.set_at((x, y), color)
-
-            return surf
-
 
 # ------------------------------- #
 

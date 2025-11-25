@@ -17,23 +17,58 @@ pg.init()
 ancho_mapa = 720
 alto_mapa = 720
 
+ancho_tienda = 260
+
+ancho_ventana = ancho_mapa + ancho_tienda
+alto_ventana = alto_mapa
+
 tamano_celda = 48
 
-ancho_tienda = 260
 columna_tienda = (ancho_mapa + ancho_tienda / 19)
 
 ancho_torreta = 50
 alto_torreta = 50
 
-ancho_boton = 240
-alto_boton = 52
+ancho_boton_jugar = 368
+alto_boton_jugar = 83
+
+ancho_boton_salir = 240
+alto_boton_salir = 83
+
+ancho_boton_reintentar = 276
+alto_boton_reintertar = 83
+
+ancho_boton_tienda = 240
+alto_boton_tienda = 52
+
+ancho_cursor = 25
+alto_cursor = 36
+
+# ------------------------------- #
+
+# Posiciones de los spritesheets #
+
+# Columna botones tienda #
+
+columna_boton_jugar = 0
+columna_boton_salir = 368
+columna_boton_reintentar = 608
+
+# Columna botones tienda #
+
+columna_boton_tanque = 0
+columna_boton_velocidad = 240
+columna_boton_comenzar = 480
+columna_boton_mejorar = 720
+columna_boton_cancelar = 960
+columna_boton_reembolsar = 1200
 
 # ------------------------------- #
 
 # No se como llamar a esto, pero es importante, asi que no lo borren >:( #
 
 clock = pg.time.Clock()
-ventana = pg.display.set_mode((ancho_mapa + ancho_tienda, alto_mapa)) 
+ventana = pg.display.set_mode((ancho_ventana, alto_ventana)) 
 world = cargar_mapa()
 
 # ------------------------------ #

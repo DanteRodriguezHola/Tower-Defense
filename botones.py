@@ -1,45 +1,44 @@
+from config import pg
 from spritesheet import Spritesheet
 
 import config as c
-import pygame as pg
 import estadisticas as e
 
-class Button(pg.sprite.Sprite):
-    def __init__(self, spritesheet, atajo_teclado, x , y, single_click):
+class Boton(pg.sprite.Sprite):
+    def __init__(self, spritesheet, spritesheet_column, x , y, single_click):
         pg.sprite.Sprite.__init__(self)
 
         self.images = {
-            "normal": "",
-            "hover": "",
-            "blocked": "",
+            "normal": 0,
+            "hover": 52,
+            "blocked": 104,
         }
 
-        numero = 0
-
         for image in self.images:
-            self.images[image] = spritesheet.obtener_imagen(c.ancho_boton, c.alto_boton, 0, numero)
-            numero += 52
+            self.images[image] = spritesheet.obtener_imagen(c.ancho_boton_tienda, c.alto_boton_tienda, spritesheet_column, self.images[image])
 
         # ------------------------------- #
 
-        self.hotkey = atajo_teclado
-
         self.rect = self.images["normal"].get_rect()
         self.rect.topleft = (x, y)
+        self.delay = 500
         self.clicked = False
+        self.last_clicked = 0
         self.single_click = single_click
     
-    def draw(self, surface, pressed_key):
+    def dibujar(self, surface):
         posicion_mouse = pg.mouse.get_pos()
+        tiempo_actual = pg.time.get_ticks()
         accion = False
-        
-        if not(self.rect.collidepoint(posicion_mouse) or pressed_key == self.hotkey):
+
+        if not (self.rect.collidepoint(posicion_mouse)):
             surface.blit(self.images["normal"], self.rect)
             return accion
         
         surface.blit(self.images["hover"], self.rect)
         
-        if ((pg.mouse.get_pressed()[0] == 1 and self.clicked == False) or pressed_key == self.hotkey):
+        if ((pg.mouse.get_pressed()[0] == 1 and self.clicked == False and tiempo_actual - self.last_clicked >= self.delay)):
+            self.last_clicked = tiempo_actual
             accion = True
 
             if self.single_click:
@@ -49,30 +48,58 @@ class Button(pg.sprite.Sprite):
 
         self.clicked = False
 
-class TurretButton(Button):
-    def __init__(self, spritesheet, atajo_teclado, x , y, single_click, tipo_torreta):
-        super().__init__(spritesheet, atajo_teclado, x , y, single_click)
+class BotonTorreta(Boton):
+    def __init__(self, spritesheet, spritesheet_column, x, y, single_click, tipo_torreta):
+        super().__init__(spritesheet, spritesheet_column, x, y, single_click)
         self.turret_type = tipo_torreta
 
-    def draw(self, surface, pressed_key):
+    def dibujar(self, surface):
         costo_torreta = e.torretas[self.turret_type][0]["precio"]
 
         if e.jugador["dinero"] < costo_torreta:
             surface.blit(self.images["blocked"], self.rect)
             return False
         
-        return super().draw(surface, pressed_key)
+        return super().dibujar(surface)
 
-class UpgradeButton(Button):
-    def __init__(self, spritesheet, atajo_teclado, x, y, single_click):
-        super().__init__(spritesheet, atajo_teclado, x, y, single_click)
+class VelocidadBoton(Boton):
+    def __init__(self, spritesheet, spritesheet_column, x, y, single_click):
+        super().__init__(spritesheet, spritesheet_column, x, y, single_click)
 
-    def draw(self, surface, pressed_key, selected_turret):
+    def dibujar(self, surface):
+        posicion_mouse = pg.mouse.get_pos()
+        tiempo_actual = pg.time.get_ticks()
+        accion = False
+
+        if not(self.rect.collidepoint(posicion_mouse)):
+            if self.clicked:
+                image = self.images["blocked"]
+            else:
+                image = self.images["normal"]
+
+            surface.blit(image, self.rect)
+            return accion
+        
+        surface.blit(self.images["hover"], self.rect)
+
+        if pg.mouse.get_pressed()[0] == 1 and tiempo_actual - self.last_clicked >= self.delay:
+            self.last_clicked = tiempo_actual
+            self.clicked = not(self.clicked)
+            accion = True
+  
+            return accion
+
+
+class MejorarBoton(Boton):
+    def __init__(self, spritesheet, spritesheet_column, x, y, single_click):
+        super().__init__(spritesheet, spritesheet_column, x, y, single_click)
+
+    def dibujar(self, surface, selected_turret):
         if self.check_upgrade_available(selected_turret) == False:
             surface.blit(self.images["blocked"], self.rect)
             return False
         
-        return super().draw(surface, pressed_key)
+        return super().dibujar(surface)
         
     def check_upgrade_available(self, selected_turret):
         if not(selected_turret.upgrade_level < 3):
@@ -82,31 +109,40 @@ class UpgradeButton(Button):
             return False
         
         return True
+    
+class MenuBoton(Boton):
+    def __init__(self, spritesheet, spritesheet_column, lenght, height, x, y, single_click):
+        super().__init__(spritesheet, spritesheet_column, x, y, single_click)
+
+        self.images = {
+            "normal": 0,
+            "hover": 83,
+        }
+
+        for image in self.images:
+            self.images[image] = spritesheet.obtener_imagen(lenght, height, spritesheet_column, self.images[image])
+
+        self.rect = self.images["normal"].get_rect()
+        self.rect.topleft = (x, y)
+
+    def dibujar(self, surface):
+        return super().dibujar(surface)
 
 # ------------------------------- #
 
 # Carga de spritesheets y creación de los botones #
 
-spritesheet_boton_tanque = Spritesheet("assets/imagenes/tienda/spritesheet_boton_tanque.png")
-boton_tanque = TurretButton(spritesheet_boton_tanque, c.atajo_tanque, c.columna_tienda, c.pos_1, True, "Tanque")
+spritesheet_botones_menu = Spritesheet("assets/imagenes/menu/spritesheet_botones_menu0.png")
 
-spritesheet_boton_explosivos = Spritesheet("assets/imagenes/tienda/spritesheet_boton_explosivos.png")
-boton_explosivos = TurretButton(spritesheet_boton_explosivos, c.atajo_explosivos, c.columna_tienda, c.pos_2, True, "Explosivos")
+boton_jugar = MenuBoton(spritesheet_botones_menu, c.columna_boton_jugar, c.ancho_boton_jugar, c.alto_boton_jugar, 306, 420, True)
+boton_salir = MenuBoton(spritesheet_botones_menu, c.columna_boton_salir, c.ancho_boton_salir, c.alto_boton_salir, 370, 520, True)
+boton_reintentar = MenuBoton(spritesheet_botones_menu, c.columna_boton_reintentar, c.ancho_boton_reintentar, c.alto_boton_reintertar, 352, 420, True)
 
-spritesheet_boton_comenzar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_comenzar.png")
-boton_comenzar = Button(spritesheet_boton_comenzar, c.atajo_comenzar, c.columna_tienda, c.pos_5_a, True)
+spritesheet_botones_tienda = Spritesheet("assets/imagenes/tienda/spritesheet_botones_tienda.png")
 
-spritesheet_boton_mejorar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_mejorar.png")
-boton_mejorar = UpgradeButton(spritesheet_boton_mejorar, c.atajo_mejorar, c.columna_tienda, c.pos_5, False)
-
-spritesheet_boton_cancelar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_cancelar.png")
-boton_cancelar = Button(spritesheet_boton_cancelar, c.atajo_cancelar_reembolso, c.columna_tienda, c.pos_6, True)
-
-spritesheet_boton_reembolsar = Spritesheet("assets/imagenes/tienda/spritesheet_boton_reembolsar.png")
-boton_reembolsar = Button(spritesheet_boton_reembolsar, c.atajo_cancelar_reembolso, c.columna_tienda, c.pos_6, True)
-
-# ------------------------------- #
-
-# Que hacer a futuro #
-
-# Hacer que todos las imagenes de los botones se encuentren en una solo spritesheet
+boton_tanque = BotonTorreta(spritesheet_botones_tienda, c.columna_boton_tanque, c.columna_tienda, c.pos_1, True, "Tanque")
+boton_velocidad = VelocidadBoton(spritesheet_botones_tienda, c.columna_boton_velocidad, c.columna_tienda, c.pos_2, True)
+boton_comenzar = Boton(spritesheet_botones_tienda, c.columna_boton_comenzar, c.columna_tienda, c.pos_3, True)
+boton_mejorar = MejorarBoton(spritesheet_botones_tienda, c.columna_boton_mejorar, c.columna_tienda, c.pos_5, True)
+boton_cancelar = Boton(spritesheet_botones_tienda, c.columna_boton_cancelar, c.columna_tienda, c.pos_6, True)
+boton_reembolsar = Boton(spritesheet_botones_tienda, c.columna_boton_reembolsar, c.columna_tienda, c.pos_6, True)

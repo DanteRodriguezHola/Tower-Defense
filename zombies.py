@@ -66,8 +66,8 @@ class Enemy(pg.sprite.Sprite):
             self.kill()
 
         dist = self.movement.length()
-        if dist >= self.speed:
-            self.pos += self.movement.normalize() * self.speed * m.velocidad_juego
+        if dist >= (self.speed * m.velocidad_juego):
+            self.pos += self.movement.normalize() * (self.speed * m.velocidad_juego)
         else:
             if dist != 0:
                 self.pos += self.movement.normalize() * dist

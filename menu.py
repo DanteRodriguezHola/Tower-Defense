@@ -1,43 +1,34 @@
-import pygame as pg
-from config import ventana
+from config import pg
+from cursor import cursor
+from spritesheet import Spritesheet
 
-fondo_menu = pg.image.load('assets/imagenes/menu/menu.png').convert_alpha()
-jugar_img = pg.image.load('assets/imagenes/menu/boton_jugar.png').convert_alpha()
-salir_img = pg.image.load('assets/imagenes/menu/boton_salir.png').convert_alpha()
-jugar_hover = pg.image.load('assets/imagenes/menu/boton_jugar_hover.png').convert_alpha()
-salir_hover = pg.image.load('assets/imagenes/menu/boton_salir_hover.png').convert_alpha()
-huergo = pg.image.load('assets/imagenes/menu/logo_huergo.png').convert_alpha()
+import botones as b
+import config as c
+import manager as m
 
-class Boton:
-    def __init__(self, x, y, imagen_normal, imagen_hover):
-        self.imagen_normal = imagen_normal
-        self.imagen_hover = imagen_hover
-        self.rect = self.imagen_normal.get_rect(topleft=(x, y))
-        self.hover = False
+spritesheet_menu = Spritesheet("assets/imagenes/menu/spritesheet_menu.png")
 
-    def dibujar(self, pantalla):
-        imagen = self.imagen_hover if self.hover else self.imagen_normal
-        pantalla.blit(imagen, self.rect)
+imagenes_menu = {
+    "menu": 0,
+    "derrota": 720,
+    "victoria": 1440,
+}
 
-    def actualizar(self, mouse_pos):
-        self.hover = self.rect.collidepoint(mouse_pos)
+for imagen in imagenes_menu:
+    imagenes_menu[imagen] = spritesheet_menu.obtener_imagen(c.ancho_ventana, c.alto_ventana, 0, imagenes_menu[imagen])
 
-    def click(self, evento):
-        return evento.type == pg.MOUSEBUTTONDOWN and self.hover
+def mostrar_menu(estado):
+    c.ventana.blit(imagenes_menu[estado], (0, 0))
 
-# Crear botones una sola vez
-boton_jugar = Boton(306, 420, jugar_img, jugar_hover)
-boton_salir = Boton(370, 520, salir_img, salir_hover)
+    if m.estado == "menu":
+        if b.boton_jugar.dibujar(c.ventana):
+            m.estado = "jugando"
+    
+    else:
+         if b.boton_reintentar.dibujar(c.ventana):
+            m.estado = "jugando"
 
-def menu():
-    ventana.blit(fondo_menu, (0, 0))
-    ventana.blit(huergo, (810, 558))
-    mouse_pos = pg.mouse.get_pos()
+    if b.boton_salir.dibujar(c.ventana):
+        m.jugando = False
 
-    boton_jugar.actualizar(mouse_pos)
-    boton_salir.actualizar(mouse_pos)
-
-    boton_jugar.dibujar(ventana)
-    boton_salir.dibujar(ventana)
-
-    return boton_jugar, boton_salir
+    cursor.draw(c.ventana)
