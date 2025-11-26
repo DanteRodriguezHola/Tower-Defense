@@ -73,7 +73,7 @@ while m.jugando:
             if not(b.boton_velocidad.clicked):
                 m.velocidad_juego = 1
             else:
-                m.velocidad_juego = 20
+                m.velocidad_juego = 2
         
         if m.torreta_seleccionada:
             m.torreta_seleccionada.selected = True
