@@ -1,5 +1,5 @@
 import os
-import config as c
+import manager as m
 
 def obtener_ruta_archivo(numero_ronda):
     nombre_archivo_ronda = "ronda_" + numero_ronda + ".txt"
@@ -17,8 +17,9 @@ def procesar_rondas(numero_de_ronda):
                 dic_enemigos = crear_diccionarios_enemigos(oleada)
                 lista_enemigos.append(dic_enemigos)
         return lista_enemigos
+    
     except FileNotFoundError:
-        c.estado = "ganaste"
+        m.estado = "victoria"
         return []
 
 def crear_diccionarios_enemigos(oleada):

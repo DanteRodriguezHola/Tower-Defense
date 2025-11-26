@@ -6,6 +6,7 @@ from config import pg
 from cursor import cursor
 from menu import mostrar_menu
 from tienda import cargar_tienda
+from world import world
 from zombies import Enemy
 
 import config as c
@@ -34,7 +35,7 @@ tecla_presionada = None
 
 while m.jugando:
     if m.estado == "menu":
-        mostrar_menu(m.estado)
+        mostrar_menu(m.estado, grupo_torretas, grupo_enemigos)
 
         for evento in pg.event.get():
             if evento.type == pg.QUIT:
@@ -44,7 +45,7 @@ while m.jugando:
     
     elif m.estado == "jugando":
         c.clock.tick(60) 
-        c.world.draw(c.ventana)
+        world.draw(c.ventana)
 
     # ------------------------------- #
 
@@ -69,10 +70,10 @@ while m.jugando:
                 m.creando_torretas = True
 
         if b.boton_velocidad.dibujar(c.ventana):
-            if b.boton_velocidad.clicked:
-                m.velocidad_juego = 2
-            else:
+            if not(b.boton_velocidad.clicked):
                 m.velocidad_juego = 1
+            else:
+                m.velocidad_juego = 2
         
         if m.torreta_seleccionada:
             m.torreta_seleccionada.selected = True
@@ -91,9 +92,6 @@ while m.jugando:
         if e.jugador["vida"] <= 0:
             e.jugador["vida"] = 0
             m.estado = "derrota"
-
-        if c.world.oleada >= 3:
-            m.estado = "victoria"
         
         draw_text(str(e.jugador["vida"]), text_font, "black", 780, 605)
         draw_text(str(e.jugador["dinero"]), text_font, "black", 780, 668)
@@ -107,39 +105,24 @@ while m.jugando:
                 m.tiempo_spawn_enemigos -= 50
         
         else:
-            if pg.time.get_ticks() - m.ultimo_spawn_enemigo > m.tiempo_spawn_enemigos / m.velocidad_juego:
-                if c.world.spawned_enemies < len(c.world.enemy_list):
-                    tipo_enemigo = c.world.enemy_list[c.world.spawned_enemies]
-                    enemigo = Enemy(tipo_enemigo, c.world.waypoints)
+            if pg.time.get_ticks() - m.ultimo_spawn_enemigo > (m.tiempo_spawn_enemigos / m.velocidad_juego):
+                if world.spawned_enemies < len(world.enemy_list):
+                    tipo_enemigo = world.enemy_list[world.spawned_enemies]
+                    enemigo = Enemy(tipo_enemigo, world.waypoints)
                     grupo_enemigos.add(enemigo)
-                    c.world.spawned_enemies += 1
+                    world.spawned_enemies += 1
                     m.ultimo_spawn_enemigo = pg.time.get_ticks()
         
         cursor.draw(c.ventana)
 
-# ------------------------------- #
-    # Trampas de desarollador #
-
-        if tecla_presionada == 43: # +
-            e.jugador["dinero"] += 100
-
-        if tecla_presionada == 45: # -
-            e.jugador["vida"] -= 100
-
-        if tecla_presionada == 1073742053: # Shift derecho
-            for enemigo in grupo_enemigos:
-                enemigo.health = 0
-
     # ------------------------------- #
 
-        tecla_presionada = None
-
-        if c.world.check_level_complete() == True:
-            c.world.level += 1
+        if world.check_level_complete() == True:
+            world.level += 1
             m.ultimo_spawn_enemigo = pg.time.get_ticks()
             m.nivel_iniciado = False
-            c.world.reset_level()
-            c.world.process_enemies()
+            world.reset_level()
+            world.process_enemies()
 
     # ------------------------------- #
 
@@ -151,11 +134,6 @@ while m.jugando:
 
             if evento.type == pg.QUIT:
                 m.jugando = False
-
-    # Al presionar alguna tecla #
-
-            if evento.type == pg.KEYDOWN:
-                tecla_presionada = evento.key
 
     # Al hacer click izquierdo # 
 
@@ -172,21 +150,19 @@ while m.jugando:
             
     # Al presionar alguna tecla #
 
-            if evento.type == pg.KEYDOWN:
-                tecla_presionada = evento.key
-
         mouse_pos = pg.mouse.get_pos()
         for enemigo in grupo_enemigos:
             enemigo.ver_info(mouse_pos, c.ventana)
 
         pg.display.flip()
 
-    elif m.estado == "victoria" or m.estado == "derrota":
-        mostrar_menu(m.estado)
+    else:
+        mostrar_menu(m.estado, grupo_torretas, grupo_enemigos)
 
         for evento in pg.event.get():
             if evento.type == pg.QUIT:
                 m.jugando = False
 
         pg.display.flip()
+
 pg.quit()

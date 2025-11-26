@@ -1,7 +1,8 @@
+from config import pg
 from rondas import procesar_rondas
 
+import estadisticas as estadisticas
 import random
-import pygame as pg
 import json
 
 class World():
@@ -49,24 +50,45 @@ class World():
         self.missed_enemies = 0
 
     def process_enemies(self):
-        enemy_spawn_data = procesar_rondas(self.oleada)
         try:
+            enemy_spawn_data = procesar_rondas(self.oleada)
             enemies = enemy_spawn_data[self.level]
+        
         except IndexError:
             self.level = 0
             self.oleada += 1
-            print("Ronda.py:", self.oleada)
             enemy_spawn_data = procesar_rondas(self.oleada)
             
             if not enemy_spawn_data:
                 return
             
             enemies = enemy_spawn_data[self.level]
+            
         for enemy_type in enemies:
             enemies_to_spawn = enemies[enemy_type]
             for enemy in range(enemies_to_spawn):
                 self.enemy_list.append(enemy_type)
+
         random.shuffle(self.enemy_list)
+
+    def reiniciar_nivel(self, grupo_torretas, grupo_enemigos):
+        self.level = -1
+        self.oleada = 1
+        self.niveles_terminados = 0
+
+        self.enemy_list = []
+        self.spawned_enemies = 0
+        self.killed_enemies = 0
+        self.missed_enemies = 0
+
+        estadisticas.jugador["vida"] = 100
+        estadisticas.jugador["dinero"] = 500
+
+        for torreta in grupo_torretas:
+            grupo_torretas.remove(torreta)
+
+        for enemigo in grupo_enemigos:
+            grupo_enemigos.remove(enemigo)
         
 
 def cargar_mapa():
@@ -77,3 +99,5 @@ def cargar_mapa():
     world.process_data()
     world.process_enemies()
     return world
+
+world = cargar_mapa()

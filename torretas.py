@@ -1,4 +1,5 @@
 from config import pg
+from world import world
 
 import config as c
 import estadisticas
@@ -122,7 +123,7 @@ def crear_torreta(tipo_torreta, nivel_torreta, posicion_mouse, grupo_torretas):
     celda_numero = (celda_y * 15) + celda_x
 
     #Se comprueba si donde se va a colocar la torreta esta fuera del sendero.
-    if c.world.tile_map[celda_numero] == 7: 
+    if world.tile_map[celda_numero] == 7: 
         espacio_libre = True
         #Esto comprueba si donde esta ubicado el mouse ya hay otra torreta.
         for torreta in grupo_torretas:

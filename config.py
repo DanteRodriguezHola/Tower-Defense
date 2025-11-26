@@ -2,8 +2,6 @@
 
 # Importaciones #
 
-from world import cargar_mapa
-
 import pygame as pg
 
 # ------------------------------- #
@@ -69,7 +67,6 @@ columna_boton_reembolsar = 1200
 
 clock = pg.time.Clock()
 ventana = pg.display.set_mode((ancho_ventana, alto_ventana)) 
-world = cargar_mapa()
 
 # ------------------------------ #
 

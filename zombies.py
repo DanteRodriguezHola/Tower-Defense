@@ -1,7 +1,7 @@
 from config import pg
+from world import world
 from pygame.math import Vector2
 
-import config as c
 import estadisticas as e
 import manager as m
 import math
@@ -62,7 +62,8 @@ class Enemy(pg.sprite.Sprite):
             self.movement = self.target - self.pos
         else:
             e.jugador["vida"] -= self.damage
-            c.world.missed_enemies += 1
+            e.jugador["dinero"] += self.reward // 5
+            world.missed_enemies += 1
             self.kill()
 
         dist = self.movement.length()
@@ -82,7 +83,7 @@ class Enemy(pg.sprite.Sprite):
 
     def check_alive(self):
         if self.health <= 0:
-            c.world.killed_enemies += 1
+            world.killed_enemies += 1
             e.jugador["dinero"] += self.reward
             self.kill()
     
