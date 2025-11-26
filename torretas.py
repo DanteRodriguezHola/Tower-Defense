@@ -107,9 +107,12 @@ class Torreta(pg.sprite.Sprite):
     
     def reembolsar_torreta(self, grupo_torretas):
         if m.nivel_iniciado == False:
-            self.refund *= 3
+            reembolso = self.refund * 3
+
+        else:
+            reembolso = self.refund
         
-        estadisticas.jugador["dinero"] += self.refund
+        estadisticas.jugador["dinero"] += reembolso
 
         return grupo_torretas.remove(self)
 

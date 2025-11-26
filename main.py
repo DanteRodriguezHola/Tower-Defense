@@ -73,7 +73,7 @@ while m.jugando:
             if not(b.boton_velocidad.clicked):
                 m.velocidad_juego = 1
             else:
-                m.velocidad_juego = 2
+                m.velocidad_juego = 20
         
         if m.torreta_seleccionada:
             m.torreta_seleccionada.selected = True
@@ -101,8 +101,7 @@ while m.jugando:
         if m.nivel_iniciado == False:
             if b.boton_comenzar.dibujar(c.ventana):
                 m.nivel_iniciado = True
-                e.jugador["dinero"] += 50
-                m.tiempo_spawn_enemigos -= 50
+                m.tiempo_spawn_enemigos -= 10
         
         else:
             if pg.time.get_ticks() - m.ultimo_spawn_enemigo > (m.tiempo_spawn_enemigos / m.velocidad_juego):

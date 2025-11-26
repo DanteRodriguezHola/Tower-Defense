@@ -1,8 +1,10 @@
+from botones import boton_velocidad
 from config import pg
 from rondas import procesar_rondas
 
 import estadisticas as estadisticas
 import random
+import manager as m
 import json
 
 class World():
@@ -49,6 +51,9 @@ class World():
         self.killed_enemies = 0
         self.missed_enemies = 0
 
+        if m.estado != "derrota" or m.estado != "victoria":
+            estadisticas.jugador["dinero"] += 50
+
     def process_enemies(self):
         try:
             enemy_spawn_data = procesar_rondas(self.oleada)
@@ -58,7 +63,7 @@ class World():
             self.level = 0
             self.oleada += 1
             enemy_spawn_data = procesar_rondas(self.oleada)
-            
+
             if not enemy_spawn_data:
                 return
             
@@ -82,13 +87,20 @@ class World():
         self.missed_enemies = 0
 
         estadisticas.jugador["vida"] = 100
-        estadisticas.jugador["dinero"] = 500
+        estadisticas.jugador["dinero"] = 450
 
         for torreta in grupo_torretas:
             grupo_torretas.remove(torreta)
 
         for enemigo in grupo_enemigos:
             grupo_enemigos.remove(enemigo)
+
+        m.velocidad_juego = 1
+        boton_velocidad.clicked = False
+
+        m.tiempo_spawn_enemigos = 1500
+        m.torreta_seleccionada = None
+        m.creando_torretas = False
         
 
 def cargar_mapa():

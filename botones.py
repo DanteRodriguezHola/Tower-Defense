@@ -21,7 +21,7 @@ class Boton(pg.sprite.Sprite):
 
         self.rect = self.images["normal"].get_rect()
         self.rect.topleft = (x, y)
-        self.delay = 500
+        self.delay = 100
         self.clicked = False
         self.last_clicked = 0
         self.single_click = single_click
